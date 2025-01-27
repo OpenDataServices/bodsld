@@ -71,27 +71,32 @@ def get_schemas_and_codelists(schema_dir="schemas", overwrite=False):
     codelists = {}
 
     for fn in SCHEMA_FILES:
-        if not os.path.isfile(os.path.join(schema_dir, fn)) or overwrite:
+        fp = os.path.join(schema_dir, fn)
+        if not os.path.isfile(fp) or overwrite:
             logger.info(f"Fetching {fn} from github")
             r = requests.get(os.path.join(REMOTE_SCHEMA_DIR, fn))
             schemas[fn] = r.json()
+            with open(fp, "w") as f:
+                f.write(r.json())
         else:
             logger.info(f"Using {fn} from cache")
-            with open(os.path.join(schema_dir, fn)) as f:
+            with open(fp) as f:
                 schemas[fn] = json.load(f)
 
     for fn in CODELIST_FILES:
-        if not os.path.isfile(os.path.join(schema_dir, "codelists", fn)) or overwrite:
+        fp = os.path.join(schema_dir, "codelists", fn)
+        if not os.path.isfile(fp) or overwrite:
             logger.info(f"Fetching {fn} from github")
             r = requests.get(os.path.join(REMOTE_SCHEMA_DIR, "codelists", fn))
             codelists[fn] = r.text
+            with open(fp, "w") as f:
+                f.write(r.text)
         else:
             logger.info(f"Using {fn} from cache")
-            with open(os.path.join(schema_dir, "codelists", fn)) as f:
+            with open(fp) as f:
                 codelists[fn] = f.read()
     
     return (schemas, codelists)
-
 
 
 def get_codes(codelist_files, filename):
