@@ -109,8 +109,8 @@ class BODSVocab:
         # self.map_entity()
         # self.map_entity_types()
         # self.map_relationship()
-        # self.map_unspecified()
-        self.map_interest()
+        self.map_unspecified()
+        # self.map_interest()
         # self.map_address()
         # self.map_agent()
         # self.map_annotation()
@@ -390,46 +390,19 @@ class BODSVocab:
         self.g.add((BODS.interest, RDFS.range, BODS.Interest))
 
     def map_unspecified(self):
-        uns_path = "/$defs/UnspecifiedRecord"
-        self.g.add((BODS.Unspecified, RDF.type, OWL.Class))
+        path = "/$defs/UnspecifiedRecord"
+        self.map_class(BODS.Unspecified, path)
         self.g.add((BODS.Unspecified, RDFS.subClassOf, BODS.RecordDetails))
-        self.g.add((BODS.Unspecified, RDFS.label,
-          Literal(self.get_title(uns_path))))
-        self.g.add((BODS.Unspecified, RDFS.comment,
-          Literal(self.get_description(uns_path))))
 
         # Unspecified Record properties
-        uns_properties = get_properties(self.registry, uns_path)
-        props = {}
-        for up in uns_properties:
-            if up not in self.exclude:
-                props[up] = f"{uns_path}/properties/{up}"
+        self.map_properties(BODS.Unspecified, path)
 
-        for prop, path in props.items():
-            prop_range = self.get_property_range(path, prop)
-            prop = self.rename_property(prop)
-
-            title = self.get_title(path) or prop
-            description = self.get_description(path) or prop
-            self.g.add((BODS[prop], RDF.type, RDF.Property))
-            self.g.add((BODS[prop], RDFS.domain, BODS.Unspecified))
-            self.g.add((BODS[prop], RDFS.label, Literal(title)))
-            self.g.add((BODS[prop], RDFS.comment, Literal(description)))
-
-            if prop_range and prop != "unspecifiedReason":
-                self.g.add((BODS[prop], RDFS.range, prop_range))
-
+        # Range fixup
         self.g.add((BODS.unspecifiedReason, RDFS.range, BODS.UnspecifiedReason))
+        self.g.remove((BODS.unspecifiedReason, RDFS.range, RDFS.Literal))
 
         # Unspecified Reason codelist
-        self.g.add((BODS.UnspecifiedReason, RDF.type, OWL.Class))
-        unspec_reasons = get_codes_and_info(codelists, "unspecifiedReason.csv")
-        for code, info in unspec_reasons.items():
-          ur = cap_first(code)
-          self.g.add((BODS[ur], RDF.type, BODS.UnspecifiedReason))
-          self.g.add((BODS[ur], RDFS.label, Literal(unspec_reasons.get(code)[0])))
-          self.g.add((BODS[ur], RDFS.comment, Literal(unspec_reasons.get(code)[1])))
-
+        self.map_instances(BODS.UnspecifiedReason, "unspecifiedReason.csv")
 
     def map_interest(self):
         path = "/$defs/Interest"
