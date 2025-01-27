@@ -118,11 +118,11 @@ class BODSVocab:
 
 
     def make_graph(self):
-        # self.map_statement()
+        self.map_statement()
         # self.map_declaration()
         # self.map_record()
         # self.map_person()
-        self.map_entity()
+        # self.map_entity()
         # self.map_relationship()
         # self.map_unspecified()
         # self.map_interest()
@@ -131,59 +131,24 @@ class BODSVocab:
         # self.map_annotation()
 
     def map_statement(self):
-        self.g.add((BODS.Statement, RDF.type, OWL.Class))
-        self.g.add((BODS.Statement, RDFS.label,
-            Literal(self.get_title("/$defs/Statement"))))
-        self.g.add((BODS.Statement, RDFS.comment,
-            Literal(self.get_description("/$defs/Statement"))))
+        path = "/$defs/Statement"
+        self.map_class(BODS.Statement, path)
 
         # Turn recordStatus codelist into classes
-
+        self.map_types(BODS.Statement, BODS.Statement, "recordStatus.csv")
         record_status = get_codes_and_info(self.codelists, "recordStatus.csv")
 
-        self.g.add((BODS.NewRecordStatement, RDF.type, OWL.Class))
-        self.g.add((BODS.NewRecordStatement, RDFS.subClassOf, BODS.Statement))
-        self.g.add((BODS.NewRecordStatement, RDFS.label, Literal(record_status.get('new')[0])))
-        self.g.add((BODS.NewRecordStatement, RDFS.comment, Literal(record_status.get('new')[1])))
-        self.g.add((BODS.UpdatedRecordStatement, RDF.type, OWL.Class))
-        self.g.add((BODS.UpdatedRecordStatement, RDFS.subClassOf, BODS.Statement))
-        self.g.add((BODS.UpdatedRecordStatement, RDFS.label, Literal(record_status.get('updated')[0])))
-        self.g.add((BODS.UpdatedRecordStatement, RDFS.comment, Literal(record_status.get('updated')[1])))
-        self.g.add((BODS.ClosedRecordStatement, RDF.type, OWL.Class))
-        self.g.add((BODS.ClosedRecordStatement, RDFS.subClassOf, BODS.Statement))
-        self.g.add((BODS.ClosedRecordStatement, RDFS.label, Literal(record_status.get('closed')[0])))
-        self.g.add((BODS.ClosedRecordStatement, RDFS.comment, Literal(record_status.get('closed')[1])))
-
         # Statement properties
+        self.map_properties(BODS.Statement, path)
+        pd_path = "/$defs/Statement/properties/publicationDetails"
+        self.map_properties(BODS.Statement, pd_path)
 
-        stmt_properties = get_properties(self.registry, "/$defs/Statement")
-        pd_properties = get_properties(self.registry, "/$defs/Statement/properties/publicationDetails")
-        props = {}
-        for sp in stmt_properties:
-          if sp not in self.exclude:
-            props[sp] = f"/$defs/Statement/properties/{sp}"
-        for pdp in pd_properties:
-          if pdp not in self.exclude:
-            props[pdp] = f"/$defs/Statement/properties/publicationDetails/properties/{pdp}"
-
-        for prop, path in props.items():
-
-          prop_range = self.get_property_range(path, prop)
-          prop = self.rename_property(prop)
-
-          self.g.add((BODS[prop], RDF.type, RDF.Property))
-          self.g.add((BODS[prop], RDFS.domain, BODS.Statement))
-          self.g.add((BODS[prop], RDFS.label, Literal(self.get_title(path))))
-          self.g.add((BODS[prop], RDFS.comment, Literal(self.get_description(path))))
-
-          if prop_range:
-            self.g.add((BODS[prop], RDFS.range, prop_range))
-
-          # TODO: can I automate these ranges from the $ref?
-          self.g.add((BODS.annotation, RDFS.range, BODS.Annotation))
-          self.g.add((BODS.publisher, RDFS.range, BODS.Agent))
-          self.g.add((BODS.source, RDFS.range, BODS.Source))
-          self.g.add((BODS.recordDetails, RDFS.range, BODS.RecordDetails))
+        # Range fixup
+        # TODO: can I automate these ranges from the $ref?
+        self.g.add((BODS.annotation, RDFS.range, BODS.Annotation))
+        self.g.add((BODS.publisher, RDFS.range, BODS.Agent))
+        self.g.add((BODS.source, RDFS.range, BODS.Source))
+        self.g.add((BODS.recordDetails, RDFS.range, BODS.RecordDetails))
 
     def map_declaration(self):
         # Set label and description as these aren't in the JSON
