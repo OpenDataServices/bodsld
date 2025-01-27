@@ -134,7 +134,8 @@ class BODSVocab:
         # self.map_name()
         # self.map_pepstatus()
         # self.map_politicalexposure()
-        self.map_source()
+        self.map_securitieslisting()
+        # self.map_source()
 
     def map_statement(self):
         path = "/$defs/Statement"
@@ -409,10 +410,16 @@ class BODSVocab:
 
 
     def map_securitieslisting(self):
-        pass
+        path = "/$defs/SecuritiesListing"
+        self.map_class(BODS.SecuritiesListing, path)
+        self.map_properties(BODS.SecuritiesListing, path)
+        self.g.add((BODS.securityId, RDFS.range, BODS.SecuritiesIdentifier))
 
-    def map_securitiesidentifier(self):
-        pass
+        sec_path = "/$defs/SecuritiesListing/properties/security"
+        self.map_class(BODS.SecuritiesIdentifier, sec_path)
+        self.g.add((BODS.SecuritiesIdentifier, RDFS.subClassOf, BODS.Identifier))
+        self.map_properties(BODS.SecuritiesIdentifier, sec_path)
+        # HERENOW this doesn't make sense
 
     def map_source(self):
         path = "/$defs/Source"
@@ -510,7 +517,8 @@ if __name__ == "__main__":
         "exclusiveMinimum": "shareExclusiveMinimum",
         "exclusiveMaximum": "shareExclusiveMaximum",
         "address": "streetAddress",
-        "id": "idString"
+        "id": "idString",
+        "security": "securityId"
     }
     vocab.rename_properties(["annotations", "alternateNames",
       "identifiers", "names", "securitiesListings", "companyFilingsURLs", "interests"] + list(rename_map.keys()), rename_map)
