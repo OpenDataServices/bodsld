@@ -118,7 +118,7 @@ class BODSVocab:
 
 
     def make_graph(self):
-        self.map_statement()
+        # self.map_statement()
         # self.map_declaration()
         # self.map_record()
         # self.map_person()
@@ -128,7 +128,8 @@ class BODSVocab:
         # self.map_interest()
         # self.map_address()
         # self.map_agent()
-        # self.map_annotation()
+        self.map_annotation()
+        self.map_jurisdiction()
 
     def map_statement(self):
         path = "/$defs/Statement"
@@ -356,11 +357,17 @@ class BODSVocab:
         # Range fixup
         self.g.add((BODS.motivation, RDFS.range, BODS.AnnotationMotivation))
         self.g.remove((BODS.motivation, RDFS.range, RDFS.Literal))
+        self.g.add((BODS.createdBy, RDFS.range, BODS.Agent))
 
         # TODO duplicate property description
 
     def map_jurisdiction(self):
-        pass
+        path = "/$defs/Jurisdiction"
+        self.map_class(BODS.Jurisdiction, path)
+
+        # Jurisdiction properties
+        self.map_properties(BODS.Jurisdiction, path)
+        # TODO: name needs converting to jurisdictionName
 
     def map_identifier(self):
         pass
