@@ -101,7 +101,8 @@ class BODSVocab:
         # self.map_unspecified()
         # self.map_interest()
         # self.map_interest_types()
-        self.map_address()
+        # self.map_address()
+        self.map_agent()
 
     def map_statement(self):
         self.g.add((BODS.Statement, RDF.type, OWL.Class))
@@ -489,7 +490,22 @@ class BODSVocab:
         self.g.add((BODS.country, RDFS.range, BODS.Jurisdiction))
 
     def map_agent(self):
-        pass
+        """
+        Agent is a new class for the RDF vocab, not present in the JSON schema.
+        """
+        self.g.add((BODS.Agent, RDF.type, OWL.Class))
+        self.g.add((BODS.agentName, RDF.type, RDF.Property))
+        self.g.add((BODS.agentName, RDFS.domain, BODS.Agent))
+        self.g.add((BODS.agentName, RDFS.range, RDFS.Literal))
+        self.g.add((BODS.agentName, RDFS.label, Literal("Agent name")))
+        self.g.add((BODS.agentName, RDFS.comment,
+          Literal("The name of the agent responsible for this action")))
+        self.g.add((BODS.agentUri, RDF.type, RDF.Property))
+        self.g.add((BODS.agentUri, RDFS.domain, BODS.Agent))
+        self.g.add((BODS.agentUri, RDFS.range, RDFS.Resource))
+        self.g.add((BODS.agentUri, RDFS.label, Literal("Agent URI")))
+        self.g.add((BODS.agentUri, RDFS.comment,
+          Literal("A globally unique identifier or URL for this agent")))
 
     def map_annotation(self):
         pass
