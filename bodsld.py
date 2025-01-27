@@ -62,6 +62,7 @@ class BODSVocab:
         # self.map_relationship()
         # self.map_unspecified()
         self.map_interest()
+        self.map_interest_types()
 
     def map_statement(self):
         self.g.add((BODS.Statement, RDF.type, OWL.Class))
@@ -380,7 +381,54 @@ class BODSVocab:
 
 
     def map_interest(self):
-        pass
+        interest_path = "/$defs/Interest"
+        self.g.add((BODS.Interest, RDF.type, OWL.Class))
+        self.g.add((BODS.Interest, RDFS.label,
+          Literal(self.get_title(interest_path))))
+        self.g.add((BODS.Interest, RDFS.comment,
+          Literal(self.get_description(interest_path))))
+
+        # Interest properties
+        interest_properties = get_properties(self.registry, interest_path)
+        props = {}
+        for ip in interest_properties:
+            if ip not in self.exclude:
+                props[ip] = f"{interest_path}/properties/{ip}"
+
+        for prop, path in props.items():
+            prop_range = self.get_property_range(path, prop)
+            prop = self.rename_property(prop)
+
+            title = self.get_title(path) or prop
+            description = self.get_description(path) or prop
+            self.g.add((BODS[prop], RDF.type, RDF.Property))
+            self.g.add((BODS[prop], RDFS.domain, BODS.Interest))
+            self.g.add((BODS[prop], RDFS.label, Literal(title)))
+            self.g.add((BODS[prop], RDFS.comment, Literal(description)))
+
+            if prop_range:
+                self.g.add((BODS[prop], RDFS.range, prop_range))
+
+        # Ranges
+        self.g.add((BODS.beneficialOwnershipOrControl, RDFS.range, XSD.Boolean))
+
+        # Flatten share - HERENOW
+        share_path = f"{interest_path}/properties/share"
+        share_properties = get_properties(self.registry, share_path)
+
+    def map_interest_types(self):
+
+        self.g.add((BODS.InterestType, RDF.type, OWL.Class))
+        interest_types = get_codes_and_info(self.codelists, "interestType.csv")
+        
+        for code in interest_types:
+            it = cap_first(code)
+            self.g.add((BODS[it], RDF.type, OWL.Class))
+            self.g.add((BODS[it], RDFS.subClassOf, BODS.Interest))
+            self.g.add((BODS[it], RDFS.label,
+              Literal(interest_types.get(code)[0])))
+            self.g.add((BODS[it], RDFS.comment,
+              Literal(interest_types.get(code)[1])))
 
     def map_address(self):
         pass
@@ -459,6 +507,10 @@ class BODSVocab:
     def ttl(self):
         return self.g.serialize(format="turtle", auto_compact=True)
 
+    def write_ttl(self):
+        with open("bods-vocabulary-0.4.0.ttl", "w") as f:
+            f.write(self.ttl())
+
     def write_docs(self, filename="bodsvocab.html"):
         od = OntPub(ontology=self.ttl())
         html = od.make_html(destination=filename)
@@ -466,11 +518,9 @@ class BODSVocab:
 
 if __name__ == "__main__":
 
-    schema_files = get_remote_schemas()
-    codelists = get_remote_codelists()
-    # TODO: make a cache for these
+    schemas, codelists = get_schemas_and_codelists()
 
-    vocab = BODSVocab(schema_files, codelists)
+    vocab = BODSVocab(schemas, codelists)
     vocab.metadata("https://standard.openownership.org/terms",
       "Beneficial Ownership Data Standard v0.4",
       "The RDF vocabulary for the Beneficial Ownership Data Standard v0.4")
@@ -499,13 +549,14 @@ if __name__ == "__main__":
     vocab.property_ranges(
       date_props=["statementDate", "publicationDate",
       "dissolutionDate", "formedByStatuteDate", "foundingDate", "birthDate",
-      "deathDate"],
+      "deathDate", "startDate", "endDate"],
       uri_props=["uri", "companyFilingsURL"],
       name_props=["name", "alternateName"]
     )
     
     vocab.make_graph()
     print(vocab.ttl())
+    vocab.write_ttl()
     vocab.write_docs()
 
 
