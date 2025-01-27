@@ -51,6 +51,27 @@ class BODSVocab:
         self.g.add((ont_uri, RDFS.label, Literal(label)))
         self.g.add((ont_uri, RDFS.comment, Literal(comment)))
 
+    def map_properties(self, path, domain):
+        properties = get_properties(self.registry, path)
+        props = {}
+        for p in properties:
+            if p not in self.exclude:
+                props[p] = f"{path}/properties/{p}"
+
+        for prop, path in props.items():
+            prop_range = self.get_property_range(path, prop)
+            prop = self.rename_property(prop)
+
+            title = self.get_title(path) or prop
+            description = self.get_description(path) or prop
+            self.g.add((BODS[prop], RDF.type, RDF.Property))
+            self.g.add((BODS[prop], RDFS.domain, domain))
+            self.g.add((BODS[prop], RDFS.label, Literal(title)))
+            self.g.add((BODS[prop], RDFS.comment, Literal(description)))
+
+            if prop_range:
+                self.g.add((BODS[prop], RDFS.range, prop_range))
+
     def make_graph(self):
         # self.map_statement()
         # self.map_declaration()
@@ -461,26 +482,7 @@ class BODSVocab:
               Literal(address_types.get(code)[1])))
 
         # Address properties
-        properties = get_properties(self.registry, path)
-        props = {}
-        for p in properties:
-            if p not in self.exclude:
-                props[p] = f"{path}/properties/{p}"
-
-        for prop, path in props.items():
-            prop_range = self.get_property_range(path, prop)
-            prop = self.rename_property(prop)
-
-            title = self.get_title(path) or prop
-            description = self.get_description(path) or prop
-            self.g.add((BODS[prop], RDF.type, RDF.Property))
-            self.g.add((BODS[prop], RDFS.domain, BODS.Address))
-            self.g.add((BODS[prop], RDFS.label, Literal(title)))
-            self.g.add((BODS[prop], RDFS.comment, Literal(description)))
-
-            if prop_range:
-                self.g.add((BODS[prop], RDFS.range, prop_range))
-
+        self.map_properties(path, BODS.Address)
         self.g.add((BODS.country, RDFS.range, BODS.Jurisdiction))
 
     def map_agent(self):
