@@ -110,11 +110,10 @@ class BODSVocab:
         # self.map_entity_types()
         # self.map_relationship()
         # self.map_unspecified()
-        # self.map_interest()
-        # self.map_interest_types()
+        self.map_interest()
         # self.map_address()
         # self.map_agent()
-        self.map_annotation()
+        # self.map_annotation()
 
     def map_statement(self):
         self.g.add((BODS.Statement, RDF.type, OWL.Class))
@@ -433,41 +432,18 @@ class BODSVocab:
 
 
     def map_interest(self):
-        interest_path = "/$defs/Interest"
-        self.g.add((BODS.Interest, RDF.type, OWL.Class))
-        self.g.add((BODS.Interest, RDFS.label,
-          Literal(self.get_title(interest_path))))
-        self.g.add((BODS.Interest, RDFS.comment,
-          Literal(self.get_description(interest_path))))
+        path = "/$defs/Interest"
+        self.map_class(BODS.Interest, path)
+
+        # Interest types
+        self.map_types(BODS.Interest, BODS.InterestType, "interestType.csv")
 
         # Interest properties
-        interest_properties = get_properties(self.registry, interest_path)
-        props = {}
-        for ip in interest_properties:
-            if ip not in self.exclude:
-                props[ip] = f"{interest_path}/properties/{ip}"
-
-        # Flatten share
-        share_path = f"{interest_path}/properties/share"
-        share_properties = get_properties(self.registry, share_path)
-        for sp in share_properties:
-            if sp not in self.exclude:
-                props[sp] = f"{share_path}/properties/{sp}"
-
-        for prop, path in props.items():
-            prop_range = self.get_property_range(path, prop)
-            prop = self.rename_property(prop)
-
-            title = self.get_title(path) or prop
-            description = self.get_description(path) or prop
-            self.g.add((BODS[prop], RDF.type, RDF.Property))
-            self.g.add((BODS[prop], RDFS.domain, BODS.Interest))
-            self.g.add((BODS[prop], RDFS.label, Literal(title)))
-            self.g.add((BODS[prop], RDFS.comment, Literal(description)))
-
-            if prop_range:
-                self.g.add((BODS[prop], RDFS.range, prop_range))
-
+        self.map_properties(BODS.Interest, path)
+        ## flatten share
+        share_path = f"{path}/properties/share"
+        self.map_properties(BODS.Interest, share_path)
+        
         # Ranges
         self.g.add((BODS.beneficialOwnershipOrControl, RDFS.range, XSD.boolean))
         self.g.add((BODS.shareMaximum, RDFS.range, XSD.float))
@@ -476,19 +452,6 @@ class BODSVocab:
         self.g.add((BODS.shareExclusiveMaximum, RDFS.range, XSD.float))
         self.g.add((BODS.shareExclusiveMinimum, RDFS.range, XSD.float))
 
-    def map_interest_types(self):
-
-        self.g.add((BODS.InterestType, RDF.type, OWL.Class))
-        interest_types = get_codes_and_info(self.codelists, "interestType.csv")
-        
-        for code in interest_types:
-            it = cap_first(code)
-            self.g.add((BODS[it], RDF.type, OWL.Class))
-            self.g.add((BODS[it], RDFS.subClassOf, BODS.Interest))
-            self.g.add((BODS[it], RDFS.label,
-              Literal(interest_types.get(code)[0])))
-            self.g.add((BODS[it], RDFS.comment,
-              Literal(interest_types.get(code)[1])))
 
     def map_address(self):
         path = "/$defs/Address"
