@@ -121,7 +121,7 @@ class BODSVocab:
         # self.map_statement()
         # self.map_declaration()
         # self.map_record()
-        self.map_person()
+        # self.map_person()
         # self.map_entity()
         # self.map_relationship()
         # self.map_unspecified()
@@ -132,8 +132,9 @@ class BODSVocab:
         # self.map_jurisdiction()
         # self.map_identifier()
         # self.map_name()
-        self.map_pepstatus()
-        self.map_politicalexposure()
+        # self.map_pepstatus()
+        # self.map_politicalexposure()
+        self.map_source()
 
     def map_statement(self):
         path = "/$defs/Statement"
@@ -414,7 +415,18 @@ class BODSVocab:
         pass
 
     def map_source(self):
-        pass
+        path = "/$defs/Source"
+        self.map_class(BODS.Source, path)
+
+        # Source types
+        self.map_types(BODS.Source, BODS.SourceType, "sourceType.csv")
+
+        # Source properties
+        self.map_properties(BODS.Source, path)
+
+        self.g.add((BODS.assertedBy, RDFS.range, BODS.Agent))
+
+        # TODO: description is a duplicate..
 
 
     def get_title(self, pointer):
@@ -507,8 +519,8 @@ if __name__ == "__main__":
     vocab.property_ranges(
       date_props=["statementDate", "publicationDate",
       "dissolutionDate", "formedByStatuteDate", "foundingDate", "birthDate",
-      "deathDate", "startDate", "endDate"],
-      uri_props=["uri", "companyFilingsURL"],
+      "deathDate", "startDate", "endDate", "retrievedAt"],
+      uri_props=["uri", "companyFilingsURL", "url"],
       name_props=["name", "alternateName"]
     )
     
