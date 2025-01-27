@@ -121,7 +121,7 @@ class BODSVocab:
         # self.map_statement()
         # self.map_declaration()
         # self.map_record()
-        # self.map_person()
+        self.map_person()
         # self.map_entity()
         # self.map_relationship()
         # self.map_unspecified()
@@ -133,6 +133,7 @@ class BODSVocab:
         # self.map_identifier()
         # self.map_name()
         self.map_pepstatus()
+        self.map_politicalexposure()
 
     def map_statement(self):
         path = "/$defs/Statement"
@@ -255,7 +256,6 @@ class BODSVocab:
         self.g.remove((BODS.personType, RDFS.range, RDFS.Literal))
 
         # Flatten politicalExposure/status -> PEPStatus
-        # TODO: PEPStatus class missing
         pepstatus_path = "/properties/politicalExposure/properties/status"
         self.g.add((BODS.pepStatus, RDF.type, RDF.Property))
         self.g.add((BODS.pepStatus, RDFS.domain, BODS.Person))
@@ -389,11 +389,23 @@ class BODSVocab:
         self.map_properties(BODS.Name, path)
 
     def map_pepstatus(self):
-        path = "/$defs/PepStatusDetails"
+        path = "/properties/politicalExposure/properties/status"
         self.map_class(BODS.PEPStatus, path)
 
+        self.g.add((BODS.NotPEP, RDF.type, BODS.PEPStatus))
+        self.g.add((BODS.PEP, RDF.type, BODS.PEPStatus))
+        self.g.add((BODS.PEPMissing, RDF.type, BODS.PEPStatus))
+
     def map_politicalexposure(self):
-        pass
+        path = "/$defs/PepStatusDetails"
+        self.map_class(BODS.PoliticalExposure, path)
+        self.map_properties(BODS.PoliticalExposure, path)
+
+        self.g.add((BODS.source, RDFS.range, BODS.Source))
+        self.g.add((BODS.jurisdiction, RDFS.range, BODS.Jurisdiction))
+
+        # TODO reason and jurisdiction are duplicate properties
+
 
     def map_securitieslisting(self):
         pass
