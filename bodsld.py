@@ -121,14 +121,13 @@ class BODSVocab:
         # self.map_statement()
         # self.map_declaration()
         # self.map_record()
-        # self.map_person()
-        # self.map_person_types()
+        self.map_person()
         # self.map_entity()
         # self.map_entity_types()
         # self.map_relationship()
         # self.map_unspecified()
-        self.map_interest()
-        self.map_address()
+        # self.map_interest()
+        # self.map_address()
         # self.map_agent()
         # self.map_annotation()
 
@@ -310,33 +309,12 @@ class BODSVocab:
           self.g.add((BODS[est], RDFS.comment, Literal(entity_subtypes.get(code)[1])))
 
     def map_person(self):
-        self.g.add((BODS.Person, RDF.type, OWL.Class))
+        path = "urn:person"
+        self.map_class(BODS.Person, path)
         self.g.add((BODS.Person, RDFS.subClassOf, BODS.RecordDetails))
-        self.g.add((BODS.Person, RDFS.label,
-          Literal(self.record_types.get('person')[0])))
-        self.g.add((BODS.Person, RDFS.comment,
-          Literal(self.record_types.get('person')[1])))
 
         # Person properties
-        person_properties = get_properties(self.registry, "urn:person")
-        props = {}
-        for pp in person_properties:
-            if pp not in self.exclude:
-                props[pp] = f"/properties/{pp}"
-
-        for prop, path in props.items():
-            prop_range = self.get_property_range(path, prop)
-            prop = self.rename_property(prop)
-
-            title = self.get_title(path) or prop
-            description = self.get_description(path) or prop
-            self.g.add((BODS[prop], RDF.type, RDF.Property))
-            self.g.add((BODS[prop], RDFS.domain, BODS.Person))
-            self.g.add((BODS[prop], RDFS.label, Literal(title)))
-            self.g.add((BODS[prop], RDFS.comment, Literal(description)))
-
-            if prop_range and prop != "personType":
-                self.g.add((BODS[prop], RDFS.range, prop_range))
+        self.map_properties(BODS.Person, path)
 
         # Property ranges that aren't automatically filled
         self.g.add((BODS.personType, RDFS.range, BODS.PersonType))
@@ -347,8 +325,10 @@ class BODSVocab:
         self.g.add((BODS.address, RDFS.range, BODS.Address))
         self.g.add((BODS.taxResidency, RDFS.range, BODS.Jurisdiction))
         self.g.add((BODS.politicalExposure, RDFS.range, BODS.PoliticalExposure))
+        self.g.remove((BODS.personType, RDFS.range, RDFS.Literal))
 
         # Flatten politicalExposure/status -> PEPStatus
+        # TODO: PEPStatus class missing
         pepstatus_path = "/properties/politicalExposure/properties/status"
         self.g.add((BODS.pepStatus, RDF.type, RDF.Property))
         self.g.add((BODS.pepStatus, RDFS.domain, BODS.Person))
@@ -358,26 +338,12 @@ class BODSVocab:
           Literal(self.get_description(pepstatus_path))))
         self.g.add((BODS.pepStatus, RDFS.range, BODS.PEPStatus))
 
-    def map_person_types(self):
-
-        self.g.add((BODS.PersonType, RDF.type, OWL.Class))
-        person_types = get_codes_and_info(self.codelists, "personType.csv")
-        
-        for code in person_types:
-            pt = cap_first(code)
-            self.g.add((BODS[pt], RDF.type, BODS.PersonType))
-            self.g.add((BODS[pt], RDFS.label,
-              Literal(person_types.get(code)[0])))
-            self.g.add((BODS[pt], RDFS.comment,
-              Literal(person_types.get(code)[1])))
+        # Person types
+        self.map_instances(BODS.PersonType, "personType.csv")
 
     def map_relationship(self):
         path = "urn:relationship"
         self.map_class(BODS.Relationship, path)
-        self.g.add((BODS.Relationship, RDFS.label,
-          Literal(self.record_types.get('relationship')[0])))
-        self.g.add((BODS.Relationship, RDFS.comment,
-          Literal(self.record_types.get('relationship')[1])))
         self.g.add((BODS.Relationship, RDFS.subClassOf, BODS.RecordDetails))
 
         # Relationship properties
