@@ -72,6 +72,17 @@ class BODSVocab:
             if prop_range:
                 self.g.add((BODS[prop], RDFS.range, prop_range))
 
+    def map_types(self, subclassof, bodstype, codelist):
+        self.g.add((bodstype, RDF.type, OWL.Class))
+        types = get_codes_and_info(self.codelists, codelist)
+        
+        for code in types:
+            t = cap_first(code)
+            self.g.add((BODS[t], RDF.type, OWL.Class))
+            self.g.add((BODS[t], RDFS.subClassOf, subclassof))
+            self.g.add((BODS[t], RDFS.label, Literal(types.get(code)[0])))
+            self.g.add((BODS[t], RDFS.comment, Literal(types.get(code)[1])))
+
     def make_graph(self):
         # self.map_statement()
         # self.map_declaration()
@@ -469,17 +480,7 @@ class BODSVocab:
           Literal(self.get_description(path))))
 
         # Address types
-        self.g.add((BODS.AddressType, RDF.type, OWL.Class))
-        address_types = get_codes_and_info(self.codelists, "addressType.csv")
-        
-        for code in address_types:
-            t = cap_first(code)
-            self.g.add((BODS[t], RDF.type, OWL.Class))
-            self.g.add((BODS[t], RDFS.subClassOf, BODS.Address))
-            self.g.add((BODS[t], RDFS.label,
-              Literal(address_types.get(code)[0])))
-            self.g.add((BODS[t], RDFS.comment,
-              Literal(address_types.get(code)[1])))
+        self.map_types(BODS.Address, BODS.AddressType, "addressType.csv")
 
         # Address properties
         self.map_properties(path, BODS.Address)
