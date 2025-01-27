@@ -61,8 +61,9 @@ class BODSVocab:
         # self.map_entity_types()
         # self.map_relationship()
         # self.map_unspecified()
-        self.map_interest()
+        # self.map_interest()
         # self.map_interest_types()
+        self.map_address()
 
     def map_statement(self):
         self.g.add((BODS.Statement, RDF.type, OWL.Class))
@@ -439,7 +440,48 @@ class BODSVocab:
               Literal(interest_types.get(code)[1])))
 
     def map_address(self):
-        pass
+        path = "/$defs/Address"
+        self.g.add((BODS.Address, RDF.type, OWL.Class))
+        self.g.add((BODS.Address, RDFS.label,
+          Literal(self.get_title(path))))
+        self.g.add((BODS.Address, RDFS.comment,
+          Literal(self.get_description(path))))
+
+        # Address types
+        self.g.add((BODS.AddressType, RDF.type, OWL.Class))
+        address_types = get_codes_and_info(self.codelists, "addressType.csv")
+        
+        for code in address_types:
+            t = cap_first(code)
+            self.g.add((BODS[t], RDF.type, OWL.Class))
+            self.g.add((BODS[t], RDFS.subClassOf, BODS.Address))
+            self.g.add((BODS[t], RDFS.label,
+              Literal(address_types.get(code)[0])))
+            self.g.add((BODS[t], RDFS.comment,
+              Literal(address_types.get(code)[1])))
+
+        # Address properties
+        properties = get_properties(self.registry, path)
+        props = {}
+        for p in properties:
+            if p not in self.exclude:
+                props[p] = f"{path}/properties/{p}"
+
+        for prop, path in props.items():
+            prop_range = self.get_property_range(path, prop)
+            prop = self.rename_property(prop)
+
+            title = self.get_title(path) or prop
+            description = self.get_description(path) or prop
+            self.g.add((BODS[prop], RDF.type, RDF.Property))
+            self.g.add((BODS[prop], RDFS.domain, BODS.Address))
+            self.g.add((BODS[prop], RDFS.label, Literal(title)))
+            self.g.add((BODS[prop], RDFS.comment, Literal(description)))
+
+            if prop_range:
+                self.g.add((BODS[prop], RDFS.range, prop_range))
+
+        self.g.add((BODS.country, RDFS.range, BODS.Jurisdiction))
 
     def map_agent(self):
         pass
@@ -551,7 +593,8 @@ if __name__ == "__main__":
         "maximum": "shareMaximum",
         "exact": "shareExact",
         "exclusiveMinimum": "shareExclusiveMinimum",
-        "exclusiveMaximum": "shareExclusiveMaximum"
+        "exclusiveMaximum": "shareExclusiveMaximum",
+        "address": "streetAddress"
     }
     vocab.rename_properties(["annotations", "alternateNames",
       "identifiers", "names", "securitiesListings", "companyFilingsURLs", "interests"] + list(rename_map.keys()), rename_map)
