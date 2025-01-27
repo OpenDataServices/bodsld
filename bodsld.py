@@ -128,8 +128,9 @@ class BODSVocab:
         # self.map_interest()
         # self.map_address()
         # self.map_agent()
-        self.map_annotation()
-        self.map_jurisdiction()
+        # self.map_annotation()
+        # self.map_jurisdiction()
+        self.map_identifier()
 
     def map_statement(self):
         path = "/$defs/Statement"
@@ -315,7 +316,6 @@ class BODSVocab:
         self.g.add((BODS.shareExclusiveMaximum, RDFS.range, XSD.float))
         self.g.add((BODS.shareExclusiveMinimum, RDFS.range, XSD.float))
 
-
     def map_address(self):
         path = "/$defs/Address"
         self.map_class(BODS.Address, path)
@@ -370,7 +370,11 @@ class BODSVocab:
         # TODO: name needs converting to jurisdictionName
 
     def map_identifier(self):
-        pass
+        path = "/$defs/Identifier"
+        self.map_class(BODS.Identifier, path)
+
+        # Identifier properties
+        self.map_properties(BODS.Identifier, path)
 
     def map_name(self):
         pass
@@ -471,7 +475,8 @@ if __name__ == "__main__":
         "exact": "shareExact",
         "exclusiveMinimum": "shareExclusiveMinimum",
         "exclusiveMaximum": "shareExclusiveMaximum",
-        "address": "streetAddress"
+        "address": "streetAddress",
+        "id": "idString"
     }
     vocab.rename_properties(["annotations", "alternateNames",
       "identifiers", "names", "securitiesListings", "companyFilingsURLs", "interests"] + list(rename_map.keys()), rename_map)
