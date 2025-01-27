@@ -53,16 +53,33 @@ class BODSVocab:
 
     def map_class(self, classname, path):
         self.g.add((classname, RDF.type, OWL.Class))
-        self.g.add((classname, RDFS.label, Literal(self.get_title(path))))
-        self.g.add((classname, RDFS.comment,
-          Literal(self.get_description(path))))
+
+        title = self.get_title(path)
+        descr = self.get_description(path)
+        # Special case for person/entity/relationship
+        if title == None:
+            if "relationship" in path:
+                title = self.record_types.get("relationship")[0]
+                descr = self.record_types.get("relationship")[1]
+            if "person" in path:
+                title = self.record_types.get("person")[0]
+                descr = self.record_types.get("person")[1]
+            if "entity" in path:
+                title = self.record_types.get("entity")[0]
+                descr = self.record_types.get("entity")[1]
+
+        self.g.add((classname, RDFS.label, Literal(title)))
+        self.g.add((classname, RDFS.comment, Literal(descr)))
 
     def map_properties(self, domain, path):
         properties = get_properties(self.registry, path)
         props = {}
         for p in properties:
             if p not in self.exclude:
-                props[p] = f"{path}/properties/{p}"
+                if "urn:" in path:
+                    props[p] = f"/properties/{p}"
+                else:
+                    props[p] = f"{path}/properties/{p}"
 
         for prop, path in props.items():
             prop_range = self.get_property_range(path, prop)
@@ -109,9 +126,9 @@ class BODSVocab:
         # self.map_entity()
         # self.map_entity_types()
         # self.map_relationship()
-        self.map_unspecified()
-        # self.map_interest()
-        # self.map_address()
+        # self.map_unspecified()
+        self.map_interest()
+        self.map_address()
         # self.map_agent()
         # self.map_annotation()
 
@@ -355,33 +372,16 @@ class BODSVocab:
               Literal(person_types.get(code)[1])))
 
     def map_relationship(self):
-        self.g.add((BODS.Relationship, RDF.type, OWL.Class))
-        self.g.add((BODS.Relationship, RDFS.subClassOf, BODS.RecordDetails))
+        path = "urn:relationship"
+        self.map_class(BODS.Relationship, path)
         self.g.add((BODS.Relationship, RDFS.label,
           Literal(self.record_types.get('relationship')[0])))
         self.g.add((BODS.Relationship, RDFS.comment,
           Literal(self.record_types.get('relationship')[1])))
+        self.g.add((BODS.Relationship, RDFS.subClassOf, BODS.RecordDetails))
 
         # Relationship properties
-        relationship_properties = get_properties(self.registry, "urn:relationship")
-        props = {}
-        for rp in relationship_properties:
-            if rp not in self.exclude:
-                props[rp] = f"/properties/{rp}"
-
-        for prop, path in props.items():
-            prop_range = self.get_property_range(path, prop)
-            prop = self.rename_property(prop)
-
-            title = self.get_title(path) or prop
-            description = self.get_description(path) or prop
-            self.g.add((BODS[prop], RDF.type, RDF.Property))
-            self.g.add((BODS[prop], RDFS.domain, BODS.Relationship))
-            self.g.add((BODS[prop], RDFS.label, Literal(title)))
-            self.g.add((BODS[prop], RDFS.comment, Literal(description)))
-
-            if prop_range:
-                self.g.add((BODS[prop], RDFS.range, prop_range))
+        self.map_properties(BODS.Relationship, path)
 
         # Property ranges not autofilled (all of them in this case)
         self.g.add((BODS.subject, RDFS.range, BODS.Entity))
