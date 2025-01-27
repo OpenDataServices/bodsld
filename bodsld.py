@@ -131,7 +131,8 @@ class BODSVocab:
         # self.map_annotation()
         # self.map_jurisdiction()
         # self.map_identifier()
-        self.map_name()
+        # self.map_name()
+        self.map_pepstatus()
 
     def map_statement(self):
         path = "/$defs/Statement"
@@ -388,7 +389,8 @@ class BODSVocab:
         self.map_properties(BODS.Name, path)
 
     def map_pepstatus(self):
-        pass
+        path = "/$defs/PepStatusDetails"
+        self.map_class(BODS.PEPStatus, path)
 
     def map_politicalexposure(self):
         pass
