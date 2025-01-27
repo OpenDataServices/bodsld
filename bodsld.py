@@ -130,7 +130,8 @@ class BODSVocab:
         # self.map_agent()
         # self.map_annotation()
         # self.map_jurisdiction()
-        self.map_identifier()
+        # self.map_identifier()
+        self.map_name()
 
     def map_statement(self):
         path = "/$defs/Statement"
@@ -377,7 +378,14 @@ class BODSVocab:
         self.map_properties(BODS.Identifier, path)
 
     def map_name(self):
-        pass
+        path = "/$defs/Name"
+        self.map_class(BODS.Name, path)
+
+        # Name types
+        self.map_types(BODS.Name, BODS.NameType, "nameType.csv")
+
+        # Name properties
+        self.map_properties(BODS.Name, path)
 
     def map_pepstatus(self):
         pass
