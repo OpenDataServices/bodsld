@@ -51,6 +51,12 @@ class BODSVocab:
         self.g.add((ont_uri, RDFS.label, Literal(label)))
         self.g.add((ont_uri, RDFS.comment, Literal(comment)))
 
+    def map_class(self, classname, path):
+        self.g.add((classname, RDF.type, OWL.Class))
+        self.g.add((classname, RDFS.label, Literal(self.get_title(path))))
+        self.g.add((classname, RDFS.comment,
+          Literal(self.get_description(path))))
+
     def map_properties(self, path, domain):
         properties = get_properties(self.registry, path)
         props = {}
@@ -473,11 +479,7 @@ class BODSVocab:
 
     def map_address(self):
         path = "/$defs/Address"
-        self.g.add((BODS.Address, RDF.type, OWL.Class))
-        self.g.add((BODS.Address, RDFS.label,
-          Literal(self.get_title(path))))
-        self.g.add((BODS.Address, RDFS.comment,
-          Literal(self.get_description(path))))
+        self.map_class(BODS.Address, path)
 
         # Address types
         self.map_types(BODS.Address, BODS.AddressType, "addressType.csv")
