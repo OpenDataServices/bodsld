@@ -1,0 +1,356 @@
+{
+  "$id": "urn:entity",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "0.4",
+  "title": "Entity Record Details",
+  "description": "Information about an entity.",
+  "type": "object",
+  "properties": {
+    "isComponent": {
+      "title": "Is component",
+      "description": "Whether this entity is a component in an indirect relationship. Where `isComponent` is 'true': (1) the `recordId` of this entity MUST be an element in the `componentRecords` array of that primary Relationship Statement, (2) this Entity Statement MUST come before that primary Relationship Statement in a BODS package or stream, (3) the replacement of this Entity Statement SHOULD be considered when replacing the primary Relationship Statement. The primary Relationship statement MUST have a `isComponent` value of 'false'.",
+      "type": "boolean"
+    },
+    "entityType": {
+      "type": "object",
+      "title": "Entity Type",
+      "description": "The form of the entity described in the Statement.",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "title": "Type",
+          "description": "The general form of the entity, using the entityType codelist.",
+          "codelist": "entityType.csv",
+          "enum": [
+            "registeredEntity",
+            "legalEntity",
+            "arrangement",
+            "anonymousEntity",
+            "unknownEntity",
+            "state",
+            "stateBody"
+          ]
+        },
+        "subtype": {
+          "type": "string",
+          "title": "Subtype",
+          "description": "The particular form of the entity, where relevant, using the entitySubtype codelist. The value MUST align with the `entityType` value.",
+          "codelist": "entitySubtype.csv",
+          "enum": [
+            "governmentDepartment",
+            "stateAgency",
+            "other",
+            "trust",
+            "nomination"
+          ],
+          "openCodelist": false
+        },
+        "details": {
+          "type": "string",
+          "title": "Details",
+          "description": "This may be used to provide a local name for this type of entity, or any further information to identify the type of entity. For example, in Finland 'ministeriö' for a government department."
+        }
+      },
+      "propertyOrder": 4,
+      "allOf":[
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                    "arrangement"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "subtype": {
+                "enum":[
+                  "trust",
+                  "nomination",
+                  "other"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                    "legalEntity"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "subtype": {
+                "enum": [
+                  "trust",
+                  "other"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                    "stateBody"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "subtype": {
+                "enum": [
+                  "governmentDepartment",
+                  "stateAgency",
+                  "other"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties":{
+              "type":{
+                "enum":[
+                  "registeredEntity",
+                  "state",
+                  "anonymousEntity",
+                  "unknownEntity"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "subtype":{
+                "enum": [
+                    "other"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "unspecifiedEntityDetails": {
+      "$ref": "urn:components#/$defs/UnspecifiedRecord",
+      "description": "An explanation of why an entity is anonymous or unknown." 
+    },
+    "name": {
+      "title": "Entity Name",
+      "description": "The declared name of this entity.",
+      "type": "string",
+      "propertyOrder": 10
+    },
+    "alternateNames": {
+      "title": "Alternative Names",
+      "description": "An array of other names this entity is known by.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "title": "Name",
+        "description": "A name this entity is known by."
+      },
+      "propertyOrder": 12
+    },
+    "jurisdiction": {
+      "title": "Jurisdiction",
+      "description": "The jurisdiction in which this entity was registered or created (for legal and registered entities, and arrangements). Or the state's jurisdiction (for states and state bodies).",
+      "propertyOrder": 15,
+      "$ref": "urn:components#/$defs/Jurisdiction"
+    },
+    "identifiers": {
+      "title": "Identifiers",
+      "description": "One or more official identifiers for this entity. Where available, official registration numbers should be provided.",
+      "type": "array",
+      "items": {
+        "$ref": "urn:components#/$defs/Identifier"
+      },
+      "propertyOrder": 20
+    },
+    "foundingDate": {
+      "title": "Founding Date",
+      "description": "The date on which this entity was founded, created or registered. The date MUST be given in YYYY-MM-DD format. Where a precise month or date are not available, the value may be rounded to the first day of the (first) month. This rounding SHOULD be noted in accompanying guidance (such as a publication policy or data use guide).",
+      "type": "string",
+      "format": "date",
+      "propertyOrder": 30
+    },
+    "dissolutionDate": {
+      "title": "Dissolution Date",
+      "description": "The date on which this entity was dissolved or ceased, if it is no longer active. The date MUST be given in YYYY-MM-DD format. Where a precise month or date are not available, the value may be rounded to the first day of the (first) month. This rounding SHOULD be noted in accompanying guidance (such as a publication policy or data use guide).",
+      "type": "string",
+      "format": "date",
+      "propertyOrder": 35
+    },
+    "addresses": {
+      "title": "Addresses",
+      "description": "One or more addresses for this entity.",
+      "type": "array",
+      "items": {
+        "$ref": "urn:components#/$defs/Address",
+        "properties":{
+          "type":{
+            "enum":[
+              "registered",
+              "business",
+              "alternative"
+            ]
+          }
+        }
+      },
+      "propertyOrder": 40
+    },
+    "uri": {
+      "title": "URI",
+      "description": "Where a persistent URI (https://en.wikipedia.org/wiki/Uniform_Resource_Identifier) is available for this entity this should be included.",
+      "type": "string",
+      "format": "uri",
+      "propertyOrder": 21
+    },
+    "publicListing": {
+      "title": "Public Listing",
+      "description": "Details of a publicly listed company, its securities (shares and other tradable financial instruments related to the entity), and related regulatory filings.",
+      "$ref": "#/$defs/PublicListing"
+    },
+    "formedByStatute": {
+      "type": "object",
+      "title": "Formed by Statute",
+      "description": "The law which mandated the formation of the entity described in the statement, where applicable. This information SHOULD be provided where a state has created an agency or other entity with specific legislation.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Statute Name",
+          "description": "The name of the law. "
+        },
+        "date": {
+          "type": "string",
+          "title": "Date",
+          "description": "The date on which the law came into force. The date MUST be given in YYYY-MM-DD format. Where a precise month or date are not available, the value may be rounded to the first day of the (first) month. This rounding SHOULD be noted in accompanying guidance (such as a publication policy or data use guide).",
+          "format": "date"
+        }
+      },
+      "propertyOrder": 18
+    }
+  },
+  "required": [
+    "isComponent",
+    "entityType"
+  ],
+  "$defs": {
+    "PublicListing": {
+      "type": "object",
+      "title": "Public Listing",
+      "description": "Details of a publicly listed company, its securities (shares and other tradable financial instruments related to the entity), and related regulatory filings.",
+      "required": [
+        "hasPublicListing"
+      ],
+      "minProperties": 1,
+      "properties": {
+        "hasPublicListing": {
+          "type": "boolean",
+          "title": "Has Public Listing",
+          "description": "Whether the entity is a publicly listed company."
+        },
+        "companyFilingsURLs": {
+          "type": "array",
+          "title": "Company Filings URLs",
+          "description": "URL or URLs where regulatory filings related to major holdings can be retrieved. URLs may point to pages maintained by regulatory bodies, stock exchanges or by the company itself.",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "securitiesListings": {
+          "type": "array",
+          "title": "Securities Listings",
+          "description": "Details of the entity's securities and the public exchanges and markets on which they are traded. All equity securities SHOULD be listed here, plus any other securities from which beneficial ownership might be derived. Where a security is traded on more than one market, there SHOULD be an entry for each market (or market segment).",
+          "items": {
+            "title": "Securities listing",
+            "description": "Details of a security and the market on which it is traded.",
+            "$ref": "#/$defs/SecuritiesListing"
+          }
+        }
+      }
+    },
+    "SecuritiesListing": {
+      "type": "object",
+      "title": "Securities Listing",
+      "description": "Details of a security and the market on which it is traded.",
+      "required": [
+        "stockExchangeJurisdiction",
+        "security",
+        "stockExchangeName"
+      ],
+      "properties": {
+        "marketIdentifierCode": {
+          "type": "string",
+          "title": "Market Identifier Code (MIC)",
+          "description": "The Market Identifier Code (MIC) of the market on which the security is traded. Where the security is traded on a segment of an exchange, this is the MIC of the segment. Where it is traded on the main exchange, this is the MIC of the main exchange and MUST match the `operatingMarketIdentifierCode`. MICs are allocated and managed under ISO standard 10383."
+        },
+        "operatingMarketIdentifierCode": {
+          "type": "string",
+          "title": "Operating Market Identifier Code (Operating MIC)",
+          "description": "The Market Identifier Code (MIC) of the main exchange or trading platform handling trades in this security. Where the security is traded on a segment of an exchange, this is the MIC of the parent exchange or trading platform. Where it is traded on the main exchange, this is the MIC of that main exchange and MUST match the `marketIdentifierCode`. MICs are allocated and managed under ISO standard 10383."
+        },
+        "stockExchangeJurisdiction": {
+          "type": "string",
+          "title": "Stock Exchange Jurisdiction",
+          "description": "The 2-letter country code (ISO 3166-1) or the subdivision code (ISO 3166-2) for the jurisdiction under which the exchange, market or trading platform is regulated.",
+          "maxLength": 6,
+          "minLength": 2
+        },
+        "stockExchangeName": {
+          "type": "string",
+          "title": "Stock Exchange Name",
+          "description": "The name of the exchange, market or trading platform on which the security is traded. If the security is traded on a segment of the exchange, then the name SHOULD include both elements. For example, 'London Stock Exchange - MTF'."
+        },
+        "security": {
+          "type": "object",
+          "title": "Security",
+          "description": "Identifying information of the stock or other security.",
+          "required": [
+            "ticker"
+          ],
+          "properties": {
+            "idScheme": {
+              "type": "string",
+              "title": "Identifier Scheme",
+              "description": "The scheme under which the security has been issued a unique, persistent identifier, using the securitiesIdentifierSchemes codelist.",
+              "enum": [
+                "isin",
+                "figi",
+                "cusip",
+                "cins"
+              ],
+              "codelist": "securitiesIdentifierSchemes.csv"
+            },
+            "id": {
+              "type": "string",
+              "title": "Identifier",
+              "description": "The unique identifier of the security as issued under the `idScheme`."
+            },
+            "ticker": {
+              "type": "string",
+              "title": "Stock Ticker",
+              "description": "The stock ticker identifying this security on the named stock exchange."
+            }
+          }
+        }
+      }
+    }
+  }
+}

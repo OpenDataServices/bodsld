@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:codelists",
+  "version": "0.4",
+  "title": "Codelist schema",
+  "description": "Schema for BODS codelist CSV files.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "code",
+      "title",
+      "description"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "code": {
+        "title": "code",
+        "description": "The value to use in BODS data. Codes should match the letter case of external codes (e.g. ISO 4217) and should be camel case, otherwise.",
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[^\\s].*[^\\s]$"
+      },
+      "title": {
+        "title": "title",
+        "description": "A short title for the code.",
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[^\\s].*[^\\s]$"
+      },
+      "description": {
+        "title": "description",
+        "description": "A longer-form description of the code.",
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[^\\s].*[^\\s]$"
+      },
+      "technical note": {
+        "title": "technical note",
+        "description": "Notes on the application of the code.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    }
+  },
+  "minItems": 1,
+  "uniqueItems": true
+}

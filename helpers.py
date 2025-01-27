@@ -1,5 +1,6 @@
 import os
 import csv
+import json
 import requests
 import logging
 
@@ -9,6 +10,7 @@ from rdflib.namespace import Namespace, RDF, RDFS, XSD, OWL, DCTERMS
 from pylode.profiles.ontpub import OntPub
 
 
+logger = logging.getLogger(__name__)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
@@ -31,7 +33,7 @@ CODELIST_FILES = [
   "personType.csv",
   "recordStatus.csv",
   "recordType.csv",
-  "securitiesIdentifierSchemas.csv",
+  "securitiesIdentifierSchemes.csv",
   "sourceType.csv",
   "unspecifiedReason.csv"
 ]
@@ -42,11 +44,11 @@ def cap_first(s):
 
 
 def get_remote_schemas():
-    schema_files = []
+    schema_files = {}
     for fn in SCHEMA_FILES:
         r = requests.get(os.path.join(REMOTE_SCHEMA_DIR, fn))
         j = r.json()
-        schema_files.append(j)
+        schema_files[fn] = j
     return schema_files
 
 
@@ -57,6 +59,39 @@ def get_remote_codelists():
         t = r.text
         codelist_files[fn] = t
     return codelist_files
+
+
+def get_schemas_and_codelists(schema_dir="schemas", overwrite=False):
+    """
+    Fetch schema and codelist files from disc.
+    If they're not there, fetch from github and store them.
+    If overwrite = True, re-fetch them from github.
+    """
+    schemas = {}
+    codelists = {}
+
+    for fn in SCHEMA_FILES:
+        if not os.path.isfile(os.path.join(schema_dir, fn)) or overwrite:
+            logger.info(f"Fetching {fn} from github")
+            r = requests.get(os.path.join(REMOTE_SCHEMA_DIR, fn))
+            schemas[fn] = r.json()
+        else:
+            logger.info(f"Using {fn} from cache")
+            with open(os.path.join(schema_dir, fn)) as f:
+                schemas[fn] = json.load(f)
+
+    for fn in CODELIST_FILES:
+        if not os.path.isfile(os.path.join(schema_dir, "codelists", fn)) or overwrite:
+            logger.info(f"Fetching {fn} from github")
+            r = requests.get(os.path.join(REMOTE_SCHEMA_DIR, "codelists", fn))
+            codelists[fn] = r.text
+        else:
+            logger.info(f"Using {fn} from cache")
+            with open(os.path.join(schema_dir, "codelists", fn)) as f:
+                codelists[fn] = f.read()
+    
+    return (schemas, codelists)
+
 
 
 def get_codes(codelist_files, filename):
@@ -103,21 +138,15 @@ def get_properties(registry, pointer):
         return
 
 
-
-
-
 def get_type(registry, pointer):
     path = f"{pointer}/type"
     bit = find_a_bit(registry, path)
     return bit.contents
 
 
-
-
-
 def schema_registry(schema_files):
     schemas = []
-    for schema in schema_files:
+    for schema in schema_files.values():
         schemas.append((schema.get("$id"),
             Resource(contents=schema, specification=DRAFT202012)))
 
