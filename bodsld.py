@@ -121,9 +121,8 @@ class BODSVocab:
         # self.map_statement()
         # self.map_declaration()
         # self.map_record()
-        self.map_person()
-        # self.map_entity()
-        # self.map_entity_types()
+        # self.map_person()
+        self.map_entity()
         # self.map_relationship()
         # self.map_unspecified()
         # self.map_interest()
@@ -216,39 +215,14 @@ class BODSVocab:
         self.g.add((BODS.RecordDetails, RDFS.comment, Literal(self.get_description("/$defs/Statement/properties/recordDetails"))))
 
     def map_entity(self):
-        self.g.add((BODS.Entity, RDF.type, OWL.Class))
+        path = "urn:entity"
+        self.map_class(BODS.Entity, path)
         self.g.add((BODS.Entity, RDFS.subClassOf, BODS.RecordDetails))
-        self.g.add((BODS.Entity, RDFS.label,
-          Literal(self.record_types.get('entity')[0])))
-        self.g.add((BODS.Entity, RDFS.comment,
-          Literal(self.record_types.get('entity')[1])))
-
 
         # Entity properties
-        entity_properties = get_properties(self.registry, "urn:entity")
-        pl_properties = get_properties(self.registry, "/$defs/PublicListing")
-        props = {}
-        for ep in entity_properties:
-          if ep not in self.exclude:
-            props[ep] = f"/properties/{ep}"
-        for plp in pl_properties:
-          if plp not in self.exclude:
-            props[plp] = f"/$defs/PublicListing/properties/{plp}"
-
-        for prop, path in props.items():
-
-          prop_range = self.get_property_range(path, prop)
-          prop = self.rename_property(prop)
-
-          title = self.get_title(path) or prop
-          description = self.get_description(path) or prop
-          self.g.add((BODS[prop], RDF.type, RDF.Property))
-          self.g.add((BODS[prop], RDFS.domain, BODS.Entity))
-          self.g.add((BODS[prop], RDFS.label, Literal(title)))
-          self.g.add((BODS[prop], RDFS.comment, Literal(description)))
-
-          if prop_range:
-            self.g.add((BODS[prop], RDFS.range, prop_range))
+        self.map_properties(BODS.Entity, path)
+        publiclisting_path = "/$defs/PublicListing"
+        self.map_properties(BODS.Entity, publiclisting_path)
 
         # Flatten entity type properties
         self.g.add((BODS.entitySubtype, RDF.type, RDF.Property))
@@ -288,25 +262,9 @@ class BODSVocab:
         self.g.add((BODS.securitiesListing, RDFS.range, BODS.SecuritiesListing))
         self.g.add((BODS.companyFilingsURL, RDFS.range, RDFS.Resource))
 
-    def map_entity_types(self):
-        
-        self.g.add((BODS.EntityType, RDF.type, OWL.Class))
-        entity_types = get_codes_and_info(self.codelists, "entityType.csv")
-        
-        for code, info in entity_types.items():
-          et = cap_first(code)
-          self.g.add((BODS[et], RDF.type, BODS.EntityType))
-          self.g.add((BODS[et], RDFS.label, Literal(entity_types.get(code)[0])))
-          self.g.add((BODS[et], RDFS.comment, Literal(entity_types.get(code)[1])))
-
-        self.g.add((BODS.EntitySubype, RDF.type, OWL.Class))
-        entity_subtypes = get_codes_and_info(self.codelists, "entitySubtype.csv")
-        
-        for code, info in entity_subtypes.items():
-          est = cap_first(code)
-          self.g.add((BODS[est], RDF.type, BODS.EntitySubtype))
-          self.g.add((BODS[est], RDFS.label, Literal(entity_subtypes.get(code)[0])))
-          self.g.add((BODS[est], RDFS.comment, Literal(entity_subtypes.get(code)[1])))
+        # Entity type and subtype instances
+        self.map_instances(BODS.EntityType, "entityType.csv")
+        self.map_instances(BODS.EntitySubtype, "entitySubtype.csv")
 
     def map_person(self):
         path = "urn:person"
