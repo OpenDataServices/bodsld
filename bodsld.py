@@ -62,7 +62,7 @@ class BODSVocab:
         # self.map_relationship()
         # self.map_unspecified()
         self.map_interest()
-        self.map_interest_types()
+        # self.map_interest_types()
 
     def map_statement(self):
         self.g.add((BODS.Statement, RDF.type, OWL.Class))
@@ -395,6 +395,13 @@ class BODSVocab:
             if ip not in self.exclude:
                 props[ip] = f"{interest_path}/properties/{ip}"
 
+        # Flatten share
+        share_path = f"{interest_path}/properties/share"
+        share_properties = get_properties(self.registry, share_path)
+        for sp in share_properties:
+            if sp not in self.exclude:
+                props[sp] = f"{share_path}/properties/{sp}"
+
         for prop, path in props.items():
             prop_range = self.get_property_range(path, prop)
             prop = self.rename_property(prop)
@@ -410,11 +417,12 @@ class BODSVocab:
                 self.g.add((BODS[prop], RDFS.range, prop_range))
 
         # Ranges
-        self.g.add((BODS.beneficialOwnershipOrControl, RDFS.range, XSD.Boolean))
-
-        # Flatten share - HERENOW
-        share_path = f"{interest_path}/properties/share"
-        share_properties = get_properties(self.registry, share_path)
+        self.g.add((BODS.beneficialOwnershipOrControl, RDFS.range, XSD.boolean))
+        self.g.add((BODS.shareMaximum, RDFS.range, XSD.float))
+        self.g.add((BODS.shareMinimum, RDFS.range, XSD.float))
+        self.g.add((BODS.shareExact, RDFS.range, XSD.float))
+        self.g.add((BODS.shareExclusiveMaximum, RDFS.range, XSD.float))
+        self.g.add((BODS.shareExclusiveMinimum, RDFS.range, XSD.float))
 
     def map_interest_types(self):
 
@@ -529,7 +537,7 @@ if __name__ == "__main__":
     vocab.exclude_properties(["statementId", "publicationDetails",
       "declarationSubject", "declaration", "recordId", "recordType",
       "recordStatus", "isComponent", "type", "unspecifiedEntityDetails",
-      "publicListing", "unspecifiedPersonDetails", "componentRecords"])
+      "publicListing", "unspecifiedPersonDetails", "componentRecords", "share"])
     
     # Properties that need to be renamed (usually from singular to plural)
     rename_map = {
@@ -538,12 +546,15 @@ if __name__ == "__main__":
         "nationalities": "nationality",
         "taxResidencies": "taxResidency",
         "reason": "unspecifiedReason",
-        "description": "unspecifiedDescription"
+        "description": "unspecifiedDescription",
+        "minimum": "shareMinimum",
+        "maximum": "shareMaximum",
+        "exact": "shareExact",
+        "exclusiveMinimum": "shareExclusiveMinimum",
+        "exclusiveMaximum": "shareExclusiveMaximum"
     }
-    vocab.rename_properties(["annotations", "addresses", "alternateNames",
-      "identifiers", "names", "formedByStatute", "securitiesListings", "companyFilingsURLs", "nationalities", "taxResidencies", "interests",
-      "reason", "description"],
-      rename_map)
+    vocab.rename_properties(["annotations", "alternateNames",
+      "identifiers", "names", "securitiesListings", "companyFilingsURLs", "interests"] + list(rename_map.keys()), rename_map)
 
     # Properties that will have a special type in the RDF model
     vocab.property_ranges(
@@ -555,7 +566,7 @@ if __name__ == "__main__":
     )
     
     vocab.make_graph()
-    print(vocab.ttl())
+    # print(vocab.ttl())
     vocab.write_ttl()
     vocab.write_docs()
 
