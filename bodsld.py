@@ -57,7 +57,7 @@ class BODSVocab:
         self.g.add((classname, RDFS.comment,
           Literal(self.get_description(path))))
 
-    def map_properties(self, path, domain):
+    def map_properties(self, domain, path):
         properties = get_properties(self.registry, path)
         props = {}
         for p in properties:
@@ -89,6 +89,17 @@ class BODSVocab:
             self.g.add((BODS[t], RDFS.label, Literal(types.get(code)[0])))
             self.g.add((BODS[t], RDFS.comment, Literal(types.get(code)[1])))
 
+    def map_instances(self, instance_class, codelist):
+        self.g.add((instance_class, RDF.type, OWL.Class))
+        types = get_codes_and_info(self.codelists, codelist)
+        
+        for code, info in types.items():
+            t = cap_first(code)
+            self.g.add((BODS[t], RDF.type, instance_class))
+            self.g.add((BODS[t], RDFS.label, Literal(types.get(code)[0])))
+            self.g.add((BODS[t], RDFS.comment, Literal(types.get(code)[1])))
+
+
     def make_graph(self):
         # self.map_statement()
         # self.map_declaration()
@@ -102,7 +113,8 @@ class BODSVocab:
         # self.map_interest()
         # self.map_interest_types()
         # self.map_address()
-        self.map_agent()
+        # self.map_agent()
+        self.map_annotation()
 
     def map_statement(self):
         self.g.add((BODS.Statement, RDF.type, OWL.Class))
@@ -486,7 +498,7 @@ class BODSVocab:
         self.map_types(BODS.Address, BODS.AddressType, "addressType.csv")
 
         # Address properties
-        self.map_properties(path, BODS.Address)
+        self.map_properties(BODS.Address, path)
         self.g.add((BODS.country, RDFS.range, BODS.Jurisdiction))
 
     def map_agent(self):
@@ -508,7 +520,19 @@ class BODSVocab:
           Literal("A globally unique identifier or URL for this agent")))
 
     def map_annotation(self):
-        pass
+        path = "/$defs/Annotation"
+        self.map_class(BODS.Annotation, path)
+        self.map_instances(BODS.AnnotationMotivation,
+          "annotationMotivation.csv")
+
+        # Properties
+        self.map_properties(BODS.Annotation, path)
+
+        # Range fixup
+        self.g.add((BODS.motivation, RDFS.range, BODS.AnnotationMotivation))
+        self.g.remove((BODS.motivation, RDFS.range, RDFS.Literal))
+
+        # TODO duplicate property description
 
     def map_jurisdiction(self):
         pass
