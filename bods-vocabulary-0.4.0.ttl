@@ -1,0 +1,936 @@
+@prefix bods: <https://standard.openownership.org/terms#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://standard.openownership.org/terms> a owl:Ontology ;
+    rdfs:label "Beneficial Ownership Data Standard v0.4" ;
+    rdfs:comment "The RDF vocabulary for the Beneficial Ownership Data Standard v0.4" .
+
+bods:AddressType a owl:Class .
+
+bods:Alternative a owl:Class ;
+    rdfs:label "Alternative address",
+        "Alternative name" ;
+    rdfs:comment "An address provided in addition to the primary address for this entity or person that is neither a service nor a registered address.",
+        "Another name that the person is known by. This might be an alias, a nickname or a name that the person is also known as (aka)." ;
+    rdfs:subClassOf bods:Address,
+        bods:Name .
+
+bods:AnonymousEntity a bods:EntityType ;
+    rdfs:label "Anonymous entity" ;
+    rdfs:comment "An entity that has been identified, but for which identifying information is being withheld. The reason for non-disclosure should be given in the accompanying `unspecifiedEntityDetails` field." .
+
+bods:AnonymousPerson a bods:PersonType ;
+    rdfs:label "Anonymous person" ;
+    rdfs:comment "A natural person who has been identified, but identifying information is being withheld. The reason for non-disclosure should be given in the accompanying `unspecifiedPersonDetails` field." .
+
+bods:AppointmentOfBoard a owl:Class ;
+    rdfs:label "Appointment of board" ;
+    rdfs:comment "A controlling interest in an entity. Defined as the absolute right to appoint members of the board of directors." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:Arrangement a bods:EntityType ;
+    rdfs:label "Arrangement" ;
+    rdfs:comment "A legal arrangement, agreement, contract or other mechanism via which one or more natural or legal persons can associate to exert ownership or control over an entity. Parties to an arrangement have no other form of collective legal identity." .
+
+bods:BeneficiaryOfLegalArrangement a owl:Class ;
+    rdfs:label "Beneficiary of a legal arrangement" ;
+    rdfs:comment "A person who benefits from a trust or other legal arrangement's holdings or activities." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:Birth a owl:Class ;
+    rdfs:label "Birth name" ;
+    rdfs:comment "The legal name of the person at birth." ;
+    rdfs:subClassOf bods:Name .
+
+bods:BoardChair a owl:Class ;
+    rdfs:label "Board chair" ;
+    rdfs:comment "The person holding the most power and authority on the board of directors." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:BoardMember a owl:Class ;
+    rdfs:label "Board member" ;
+    rdfs:comment "One of a group of people constituted as the strategic decision-making body of an organization." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:Business a owl:Class ;
+    rdfs:label "Business address" ;
+    rdfs:comment "A place where the entity conducts its business." ;
+    rdfs:subClassOf bods:Address .
+
+bods:Closed a owl:Class ;
+    rdfs:label "Closed Record" ;
+    rdfs:comment "This is the final Statement published pertaining to the record referenced by `recordId`." ;
+    rdfs:subClassOf bods:Statement .
+
+bods:Commenting a bods:AnnotationMotivation ;
+    rdfs:label "Commenting" ;
+    rdfs:comment "The description field provides contextual comments for a field, object or statement." .
+
+bods:ConditionalRightsGrantedByContract a owl:Class ;
+    rdfs:label "Conditional rights granted by contract" ;
+    rdfs:comment "An interest that exists only if some contractual condition is met." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:ControlByLegalFramework a owl:Class ;
+    rdfs:label "Control by legal framework" ;
+    rdfs:comment "Control of an entity gained through a legal framework, such as a combination of legislation (primary and secondary). This type of interest is created by governments and legislators in order to establish and guide agencies and entities linked to the state." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:ControlViaCompanyRulesOrArticles a owl:Class ;
+    rdfs:label "Control via company rules or articles" ;
+    rdfs:comment "Control of an entity gained through a provision in company articles or by shareholder agreement." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:Correcting a bods:AnnotationMotivation ;
+    rdfs:label "Correcting" ;
+    rdfs:comment "The value of this field, object or statement has been corrected, using the method in the description field or from the original value given in the description field." .
+
+bods:EnjoymentAndUseOfAssets a owl:Class ;
+    rdfs:label "Enjoyment and use of assets" ;
+    rdfs:comment "The use of assets belonging to an entity." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:Former a owl:Class ;
+    rdfs:label "Former name" ;
+    rdfs:comment "A name that the person has used in the past." ;
+    rdfs:subClassOf bods:Name .
+
+bods:GovernmentDepartment a bods:EntitySubtype ;
+    rdfs:label "Government department" ;
+    rdfs:comment "An element of government with executive responsibilities. These terms are often used to designate such a body: ministry, department, bureau or office. This MUST be used with `entityType.type` 'stateBody'." .
+
+bods:Identifying a bods:AnnotationMotivation ;
+    rdfs:label "Identifying" ;
+    rdfs:comment "The value of this field, object or statement has been augmented or processed for the purpose of identifying natural persons or legal entities, using the method in the description field." .
+
+bods:InformationUnknownToPublisher a bods:UnspecifiedReason ;
+    rdfs:label "Information unknown to the publisher of the data" ;
+    rdfs:comment "A publisher does not have access to information on this person or entity. This should not generally be used in situations where one party has the responsibility to provide such information." .
+
+bods:InterestType a owl:Class .
+
+bods:InterestedPartyExemptFromDisclosure a bods:UnspecifiedReason ;
+    rdfs:label "Interested party exempt from disclosure" ;
+    rdfs:comment "The interested party in this Relationship Statement is exempt from having their identity disclosed." .
+
+bods:InterestedPartyHasNotProvidedInformation a bods:UnspecifiedReason ;
+    rdfs:label "Interested party has not provided information" ;
+    rdfs:comment "The interested party in this Relationship Statement has not provided enough information to identify or confirm the identity of the beneficial owner." .
+
+bods:KnownPerson a bods:PersonType ;
+    rdfs:label "Known person" ;
+    rdfs:comment "A natural person who has been identified, and information such as names, identifiers or biographical information can be provided about them." .
+
+bods:Legal a owl:Class ;
+    rdfs:label "Legal name" ;
+    rdfs:comment "A name that identifies the person for legal, administrative and other official purposes. A person's legal name will usually be the one that is found on official government documents." ;
+    rdfs:subClassOf bods:Name .
+
+bods:LegalEntity a bods:EntityType ;
+    rdfs:label "Legal entity" ;
+    rdfs:comment "A body with distinct legal personality, such as an international institution or statutory corporation, but which is not otherwise uniquely identified in some official register." .
+
+bods:Linking a bods:AnnotationMotivation ;
+    rdfs:label "Linking" ;
+    rdfs:comment "The description explains how linked material relates to the field, object or statement. A URL to linked material MUST be provided in the `url` field." .
+
+bods:NameType a owl:Class .
+
+bods:New a owl:Class ;
+    rdfs:label "New Record" ;
+    rdfs:comment "This is the first Statement published pertaining to the record referenced by `recordId`." ;
+    rdfs:subClassOf bods:Statement .
+
+bods:NoBeneficialOwners a bods:UnspecifiedReason ;
+    rdfs:label "No beneficial owners" ;
+    rdfs:comment "There are no beneficial owners who need to disclose ownership according to the rules under which this statement is made." .
+
+bods:Nomination a bods:EntitySubtype ;
+    rdfs:label "Nomination" ;
+    rdfs:comment "An agreement where a nominator instructs a nominee to act on their behalf in a specified capacity. This MUST be used with `entityType.type` 'arrangement'." .
+
+bods:Nominator a owl:Class ;
+    rdfs:label "Nominator" ;
+    rdfs:comment "A person who instructs a nominee to act on their behalf in a specified capacity." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:Nominee a owl:Class ;
+    rdfs:label "Nominee" ;
+    rdfs:comment "A person who agrees to act on behalf of the nominator in a specified capacity." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:NotPEP a bods:PEPStatus .
+
+bods:OfficialRegister a owl:Class ;
+    rdfs:label "Official register" ;
+    rdfs:comment "The information was taken from an official register." ;
+    rdfs:subClassOf bods:Source .
+
+bods:Other a bods:EntitySubtype ;
+    rdfs:label "Other" ;
+    rdfs:comment "Any other type of entity." .
+
+bods:OtherInfluenceOrControl a owl:Class ;
+    rdfs:label "Other influence or control" ;
+    rdfs:comment "Any influence or control in an entity that is distinct from being a shareholder, having voting rights or having the absolute right to appoint to the board." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:PEP a bods:PEPStatus .
+
+bods:PEPMissing a bods:PEPStatus .
+
+bods:PlaceOfBirth a owl:Class ;
+    rdfs:label "Place of birth" ;
+    rdfs:comment "The place where a person was born. A town (in the `address` field) and `country` may be sufficient information. This MUST only apply to the `placeOfBirth` field for natural persons." ;
+    rdfs:subClassOf bods:Address .
+
+bods:PrimaryResearch a owl:Class ;
+    rdfs:label "Primary research" ;
+    rdfs:comment "The information was provided as a result of research into primary sources." ;
+    rdfs:subClassOf bods:Source .
+
+bods:Protector a owl:Class ;
+    rdfs:label "Protector" ;
+    rdfs:comment "A person appointed to protect the interests or wishes of the settlor, providing influence and guidance to the trustee who administers the trust. This should also be used for a person with a protector-equivalent role in any legal arrangement that is similar to a trust." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:Registered a owl:Class ;
+    rdfs:label "Registered address" ;
+    rdfs:comment "An official address for delivering statutory mail and legal notices which must be provided to company registers. This MUST only apply to entities." ;
+    rdfs:subClassOf bods:Address .
+
+bods:RegisteredEntity a bods:EntityType ;
+    rdfs:label "Registered Entity" ;
+    rdfs:comment "A legal entity created through an act of official registration. In most cases, registered entities have an officially issued identifier." .
+
+bods:Residence a owl:Class ;
+    rdfs:label "Residential address" ;
+    rdfs:comment "An address where someone lives. This MUST only apply to natural persons." ;
+    rdfs:subClassOf bods:Address .
+
+bods:RightToProfitOrIncomeFromAssets a owl:Class ;
+    rdfs:label "Right to profit or income from assets" ;
+    rdfs:comment "The right to derive profits, income or both from assets belonging to an entity." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:RightsGrantedByContract a owl:Class ;
+    rdfs:label "Rights granted by contract" ;
+    rdfs:comment "An interest that is granted by contract." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:RightsToProfitOrIncome a owl:Class ;
+    rdfs:label "Rights to receive profits or income" ;
+    rdfs:comment "An economic interest in an entity. Defined as beneficial ownership rights beyond those otherwise implied by ownership structures that are granted by contract." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:RightsToSurplusAssetsOnDissolution a owl:Class ;
+    rdfs:label "Rights to surplus assets on dissolution" ;
+    rdfs:comment "The right to a share in the amount of an asset or resource that exceeds the portion that is utilized upon the winding up of an entity." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:SelfDeclaration a owl:Class ;
+    rdfs:label "Self declaration" ;
+    rdfs:comment "The information was provided by the person or entity referred to from `declarationSubject`, or by their authorised representative." ;
+    rdfs:subClassOf bods:Source .
+
+bods:SeniorManagingOfficial a owl:Class ;
+    rdfs:label "Senior managing official" ;
+    rdfs:comment "A controlling interest in an entity gained by employment. Defined as the person who exercises control over the management of the entity." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:Service a owl:Class ;
+    rdfs:label "Service address" ;
+    rdfs:comment "An address which can be used as an alternative to a residential address for the purpose of receiving post. This MUST only apply to natural persons." ;
+    rdfs:subClassOf bods:Address .
+
+bods:Settlor a owl:Class ;
+    rdfs:label "Settlor" ;
+    rdfs:comment "A person who, either actually or by operation of law, creates a trust. They may be referred to by other names such as a trustor, a grantor or a donor. This should also be used for a person with a settlor-equivalent role in any legal arrangement that is similar to a trust." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:Shareholding a owl:Class ;
+    rdfs:label "Shareholding" ;
+    rdfs:comment "An economic interest in an entity gained by holding shares." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:SourceType a owl:Class .
+
+bods:State a bods:EntityType ;
+    rdfs:label "State" ;
+    rdfs:comment "A country, nation or community with legal sovereignty within a territory." .
+
+bods:StateAgency a bods:EntitySubtype ;
+    rdfs:label "State Agency" ;
+    rdfs:comment "A body overseeing or administering elements of public policy. State agencies may have responsibilities which are devolved from government departments or from the state's legislative body. This MUST be used with `entityType.type` 'stateBody." .
+
+bods:StateBody a bods:EntityType ;
+    rdfs:label "State body" ;
+    rdfs:comment "A core administrative or legislative unit within a state's apparatus." .
+
+bods:SubjectExemptFromDisclosure a bods:UnspecifiedReason ;
+    rdfs:label "Subject exempt from disclosure" ;
+    rdfs:comment "The subject of this Relationship Statement is not required to disclose its beneficial owner." .
+
+bods:SubjectUnableToConfirmOrIdentifyBeneficialOwner a bods:UnspecifiedReason ;
+    rdfs:label "Subject unable to confirm or identify beneficial owner" ;
+    rdfs:comment "The subject of this Relationship Statement has, as the disclosing party, been unwilling or unable to confirm the existence identify a beneficial owner." .
+
+bods:ThirdParty a owl:Class ;
+    rdfs:label "Third party" ;
+    rdfs:comment "The information was provided by a third party, not directly related to the person, entity or interests described by this statement." ;
+    rdfs:subClassOf bods:Source .
+
+bods:Transformation a bods:AnnotationMotivation ;
+    rdfs:label "Transformation" ;
+    rdfs:comment "The values of this field, object or statement have been changed from their original form using the method in the description field. The transformed representation may be provided in the `transformedContent` field." .
+
+bods:Translation a owl:Class ;
+    rdfs:label "Translation of name" ;
+    rdfs:comment "A translation of the person's legal name in a different language." ;
+    rdfs:subClassOf bods:Name .
+
+bods:Transliteration a owl:Class ;
+    rdfs:label "Transliteration of name" ;
+    rdfs:comment "A transliteration of the person's legal name in a different script." ;
+    rdfs:subClassOf bods:Name .
+
+bods:Trust a bods:EntitySubtype ;
+    rdfs:label "Trust" ;
+    rdfs:comment "A trust or trust like arrangement. An arrangement where a settlor transfers ownership of assets to trustees to control for the benefit of beneficiaries. This MUST be used with `entityType.type` 'arrangement' or 'legalEntity'." .
+
+bods:Trustee a owl:Class ;
+    rdfs:label "Trustee" ;
+    rdfs:comment "A person who administers a trust for the benefit of a third party and in whom the legal title of the trust property is vested either by declaration of the settlor or by operation of law. This should also be used for a person with a trustee-equivalent role in any legal arrangement that is similar to a trust." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:Unknown a bods:UnspecifiedReason ;
+    rdfs:label "Unknown reason" ;
+    rdfs:comment "The reason an interested party cannot be provided is not known." .
+
+bods:UnknownEntity a bods:EntityType ;
+    rdfs:label "Unknown entity" ;
+    rdfs:comment "An entity that has not been identified." .
+
+bods:UnknownInterest a owl:Class ;
+    rdfs:label "Unknown interest" ;
+    rdfs:comment "The interestedParty is known to have an interest in the subject of this Relationship Statement, but the nature of the interest is unknown." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:UnknownPerson a bods:PersonType ;
+    rdfs:label "Unknown person" ;
+    rdfs:comment "A natural person whose identity has not been discovered or confirmed." .
+
+bods:UnpublishedInterest a owl:Class ;
+    rdfs:label "Unpublished interest" ;
+    rdfs:comment "The nature of this interest is known but is not published." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:Updated a owl:Class ;
+    rdfs:label "Updated Record" ;
+    rdfs:comment "This Statement updates information published in a prior Statement pertaining to the record referenced by `recordId`." ;
+    rdfs:subClassOf bods:Statement .
+
+bods:Verified a owl:Class ;
+    rdfs:label "Verified" ;
+    rdfs:comment "The information has been verified through the process documented in the associated description." ;
+    rdfs:subClassOf bods:Source .
+
+bods:VotingRights a owl:Class ;
+    rdfs:label "Voting rights" ;
+    rdfs:comment "A controlling interest in an entity gained by holding shares. Defined as the right of shareholders to vote on matters of corporate policy, including decisions on the makeup of the board of directors, issuing securities, initiating corporate actions and making substantial changes in the corporation's operations." ;
+    rdfs:subClassOf bods:Interest .
+
+bods:address a rdf:Property ;
+    rdfs:label "Addresses" ;
+    rdfs:comment "One or more addresses for this person." ;
+    rdfs:domain bods:Entity,
+        bods:Person ;
+    rdfs:range bods:Address .
+
+bods:agentName a rdf:Property ;
+    rdfs:label "Agent name" ;
+    rdfs:comment "The name of the agent responsible for this action" ;
+    rdfs:domain bods:Agent ;
+    rdfs:range rdfs:Literal .
+
+bods:agentUri a rdf:Property ;
+    rdfs:label "Agent URI" ;
+    rdfs:comment "A globally unique identifier or URL for this agent" ;
+    rdfs:domain bods:Agent ;
+    rdfs:range rdfs:Resource .
+
+bods:alternateName a rdf:Property ;
+    rdfs:label "Alternative Names" ;
+    rdfs:comment "An array of other names this entity is known by." ;
+    rdfs:domain bods:Entity ;
+    rdfs:range bods:Name .
+
+bods:annotation a rdf:Property ;
+    rdfs:label "Annotations" ;
+    rdfs:comment "Annotations about this Statement or parts of this Statement" ;
+    rdfs:domain bods:Statement ;
+    rdfs:range bods:Annotation .
+
+bods:assertedBy a rdf:Property ;
+    rdfs:label "Asserted By" ;
+    rdfs:comment "The people or organisations providing the information asserted in this Statement. This may include the declaring subject of a self-declaration, or the name of an agent making a declaration on their behalf. If this Statement has been verified, the array may include the name of the organisation providing verification." ;
+    rdfs:domain bods:Source ;
+    rdfs:range bods:Agent .
+
+bods:beneficialOwnershipOrControl a rdf:Property ;
+    rdfs:label "Beneficial Ownership or Control" ;
+    rdfs:comment "Whether this interest (alone or with others) means the interested party is a beneficial owner of the subject. If 'true' the interested party MUST be a natural person. The definition of 'beneficial owner' in operation SHOULD be noted in accompanying guidance (such as a publication policy or data use guide)." ;
+    rdfs:domain bods:Interest ;
+    rdfs:range xsd:boolean .
+
+bods:birthDate a rdf:Property ;
+    rdfs:label "Date of Birth" ;
+    rdfs:comment "The date of birth for this person, in YYYY, YYYY-MM, or YYYY-MM-DD format." ;
+    rdfs:domain bods:Person ;
+    rdfs:range xsd:dateTime .
+
+bods:bodsVersion a rdf:Property ;
+    rdfs:label "BODS Version" ;
+    rdfs:comment "The version of the Beneficial Ownership Data Standard to which this Statement conforms, expressed as major.minor (e.g. 0.2 or 1.0). In a published BODS dataset, all Statements MUST have the same major version number." ;
+    rdfs:domain bods:Statement ;
+    rdfs:range rdfs:Literal .
+
+bods:code a rdf:Property ;
+    rdfs:label "Country or Subdivision Code" ;
+    rdfs:comment "The 2-letter country code (ISO 3166-1) or the subdivision code (ISO 3166-2) for the jurisdiction." ;
+    rdfs:domain bods:Jurisdiction ;
+    rdfs:range rdfs:Literal .
+
+bods:companyFilingsURL a rdf:Property ;
+    rdfs:label "Company Filings URLs" ;
+    rdfs:comment "URL or URLs where regulatory filings related to major holdings can be retrieved. URLs may point to pages maintained by regulatory bodies, stock exchanges or by the company itself." ;
+    rdfs:domain bods:Entity ;
+    rdfs:range rdfs:Resource .
+
+bods:country a rdf:Property ;
+    rdfs:label "Country" ;
+    rdfs:comment "The country for this address." ;
+    rdfs:domain bods:Address ;
+    rdfs:range bods:Jurisdiction .
+
+bods:createdBy a rdf:Property ;
+    rdfs:label "Created By" ;
+    rdfs:comment "The person, organisation or agent that created this Annotation." ;
+    rdfs:domain bods:Annotation ;
+    rdfs:range bods:Agent .
+
+bods:creationDate a rdf:Property ;
+    rdfs:label "Creation Date" ;
+    rdfs:comment "The date on which this Annotation was created, in full-date (YYYY-MM-DD) or date-time (e.g. YYYY-MM-DDTHH:MM:SSZ) format. See the IETF RFC3339 standard, section 5.6." ;
+    rdfs:domain bods:Annotation ;
+    rdfs:range rdfs:Literal .
+
+bods:deathDate a rdf:Property ;
+    rdfs:label "Death Date" ;
+    rdfs:comment "The date of death for this person, in YYYY, YYYY-MM, or YYYY-MM-DD format." ;
+    rdfs:domain bods:Person ;
+    rdfs:range xsd:dateTime .
+
+bods:declarationIdString a rdf:Property ;
+    rdfs:label "Declaration Reference" ;
+    rdfs:comment "An identifier or reference for a declaration within the publisher’s system. Where a Statement is a claim from a particular declaration (made at a point in time by a `source` about a `declarationSubject`) this field identifies the declaration." ;
+    rdfs:domain bods:Declaration ;
+    rdfs:range rdfs:Literal .
+
+bods:declarationSubject a rdf:Property ;
+    rdfs:label "Declaration Subject" ;
+    rdfs:comment "A `recordId` value for the subject of a beneficial ownership network (always an entity or person)." ;
+    rdfs:domain bods:Declaration ;
+    rdfs:range bods:Entity,
+        bods:Person .
+
+bods:details a rdf:Property ;
+    rdfs:label "Details" ;
+    rdfs:comment "The local name given to this kind of interest, or further information (semi-structured or unstructured) to clarify the nature of the interest." ;
+    rdfs:domain bods:Interest ;
+    rdfs:range rdfs:Literal .
+
+bods:directOrIndirect a rdf:Property ;
+    rdfs:label "Direct or Indirect" ;
+    rdfs:comment "How directly the interest is exercised by the interested party. The value MUST be 'indirect' if intermediate entities or agents are known to exist, and MUST be 'direct' if such intermediaries are known not to exist. Otherwise the value MUST be 'unknown'." ;
+    rdfs:domain bods:Interest ;
+    rdfs:range rdfs:Literal .
+
+bods:dissolutionDate a rdf:Property ;
+    rdfs:label "Dissolution Date" ;
+    rdfs:comment "The date on which this entity was dissolved or ceased, if it is no longer active. The date MUST be given in YYYY-MM-DD format. Where a precise month or date are not available, the value may be rounded to the first day of the (first) month. This rounding SHOULD be noted in accompanying guidance (such as a publication policy or data use guide)." ;
+    rdfs:domain bods:Entity ;
+    rdfs:range xsd:dateTime .
+
+bods:endDate a rdf:Property ;
+    rdfs:label "End Date" ;
+    rdfs:comment "The date from which this interest ceased to exist. The date MUST be given in YYYY-MM-DD format. Where a precise month or date are unknown, the value may be rounded to the first day of the (first) month. This rounding SHOULD be noted in accompanying guidance (such as a publication policy or data use guide).",
+        "The date from which this person no longer had the status of a Politically-exposed Person (PEP). The date MUST be given in YYYY-MM-DD format. Where a precise month or date are unknown, the value may be rounded to the first day of the (first) month.  This rounding SHOULD be noted in accompanying guidance (such as a publication policy or data use guide)." ;
+    rdfs:domain bods:Interest,
+        bods:PoliticalExposure ;
+    rdfs:range xsd:dateTime .
+
+bods:entitySubtype a rdf:Property ;
+    rdfs:label "Subtype" ;
+    rdfs:comment "The particular form of the entity, where relevant, using the entitySubtype codelist. The value MUST align with the `entityType` value." ;
+    rdfs:domain bods:Entity ;
+    rdfs:range bods:EntitySubtype .
+
+bods:entityType a rdf:Property ;
+    rdfs:label "Entity Type" ;
+    rdfs:comment "The form of the entity described in the Statement." ;
+    rdfs:domain bods:Entity ;
+    rdfs:range bods:EntityType .
+
+bods:entityTypeDetails a rdf:Property ;
+    rdfs:label "Entity Type Details" ;
+    rdfs:comment "This may be used to provide a local name for this type of entity, or any further information to identify the type of entity. For example, in Finland 'ministeriö' for a government department." ;
+    rdfs:domain bods:Entity ;
+    rdfs:range rdfs:Literal .
+
+bods:familyName a rdf:Property ;
+    rdfs:label "Family Name" ;
+    rdfs:comment "Part of the person's `fullName` which is shared by family members. The value may include prefixes or suffixes, e.g. 'de Boer', 'van de Putte', 'von und zu Orlow'. The value may be a multiple-part family name, such as are commonly found in Hispanic countries. For example, Miguel de Cervantes Saavedra's Family Name would be recorded as 'de Cervantes Saavedra.'" ;
+    rdfs:domain bods:Name ;
+    rdfs:range rdfs:Literal .
+
+bods:formedByStatuteDate a rdf:Property ;
+    rdfs:label "Formed by Statute Date" ;
+    rdfs:comment "The date on which the law came into force. The date MUST be given in YYYY-MM-DD format. Where a precise month or date are not available, the value may be rounded to the first day of the (first) month. This rounding SHOULD be noted in accompanying guidance (such as a publication policy or data use guide)." ;
+    rdfs:domain bods:Entity ;
+    rdfs:range xsd:dateTime .
+
+bods:formedByStatuteName a rdf:Property ;
+    rdfs:label "Formed by Statute" ;
+    rdfs:comment "The law which mandated the formation of the entity described in the statement, where applicable. This information SHOULD be provided where a state has created an agency or other entity with specific legislation." ;
+    rdfs:domain bods:Entity ;
+    rdfs:range rdfs:Literal .
+
+bods:foundingDate a rdf:Property ;
+    rdfs:label "Founding Date" ;
+    rdfs:comment "The date on which this entity was founded, created or registered. The date MUST be given in YYYY-MM-DD format. Where a precise month or date are not available, the value may be rounded to the first day of the (first) month. This rounding SHOULD be noted in accompanying guidance (such as a publication policy or data use guide)." ;
+    rdfs:domain bods:Entity ;
+    rdfs:range xsd:dateTime .
+
+bods:fullName a rdf:Property ;
+    rdfs:label "Full Name" ;
+    rdfs:comment "The complete name of the person." ;
+    rdfs:domain bods:Name ;
+    rdfs:range rdfs:Literal .
+
+bods:givenName a rdf:Property ;
+    rdfs:label "Given Names" ;
+    rdfs:comment "The part of the person's `fullName` that identifies the person within their family. These are given to a person by their parents at birth or may be legally recognised as 'given names' through a formal process. For example, the given name for Johann Sebastian Bach is 'Johann Sebastian'." ;
+    rdfs:domain bods:Name ;
+    rdfs:range rdfs:Literal .
+
+bods:hasPublicListing a rdf:Property ;
+    rdfs:label "Has Public Listing" ;
+    rdfs:comment "Whether the entity is a publicly listed company." ;
+    rdfs:domain bods:Entity ;
+    rdfs:range xsd:Boolean .
+
+bods:idScheme a rdf:Property ;
+    rdfs:label "Identifier Scheme" ;
+    rdfs:comment "The scheme under which the security has been issued a unique, persistent identifier, using the securitiesIdentifierSchemes codelist." ;
+    rdfs:domain bods:SecuritiesIdentifier ;
+    rdfs:range rdfs:Literal .
+
+bods:idString a rdf:Property ;
+    rdfs:label "ID",
+        "Identifier" ;
+    rdfs:comment "The identifier for a person or entity, as issued by the scheme.",
+        "The unique identifier of the security as issued under the `idScheme`." ;
+    rdfs:domain bods:Identifier,
+        bods:SecuritiesIdentifier ;
+    rdfs:range rdfs:Literal .
+
+bods:identifier a rdf:Property ;
+    rdfs:label "Identifiers" ;
+    rdfs:comment "One or more official identifiers for this person. Where available, official registration numbers should be provided." ;
+    rdfs:domain bods:Entity,
+        bods:Person ;
+    rdfs:range bods:Identifier .
+
+bods:interest a rdf:Property ;
+    rdfs:label "Interests" ;
+    rdfs:comment "A description of the interests held by the interested party in the subject." ;
+    rdfs:domain bods:Relationship ;
+    rdfs:range bods:Interest .
+
+bods:interestedParty a rdf:Property ;
+    rdfs:label "Interested Party" ;
+    rdfs:comment "The `recordId` for the interested party in the relationship, or an Unspecified Record object with a reason for why this information has not been disclosed. The interested party MAY be an entity or a person. An Unspecified Record SHOULD only be used where no information at all is known about interested parties beyond this point of the beneficial ownership network. If the interested party is known to be an entity or person but their particular identity is unavailable, a `recordId` for them SHOULD be provided here (and the their `recordDetails.[person|entity]Type` should indicate that they are anonymous or unknown)." ;
+    rdfs:domain bods:Relationship ;
+    rdfs:range bods:Entity,
+        bods:Person .
+
+bods:jurisdiction a rdf:Property ;
+    rdfs:label "Jurisdiction" ;
+    rdfs:comment "The jurisdiction in which this entity was registered or created (for legal and registered entities, and arrangements). Or the state's jurisdiction (for states and state bodies).",
+        "The jurisdiction where this person is a PEP." ;
+    rdfs:domain bods:Entity,
+        bods:PoliticalExposure ;
+    rdfs:range bods:Jurisdiction .
+
+bods:license a rdf:Property ;
+    rdfs:label "License URL" ;
+    rdfs:comment "A link to the license that applies to this Statement. The canonical URI of the license SHOULD be used. Publishers are encouraged to use a Public Domain Dedication or Open Definition Conformant (http://opendefinition.org/licenses/) license." ;
+    rdfs:domain bods:Statement ;
+    rdfs:range rdfs:Literal .
+
+bods:marketIdentifierCode a rdf:Property ;
+    rdfs:label "Market Identifier Code (MIC)" ;
+    rdfs:comment "The Market Identifier Code (MIC) of the market on which the security is traded. Where the security is traded on a segment of an exchange, this is the MIC of the segment. Where it is traded on the main exchange, this is the MIC of the main exchange and MUST match the `operatingMarketIdentifierCode`. MICs are allocated and managed under ISO standard 10383." ;
+    rdfs:domain bods:SecuritiesListing ;
+    rdfs:range rdfs:Literal .
+
+bods:missingInfoReason a rdf:Property ;
+    rdfs:label "Missing Information Reasons" ;
+    rdfs:comment "An explanation of why the PEP status for the person is not provided (i.e. `politicalExposure.status` is 'unknown'). This may be a standard descriptive phrase from the source system, or a free text justification. Where this field is present it should be the only field except for `source`." ;
+    rdfs:domain bods:PoliticalExposure ;
+    rdfs:range rdfs:Literal .
+
+bods:motivation a rdf:Property ;
+    rdfs:label "Motivation" ;
+    rdfs:comment "The reason for this Annotation, using the annotationMotivation codelist." ;
+    rdfs:domain bods:Annotation ;
+    rdfs:range bods:AnnotationMotivation .
+
+bods:name a rdf:Property ;
+    rdfs:label "Entity Name",
+        "Name",
+        "Names" ;
+    rdfs:comment "One or more known names for this person.",
+        "The declared name of this entity.",
+        "The name of the jurisdiction" ;
+    rdfs:domain bods:Entity,
+        bods:Jurisdiction,
+        bods:Person ;
+    rdfs:range bods:Name .
+
+bods:nationality a rdf:Property ;
+    rdfs:label "Nationality" ;
+    rdfs:comment "The nationalities held by this person." ;
+    rdfs:domain bods:Person ;
+    rdfs:range bods:Jurisdiction .
+
+bods:operatingMarketIdentifierCode a rdf:Property ;
+    rdfs:label "Operating Market Identifier Code (Operating MIC)" ;
+    rdfs:comment "The Market Identifier Code (MIC) of the main exchange or trading platform handling trades in this security. Where the security is traded on a segment of an exchange, this is the MIC of the parent exchange or trading platform. Where it is traded on the main exchange, this is the MIC of that main exchange and MUST match the `marketIdentifierCode`. MICs are allocated and managed under ISO standard 10383." ;
+    rdfs:domain bods:SecuritiesListing ;
+    rdfs:range rdfs:Literal .
+
+bods:patronymicName a rdf:Property ;
+    rdfs:label "Patronymic Name" ;
+    rdfs:comment "Part of the person's `fullName` which is inherited from their father, as is common in countries such as Iceland, Ethiopia and Russia. For example, the 'Sergeyevich' in 'Mikhail Sergeyevich Gorbachev'." ;
+    rdfs:domain bods:Name ;
+    rdfs:range rdfs:Literal .
+
+bods:pepStatus a rdf:Property ;
+    rdfs:label "Politically Exposed Person (PEP) Status" ;
+    rdfs:comment "This value is 'isPep' or 'isNotPep' according to whether the person described by this statement has the status of politically exposed person (PEP). An 'unknown' value means a PEP status declaration is expected but missing; the reason for the missing data SHOULD be supplied in the `details` array." ;
+    rdfs:domain bods:Person ;
+    rdfs:range bods:PEPStatus .
+
+bods:personType a rdf:Property ;
+    rdfs:label "Person Type" ;
+    rdfs:comment "The status of this person, using the personType codelist. Where a person has the type 'anonymousPerson' or 'unknownPerson' a reason for the absence of information SHOULD be provided in 'unspecifiedPersonDetails'" ;
+    rdfs:domain bods:Person ;
+    rdfs:range bods:PersonType .
+
+bods:placeOfBirth a rdf:Property ;
+    rdfs:label "Place of Birth" ;
+    rdfs:comment "The place where this person was born." ;
+    rdfs:domain bods:Person ;
+    rdfs:range bods:Address .
+
+bods:politicalExposure a rdf:Property ;
+    rdfs:label "Political Exposure" ;
+    rdfs:comment "Information about whether, and how, the person described by this statement is politically exposed. Use this property only if politically exposed person (PEP) declarations are expected as part of beneficial ownership declarations." ;
+    rdfs:domain bods:Person ;
+    rdfs:range bods:PoliticalExposure .
+
+bods:postCode a rdf:Property ;
+    rdfs:label "Postcode" ;
+    rdfs:comment "The postal code for this address." ;
+    rdfs:domain bods:Address ;
+    rdfs:range rdfs:Literal .
+
+bods:publicationDate a rdf:Property ;
+    rdfs:label "Publication date" ;
+    rdfs:comment "The date on which this statement was published, in full-date (YYYY-MM-DD) or date-time (e.g. YYYY-MM-DDTHH:MM:SSZ) format. See the IETF RFC3339 standard, section 5.6." ;
+    rdfs:domain bods:Statement ;
+    rdfs:range xsd:dateTime .
+
+bods:publisher a rdf:Property ;
+    rdfs:label "Publisher" ;
+    rdfs:comment "Details of the organisation or person publishing a Statement." ;
+    rdfs:domain bods:Statement ;
+    rdfs:range bods:Agent .
+
+bods:recordDetails a rdf:Property ;
+    rdfs:label "Record Details" ;
+    rdfs:comment "The details of the entity, person or relationship as declared on the Statement Date." ;
+    rdfs:domain bods:Statement ;
+    rdfs:range bods:RecordDetails .
+
+bods:retrievedAt a rdf:Property ;
+    rdfs:label "Retrieved At" ;
+    rdfs:comment "A timestamp indicating when this information was imported from an external system, in full-date (YYYY-MM-DD) or date-time (e.g. YYYY-MM-DDTHH:MM:SSZ) format. See the IETF RFC3339 standard, section 5.6." ;
+    rdfs:domain bods:Source ;
+    rdfs:range xsd:dateTime .
+
+bods:scheme a rdf:Property ;
+    rdfs:label "Scheme Code" ;
+    rdfs:comment "For entities, a code from org-id.guide (https://www.org-id.guide) for an identifier-issuing authority (e.g. 'GB-COH'). For natural persons, a value with the pattern {JURISDICTION}-{TYPE} where JURISDICTION is an ISO 3166-1 3-digit country code and TYPE is one of PASSPORT, TAXID or IDCARD." ;
+    rdfs:domain bods:Identifier ;
+    rdfs:range rdfs:Literal .
+
+bods:schemeName a rdf:Property ;
+    rdfs:label "Scheme Name" ;
+    rdfs:comment "The name of the identifier-issuing authority." ;
+    rdfs:domain bods:Identifier ;
+    rdfs:range rdfs:Literal .
+
+bods:securitiesListing a rdf:Property ;
+    rdfs:label "Securities Listings" ;
+    rdfs:comment "Details of the entity's securities and the public exchanges and markets on which they are traded. All equity securities SHOULD be listed here, plus any other securities from which beneficial ownership might be derived. Where a security is traded on more than one market, there SHOULD be an entry for each market (or market segment)." ;
+    rdfs:domain bods:Entity ;
+    rdfs:range bods:SecuritiesListing .
+
+bods:securityId a rdf:Property ;
+    rdfs:label "Security" ;
+    rdfs:comment "Identifying information of the stock or other security." ;
+    rdfs:domain bods:SecuritiesListing ;
+    rdfs:range bods:SecuritiesIdentifier .
+
+bods:shareExact a rdf:Property ;
+    rdfs:label "Exact percentage" ;
+    rdfs:comment "The exact share of this interest held (if available)." ;
+    rdfs:domain bods:Interest ;
+    rdfs:range xsd:float .
+
+bods:shareExclusiveMaximum a rdf:Property ;
+    rdfs:label "Exclusive Maximum Percentage" ;
+    rdfs:comment "The exclusive upper bound of the share of this interest." ;
+    rdfs:domain bods:Interest ;
+    rdfs:range xsd:float .
+
+bods:shareExclusiveMinimum a rdf:Property ;
+    rdfs:label "Exclusive Minimum percentage" ;
+    rdfs:comment "The exclusive lower bound of the share of this interest." ;
+    rdfs:domain bods:Interest ;
+    rdfs:range xsd:float .
+
+bods:shareMaximum a rdf:Property ;
+    rdfs:label "Maximum Percentage" ;
+    rdfs:comment "The inclusive upper bound of the share of this interest." ;
+    rdfs:domain bods:Interest ;
+    rdfs:range xsd:float .
+
+bods:shareMinimum a rdf:Property ;
+    rdfs:label "Minimum Percentage" ;
+    rdfs:comment "The inclusive lower bound of the share of this interest." ;
+    rdfs:domain bods:Interest ;
+    rdfs:range xsd:float .
+
+bods:source a rdf:Property ;
+    rdfs:label "Source" ;
+    rdfs:comment "The source of information in this statement. Each statement SHOULD contain source information.",
+        "The source of this PEP information" ;
+    rdfs:domain bods:PoliticalExposure,
+        bods:Statement ;
+    rdfs:range bods:Source .
+
+bods:startDate a rdf:Property ;
+    rdfs:label "Start Date",
+        "State Date" ;
+    rdfs:comment "The date from which this interest was active. The date MUST be given in YYYY-MM-DD format. Where a precise month or date are unknown, the value may be rounded to the first day of the (first) month. This rounding SHOULD be noted in accompanying guidance (such as a publication policy or data use guide).",
+        "The date from which this person had the status of a Politically-exposed Person (PEP). The date MUST be given in YYYY-MM-DD format. Where a precise month or date are unknown, the value may be rounded to the first day of the (first) month. This rounding SHOULD be noted in accompanying guidance (such as a publication policy or data use guide)." ;
+    rdfs:domain bods:Interest,
+        bods:PoliticalExposure ;
+    rdfs:range xsd:dateTime .
+
+bods:statementDate a rdf:Property ;
+    rdfs:label "Statement Date" ;
+    rdfs:comment "The date on which this statement was declared by the source, in full-date (YYYY-MM-DD) or date-time (e.g. YYYY-MM-DDTHH:MM:SSZ) format. See the IETF RFC3339 standard, section 5.6." ;
+    rdfs:domain bods:Statement ;
+    rdfs:range xsd:dateTime .
+
+bods:statementPointerTarget a rdf:Property ;
+    rdfs:label "Statement Fragment Pointer" ;
+    rdfs:comment "An RFC6901 JSON Pointer (https://tools.ietf.org/html/rfc6901) describing the target fragment of the statement that this Annotation applies to, starting from the root of the Statement. An empty string (\"\") indicates that the Annotation applies to the whole Statement." ;
+    rdfs:domain bods:Annotation ;
+    rdfs:range rdfs:Literal .
+
+bods:stockExchangeJurisdiction a rdf:Property ;
+    rdfs:label "Stock Exchange Jurisdiction" ;
+    rdfs:comment "The 2-letter country code (ISO 3166-1) or the subdivision code (ISO 3166-2) for the jurisdiction under which the exchange, market or trading platform is regulated." ;
+    rdfs:domain bods:SecuritiesListing ;
+    rdfs:range rdfs:Literal .
+
+bods:stockExchangeName a rdf:Property ;
+    rdfs:label "Stock Exchange Name" ;
+    rdfs:comment "The name of the exchange, market or trading platform on which the security is traded. If the security is traded on a segment of the exchange, then the name SHOULD include both elements. For example, 'London Stock Exchange - MTF'." ;
+    rdfs:domain bods:SecuritiesListing ;
+    rdfs:range rdfs:Literal .
+
+bods:streetAddress a rdf:Property ;
+    rdfs:label "Address" ;
+    rdfs:comment "The address, with each line or component separated by a line-break or comma." ;
+    rdfs:domain bods:Address ;
+    rdfs:range rdfs:Literal .
+
+bods:subject a rdf:Property ;
+    rdfs:label "Subject" ;
+    rdfs:comment "The `recordId` for the subject of the relationship, or a reason why the subject cannot be specified. The subject MUST be an entity." ;
+    rdfs:domain bods:Relationship ;
+    rdfs:range bods:Entity .
+
+bods:taxResidency a rdf:Property ;
+    rdfs:label "Tax Residency" ;
+    rdfs:comment "The tax residencies held by this person, as an array of Country objects." ;
+    rdfs:domain bods:Person ;
+    rdfs:range bods:Jurisdiction .
+
+bods:ticker a rdf:Property ;
+    rdfs:label "Stock Ticker" ;
+    rdfs:comment "The stock ticker identifying this security on the named stock exchange." ;
+    rdfs:domain bods:SecuritiesIdentifier ;
+    rdfs:range rdfs:Literal .
+
+bods:transformedContent a rdf:Property ;
+    rdfs:label "Transformed Content" ;
+    rdfs:comment "A representation of the Annotation target after the transformation in the `description` field has been applied. This field MUST only be used when the `motivation` is 'transformation'." ;
+    rdfs:domain bods:Annotation ;
+    rdfs:range rdfs:Literal .
+
+bods:unspecifiedDescription a rdf:Property ;
+    rdfs:label "Description" ;
+    rdfs:comment "A free text description providing extra information about part of this Statement.",
+        "Additional information about the absence of details for a person or entity. This field may be used to provide set phrases from a source system, or a free text explanation.",
+        "Additional, free text information about the source of information." ;
+    rdfs:domain bods:Annotation,
+        bods:Source,
+        bods:Unspecified ;
+    rdfs:range rdfs:Literal .
+
+bods:unspecifiedReason a rdf:Property ;
+    rdfs:label "Reason" ;
+    rdfs:comment "The reason for this person being declared a politically-exposed person.",
+        "The reason that a person or entity cannot be specified, using the unspecifiedReason codelist." ;
+    rdfs:domain bods:PoliticalExposure,
+        bods:Unspecified ;
+    rdfs:range rdfs:Literal,
+        bods:UnspecifiedReason .
+
+bods:uri a rdf:Property ;
+    rdfs:label "URI" ;
+    rdfs:comment "A canonical URI (https://en.wikipedia.org/wiki/Uniform_Resource_Identifier) for the identifier and associated details of the person or entity, if one exists.",
+        "Where a persistent URI (https://en.wikipedia.org/wiki/Uniform_Resource_Identifier) is available for this entity this should be included." ;
+    rdfs:domain bods:Entity,
+        bods:Identifier ;
+    rdfs:range rdfs:Resource .
+
+bods:url a rdf:Property ;
+    rdfs:label "Source URL",
+        "URL" ;
+    rdfs:comment "A linked resource that annotates, provides context for or enhances this Statement. The content of the resource, or the relationship to the statement, MAY be described in the `description` field. This field is REQUIRED if the value of `motivation` is 'linking'.",
+        "The external URL from which this information was fetched, if relevant. Or, if relevant, a URL providing additional detail on how this information was sourced." ;
+    rdfs:domain bods:Annotation,
+        bods:Source ;
+    rdfs:range rdfs:Resource .
+
+bods:Declaration a owl:Class ;
+    rdfs:label "Declaration" ;
+    rdfs:comment "Each declaration is a set of claims about the entities, people and relationships within the subject’s beneficial ownership network." .
+
+bods:Unspecified a owl:Class ;
+    rdfs:label "Unspecified or unknown person or entity" ;
+    rdfs:comment "A `reason` MUST be supplied." ;
+    rdfs:subClassOf bods:RecordDetails .
+
+bods:Relationship a owl:Class ;
+    rdfs:label "Relationship" ;
+    rdfs:comment "The Record Details in this Statement describe the interests held by an interested party in a subject (an entity) at a particular point in time." ;
+    rdfs:subClassOf bods:RecordDetails .
+
+bods:PEPStatus a owl:Class ;
+    rdfs:label "Politically Exposed Person (PEP) Status" ;
+    rdfs:comment "This value is 'isPep' or 'isNotPep' according to whether the person described by this statement has the status of politically exposed person (PEP). An 'unknown' value means a PEP status declaration is expected but missing; the reason for the missing data SHOULD be supplied in the `details` array." .
+
+bods:PersonType a owl:Class .
+
+bods:SecuritiesIdentifier a owl:Class ;
+    rdfs:label "Security" ;
+    rdfs:comment "Identifying information of the stock or other security." ;
+    rdfs:subClassOf bods:Identifier .
+
+bods:Agent a owl:Class .
+
+bods:RecordDetails a owl:Class ;
+    rdfs:label "Record Details" ;
+    rdfs:comment "The details of the entity, person or relationship as declared on the Statement Date." .
+
+bods:AnnotationMotivation a owl:Class .
+
+bods:EntitySubtype a owl:Class .
+
+bods:Identifier a owl:Class ;
+    rdfs:label "Identifier" ;
+    rdfs:comment "An identifier that has been assigned to a person or entity. `scheme` or `schemeName` (or both) MUST be included in an Identifier object." .
+
+bods:Jurisdiction a owl:Class ;
+    rdfs:label "Jurisdiction" ;
+    rdfs:comment "A Jurisdiction MUST have a name. A jurisdiction SHOULD have a 2-letter country code (ISO 3166-1) or a subdivision code (ISO 3166-2)." .
+
+bods:SecuritiesListing a owl:Class ;
+    rdfs:label "Securities Listing" ;
+    rdfs:comment "Details of a security and the market on which it is traded." .
+
+bods:PoliticalExposure a owl:Class ;
+    rdfs:label "PEP Status Details" ;
+    rdfs:comment "Information about a person's political involvement." .
+
+bods:Annotation a owl:Class ;
+    rdfs:label "Annotation" ;
+    rdfs:comment "Additional information about the data contained in this Statement. Annotations can apply to a whole statement, an object or a single field. Custom properties can be included within the Annotation object to provide structured data where required." .
+
+bods:EntityType a owl:Class .
+
+bods:UnspecifiedReason a owl:Class .
+
+bods:Source a owl:Class ;
+    rdfs:label "Source" ;
+    rdfs:comment "Details describing an information source." .
+
+bods:Address a owl:Class ;
+    rdfs:label "Address" ;
+    rdfs:comment "Semi-structured address details, suitable for processing using address-parsing algorithms. Where postal codes and country information are isolated fields in source systems, this information SHOULD be published in the dedicated fields and SHOULD NOT be published in the `address` field." .
+
+bods:Statement a owl:Class ;
+    rdfs:label "Statement" ;
+    rdfs:comment "A claim about a person, entity or relationship, made at a particular point in time." .
+
+bods:Name a owl:Class ;
+    rdfs:label "Name" ;
+    rdfs:comment "A name by which this person is known. A name MUST be provided in `fullName`, and MAY be broken down in the `familyName`, `givenName` and `patronymicName` fields, based on the EC ISA Core Person Vocabulary (https://joinup.ec.europa.eu/solution/e-government-core-vocabularies) definitions." .
+
+bods:Person a owl:Class ;
+    rdfs:label "Person" ;
+    rdfs:comment "The Record Details in this Statement contain information about a natural person at a particular point in time." ;
+    rdfs:subClassOf bods:RecordDetails .
+
+bods:Entity a owl:Class ;
+    rdfs:label "Entity" ;
+    rdfs:comment "The Record Details in this Statement contain information that identifies and describes an entity at a particular point in time." ;
+    rdfs:subClassOf bods:RecordDetails .
+
+bods:Interest a owl:Class ;
+    rdfs:label "Interest" ;
+    rdfs:comment "A description of an interest held by an interestedParty in the subject." .
+

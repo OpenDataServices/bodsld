@@ -118,24 +118,24 @@ class BODSVocab:
 
 
     def make_graph(self):
-        # self.map_statement()
-        # self.map_declaration()
-        # self.map_record()
-        # self.map_person()
-        # self.map_entity()
-        # self.map_relationship()
-        # self.map_unspecified()
-        # self.map_interest()
-        # self.map_address()
-        # self.map_agent()
-        # self.map_annotation()
-        # self.map_jurisdiction()
-        # self.map_identifier()
-        # self.map_name()
-        # self.map_pepstatus()
-        # self.map_politicalexposure()
+        self.map_statement()
+        self.map_declaration()
+        self.map_record()
+        self.map_person()
+        self.map_entity()
+        self.map_relationship()
+        self.map_unspecified()
+        self.map_interest()
+        self.map_address()
+        self.map_agent()
+        self.map_annotation()
+        self.map_jurisdiction()
+        self.map_identifier()
+        self.map_name()
+        self.map_pepstatus()
+        self.map_politicalexposure()
         self.map_securitieslisting()
-        # self.map_source()
+        self.map_source()
 
     def map_statement(self):
         path = "/$defs/Statement"
@@ -419,7 +419,6 @@ class BODSVocab:
         self.map_class(BODS.SecuritiesIdentifier, sec_path)
         self.g.add((BODS.SecuritiesIdentifier, RDFS.subClassOf, BODS.Identifier))
         self.map_properties(BODS.SecuritiesIdentifier, sec_path)
-        # HERENOW this doesn't make sense
 
     def map_source(self):
         path = "/$defs/Source"
@@ -479,11 +478,11 @@ class BODSVocab:
     def ttl(self):
         return self.g.serialize(format="turtle", auto_compact=True)
 
-    def write_ttl(self):
-        with open("bods-vocabulary-0.4.0.ttl", "w") as f:
+    def write_ttl(self, filename):
+        with open(filename, "w") as f:
             f.write(self.ttl())
 
-    def write_docs(self, filename="bodsvocab.html"):
+    def write_docs(self, filename):
         od = OntPub(ontology=self.ttl())
         html = od.make_html(destination=filename)
 
@@ -533,9 +532,8 @@ if __name__ == "__main__":
     )
     
     vocab.make_graph()
-    # print(vocab.ttl())
-    vocab.write_ttl()
-    vocab.write_docs()
+    vocab.write_ttl("bods-vocabulary-0.4.0.ttl")
+    vocab.write_docs("bodsvocab.html")
 
 
 
