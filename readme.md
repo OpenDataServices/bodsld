@@ -1,12 +1,12 @@
 # BODS-LD
 
-This repo contains the latest version of the RDF vocabulary as generated from the current (v0.4.0) schema (`bods-vocabulary-0.4.0.ttl`) and equivalent HTML documentation (`bodsvocab.html`).
+This repo contains the latest version of the RDF vocabulary as generated from the current (v0.4.0) schema (`docs/terms/bods-vocabulary-0.4.0.ttl`) and equivalent HTML documentation (`docs/terms/bods-vocabulary-0.4.0.html`).
 
 It also contains script for generating the vocabulary and documentation. This only needs to be run if there are changes to the schema, or to the mapping from the schema to the RDF data model.
 
 ## Mapping
 
-TODO: Link to writeup of mapping (currently restricted access).
+See the documentation attached to this repo.
 
 ### Limitations
 
