@@ -11,3 +11,6 @@ collections:
 
 ordered_collections:
   - pages
+
+toc:
+    enabled: true
