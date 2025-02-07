@@ -1,3 +1,8 @@
+---
+title: Vocabulary
+layout: post
+---
+
 # Vocabulary
 
 We define the following prefixes as part of our vocabulary

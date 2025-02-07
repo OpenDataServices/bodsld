@@ -1,3 +1,8 @@
+---
+title: Data model
+layout: post
+---
+
 # Data model
 
 ## Named graphs
