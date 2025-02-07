@@ -5,7 +5,7 @@ layout: post
 
 We define the following prefixes as part of our vocabulary
 
-```yaml
+```json
 bods: https://vocab.openownership.org/terms#
 codes: https://vocab.openownership.org/codelists#
 orgid: https://org-id.guide/list/
