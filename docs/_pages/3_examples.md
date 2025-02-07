@@ -3,7 +3,7 @@ title: Examples
 layout: post
 ---
 
-```json
+```
 @prefix stmt: <https://example.org/statements/> .
 @prefix rec: <https://example.org/records/> .
 @prefix decl: <https://example.org/declarations/> .
