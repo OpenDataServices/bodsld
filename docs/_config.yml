@@ -8,6 +8,8 @@ baseurl:          '/bodsld'
 collections:
   pages:
     output: true
+  terms:
+    output: true
 
 ordered_collections:
   - pages
