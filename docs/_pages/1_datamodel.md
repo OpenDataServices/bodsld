@@ -7,13 +7,13 @@ layout: post
 
 Named graphs are typically used in RDF data modelling to provide additional context for RDF data; they are often used for timestamping, or to indicate the provenance of a triple. This means that as well as using triples (subject, predicate, object) for the data, we use quads (subject, predicate, object, context).
 
-```
+```yaml
 <graph> { <subject> property “value” . }
 ```
 
 The identifier for a named graph can also be the subject of a triple; this is how we attach the metadata which describes the context represented by the named graph.
 
-```
+```yaml
 <graph> property “value”
 ```
 
@@ -51,13 +51,13 @@ In this way, record details about which a particular `Statement` is made are gro
 
 As a new `Statement` is published every time the details in a record are updated, the identifier for the record is reused across multiple `Statements`. This means we may end up with apparently conflicting information:
 
-```
+```yaml
 <ex:personabcd#subject> bods:name “Max” .
 ```
 
 and
 
-```
+```yaml
 <ex:personabcd#subject> bods:name “Maxine” .
 ```
 
@@ -65,7 +65,7 @@ published at different times.
 
 Examining these triples along with the graph they are part of - ie. using quads instead of triples - shows which is the most recent data.
 
-```
+```yaml
 <ex:statement123> a bods:NewRecordStatement .
 <ex:statement123> bods:statementDate “2019-01-01T12:34:00”^^xsd:dateTime .
 <ex:statement123> <ex:personabcd#subject> bods:name “Max” .
@@ -77,7 +77,7 @@ Examining these triples along with the graph they are part of - ie. using quads 
 
 We can examine the change over time of a record's details this way:
 
-```
+```yaml
 SELECT ?name ?date WHERE
 {
   GRAPH ?statement { <ex:personabc#subject> bods:name ?name } .
@@ -88,7 +88,7 @@ ORDER BY ?date
 
 Or search only for the latest data:
 
-```
+```yaml
 SELECT ?name WHERE
 {
   GRAPH ?statement { <ex:personabc#subject> bods:name ?name } .
@@ -104,7 +104,7 @@ TODO: statements diagram
 
 The `recordStatus` property is replaced in the RDF data model by subclasses for the `Statement` class. `Statements` have an rdf:type value of `NewRecordStatement`, `UpdatedRecordStatement` or `ClosedRecordStatement`.
 
-```
+```yaml
 SELECT ?statement WHERE
 { ?statement a bods:NewRecordStatement . }
 ```
@@ -115,7 +115,7 @@ The BODS data model represents the details of records about people, entities, an
 
 While the GRAPH syntax can be used to find connections between `Statement`s and the record details they reference when querying a datastore, we can also accommodate the "[follow your nose](https://www.w3.org/2001/sw/wiki/Linking_patterns#%E2%80%9CFollow_your_nose%E2%80%9D)" discovery mechanism by creating explicit links in both directions between instances of `Statement`s and `RecordDetails` using the widely used `primaryTopic` and `primaryTopicOf` properties from the FOAF vocabulary. 
 
-```
+```yaml
 <ex:statement123> foaf:primaryTopic <ex:record321> .
 <ex:record321> foaf:primaryTopicOf <ex:statement123> .
 ```
@@ -126,7 +126,7 @@ For consistency with the JSON vocabulary we retain the `recordDetails` property,
 
 Record identifiers are expected to come from the information management system in which the record is stored (such as a companies register for a particular country). These identifiers are likely to be unique within the system, but not necessarily globally unique, and are unlikely to already be URIs. We can generate a globally unique URI for the RDF representation of the record from the `recordId` string and the org-id of the organisation which hosts the data, eg:
 
-```
+```yaml
 https://org-id.guide/list/GB-COH/record/c359f58d2977
 ```
 
@@ -156,7 +156,7 @@ TODO: RecordDetails subclass diagram
 
 To align with the more conceptually “clean” approach generally taken in data modelling for Linked Data - which would require separate identifiers for the person/entity, and the record about them - but without deviating too much from the BODS conceptual model, we can append a `#` value to the end of the record identifier to refer to the person or entity which is the subject of that record. This means that we can say:
 
-```
+```yaml
 <ex:personabcd#subject> bods:name “Max” .
 <ex:entitymno#subject> bods:name “Ball Co” .
 <ex:relationshipxyz> bods:subject <ex:entitymno#subject> .
@@ -187,7 +187,7 @@ TODO: unspecifiedReason diagram
 
 When partial data is known, an instance can have multiple types so that the necessary properties are available, eg.:
 
-```
+```yaml
 <ex:entitymno> a bods:Entity, bods:UnspecifiedRecord .
 <ex:entitymno#subject> bods:entityType bods:UnknownEntity .
 <ex:entitymno#subject> bods:jurisdiction codes:FR .
