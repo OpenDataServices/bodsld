@@ -5,7 +5,3 @@ description: The Beneficial Ownership Data Standard v0.4 RDF data model
 url:              'https://opendataservices.github.io'
 baseurl:          '/bodsld'
 
-toc:
-    enabled: true
-    h_min: 1
-    h_max: 3
