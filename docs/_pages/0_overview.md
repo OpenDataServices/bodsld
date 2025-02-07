@@ -3,8 +3,6 @@ title: Overview
 layout: post
 ---
 
-# Overview
-
 The core BODS data model is represented in RDF by the following classes:
 
 * `Statement` (with subclasses for new, updated, and closed record statements)
