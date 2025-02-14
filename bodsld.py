@@ -497,8 +497,8 @@ if __name__ == "__main__":
       "The RDF vocabulary for the Beneficial Ownership Data Standard v0.4")
     
     # Properties that aren't making it to the RDF model
-    vocab.exclude_properties(["statementId", "publicationDetails",
-      "declarationSubject", "declaration", "recordId", "recordType",
+    vocab.exclude_properties(["publicationDetails",
+      "declarationSubject", "declaration", "recordType",
       "recordStatus", "isComponent", "type", "unspecifiedEntityDetails",
       "publicListing", "unspecifiedPersonDetails", "componentRecords", "share"])
     
@@ -517,7 +517,9 @@ if __name__ == "__main__":
         "exclusiveMaximum": "shareExclusiveMaximum",
         "address": "streetAddress",
         "id": "idString",
-        "security": "securityId"
+        "security": "securityId",
+        "statementId": "statementIdString",
+        "recordId": "recordIdString",
     }
     vocab.rename_properties(["annotations", "alternateNames",
       "identifiers", "names", "securitiesListings", "companyFilingsURLs", "interests"] + list(rename_map.keys()), rename_map)
