@@ -24,6 +24,12 @@ Classes, subclasses and instances are also defined for the other components need
 * `Identifier`
 * `Jurisdiction`
 * `Name`
+* `PEPStatus`
 * `PoliticalExposure`
 * `SecuritiesListing`
+* `SecuritiesIdentifier`
 * `Source`
+
+![A diagram showing the whole core data model](assets/diagrams/whole_core.png)
+
+![A diagram showing the all the components of the data model](assets/diagrams/whole_components.png)
