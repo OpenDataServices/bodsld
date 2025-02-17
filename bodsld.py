@@ -532,7 +532,7 @@ if __name__ == "__main__":
     
     vocab.make_graph()
     vocab.write_ttl("bods-vocabulary-0.4.0.ttl")
-    vocab.write_docs("bodsvocab.html")
+    vocab.write_docs("bods-vocabulary-0.4.0.html")
 
 
 
