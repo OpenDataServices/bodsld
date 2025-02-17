@@ -156,8 +156,8 @@ Removed and flattened onto [`Statement`](#statement).
 
 Renamed to `Agent` for use in other places.
 
-* `name`: unchanged.
-* `url`: renamed to `uri`.
+* `name`: renamed to `agentName`.
+* `url`: renamed to `agentUri`.
 
 ### SecuritiesListing
 
