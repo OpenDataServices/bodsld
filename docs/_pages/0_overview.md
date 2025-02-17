@@ -30,6 +30,6 @@ Classes, subclasses and instances are also defined for the other components need
 * `SecuritiesIdentifier`
 * `Source`
 
-![A diagram showing the whole core data model](assets/diagrams/whole_core.png)
+![A diagram showing the whole core data model](/bodsld/assets/diagrams/whole_core.png)
 
-![A diagram showing the all the components of the data model](assets/diagrams/whole_components.png)
+![A diagram showing the all the components of the data model](/bodsld/assets/diagrams/whole_components.png)
