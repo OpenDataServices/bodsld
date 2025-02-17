@@ -97,7 +97,7 @@ In JSON we use a nested object to describe an unspecified person or entity. This
 * `type`: removed; use a `rdf:type` with a class.
 * `address`: renamed to `streetAddress`.
 * `postCode`: unchanged.
-* `country`: unchanged, but the value is a `Jurisdiction`.
+* `country`: unchanged, but the value is a [`Jurisdiction`](#jurisdiction).
 
 ### Annotation
 
@@ -111,7 +111,7 @@ In JSON we use a nested object to describe an unspecified person or entity. This
 
 ### Country
 
-Removed and replaced with `Jurisdiction` throughout.
+Removed and replaced with [`Jurisdiction`](#jurisdiction) throughout.
 
 ### Identifier
 
@@ -146,11 +146,11 @@ Renamed to `PoliticalExposure`.
 
 ### PublicListing
 
-Removed and flattened onto `Entity` (nested property names unchanged, except for `companyFilingsURLs` which becomes `companyFilingsURL`).
+Removed and flattened onto [`Entity`](#record-details-entity) (nested property names unchanged, except for `companyFilingsURLs` which becomes `companyFilingsURL`).
 
 ### PublicationDetails
 
-Removed and flattened onto `Statement`.
+Removed and flattened onto [`Statement`](#statement).
 
 ### Publisher
 
@@ -165,11 +165,11 @@ Renamed to `Agent` for use in other places.
 * `operatingMarketIdentifierCode`: unchanged.
 * `stockExchangeJurisdiction`: unchanged.
 * `stockExchangeName`: unchanged.
-* `security`: renamed to `securityId`; convert the nested object into an instance of `SecuritiesIdentifier` (which is a subclass of `Identifier` with the additional property of `ticker`).
+* `security`: renamed to `securityId`; convert the nested object into an instance of `SecuritiesIdentifier` (which is a subclass of [`Identifier`](#identifier) with the additional property of `ticker`).
 
 ### Share
 
-Removed and flattened onto `Interest`. Note property names are prefixed with `share*` for clarity.
+Removed and flattened onto [`Interest`](#interest). Note property names are prefixed with `share*` for clarity.
 
 ### Source
 
