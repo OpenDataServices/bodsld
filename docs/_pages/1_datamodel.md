@@ -8,22 +8,24 @@ layout: post
 Named graphs are typically used in RDF data modelling to provide additional context for RDF data; they are often used for timestamping, or to indicate the provenance of a triple. This means that as well as using triples (subject, predicate, object) for the data, we use quads (subject, predicate, object, context).
 
 ```
-<graph> { <subject> property “value” . }
+<graph> { <subject> property "value" . }
 ```
 
 The identifier for a named graph can also be the subject of a triple; this is how we attach the metadata which describes the context represented by the named graph.
 
 ```
-<graph> property “value”
+<graph> property "value"
 ```
+
+How we use _statements_ in BODS as named graphs - as a structure to provide context for a record - is explained [below](#statements-and-record-details.
 
 ## Identifiers
 
 Publishing beneficial ownership data as linked data requires generating globally unique identifiers (ideally HTTP URIs) for at least the core parts of the data model. These URIs serve as the subject in any RDF triple or the graph identifier in a quad.
 
-In some cases, identifiers which are unique but which are not HTTP URIs may already exist.
+In some cases, identifiers which are unique - but which are not HTTP URIs - may already exist.
 
-The Beneficial Ownership Data Standard describes how to generate identifiers for statements, and explains how to derive identifiers for records. The RDF representation should retain these unchanged, but for added clarity about their expected values the recordId and statementId properties from the JSON representation are renamed recordIdString and statementIdString in the RDF vocabulary.
+The [Beneficial Ownership Data Standard](https://standard.openownership.org) describes how to generate identifiers for statements, and explains how to derive identifiers for records. The RDF representation should retain these unchanged, but for added clarity about their expected values the `recordId` and `statementId` properties from the JSON representation are renamed `recordIdString` and `statementIdString` in the RDF vocabulary.
 
 For certain components in the data model, HTTP URIs to represent equivalent common concepts (eg. countries) may already exist and be in use by third parties. Where possible, we will aim to reuse these identifiers. In some cases, it may be preferable to create and maintain our own set of URIs for codelist values instead.
 
@@ -36,29 +38,29 @@ In the BODS 0.4 data model, `Statement`s are ideally suited to being used as nam
 `Statement` identifiers can be used as the graph portion of a quad:
 
 ```
-<ex:personabcd#subject> bods:name “Max” <ex:statement123> .
+<ex:personabcd#subject> bods:name "Max" <ex:statement123> .
 ```
 
 And also as the subject of triples in their own right:
 
 ```
-bods:statementDate “2019-01-01T12:34:00”^^xsd:dateTime <ex:statement123> .
+bods:statementDate "2019-01-01T12:34:00"^^xsd:dateTime <ex:statement123> .
 ```
 
 TODO: statement graph diagram
 
-In this way, record details about which a particular `Statement` is made are grouped together into the same context, and information about that context is provided by the metadata attached to the `Statement`.
+In this way, record details about which a particular `Statement` is made are grouped together into the same context, and information about that context is provided by the predicates attached to the `Statement`.
 
 As a new `Statement` is published every time the details in a record are updated, the identifier for the record is reused across multiple `Statements`. This means we may end up with apparently conflicting information:
 
 ```
-<ex:personabcd#subject> bods:name “Max” .
+<ex:personabcd#subject> bods:name "Max" .
 ```
 
 and
 
 ```
-<ex:personabcd#subject> bods:name “Maxine” .
+<ex:personabcd#subject> bods:name "Maxine" .
 ```
 
 published at different times.
@@ -67,12 +69,12 @@ Examining these triples along with the graph they are part of - ie. using quads 
 
 ```
 <ex:statement123> a bods:NewRecordStatement .
-<ex:statement123> bods:statementDate “2019-01-01T12:34:00”^^xsd:dateTime .
-<ex:statement123> <ex:personabcd#subject> bods:name “Max” .
+<ex:statement123> bods:statementDate "2019-01-01T12:34:00"^^xsd:dateTime .
+<ex:statement123> <ex:personabcd#subject> bods:name "Max" .
 
 <ex:statement234> a bods:UpdatedRecordStatement .
-<ex:statement234> bods:statementDate “2024-01-01T12:34:00”^^xsd:dateTime .
-<ex:statement234> <ex:personabcd#subject> bods:name “Maxine” .
+<ex:statement234> bods:statementDate "2024-01-01T12:34:00"^^xsd:dateTime .
+<ex:statement234> <ex:personabcd#subject> bods:name "Maxine" .
 ```
 
 We can examine the change over time of a record's details this way:
@@ -102,7 +104,7 @@ TODO: statements diagram
 
 ### Statement types
 
-The `recordStatus` property is replaced in the RDF data model by subclasses for the `Statement` class. `Statements` have an rdf:type value of `NewRecordStatement`, `UpdatedRecordStatement` or `ClosedRecordStatement`.
+The `recordStatus` property is replaced in the RDF data model by subclasses for the `Statement` class. `Statements` have an `rdf:type` value of `NewRecordStatement`, `UpdatedRecordStatement` or `ClosedRecordStatement`.
 
 ```
 SELECT ?statement WHERE
@@ -136,11 +138,13 @@ This URI won’t resolve without a significant update to org-id.guide (which may
 
 Several claims about entities and the relationship(s) between them can be made at the same time. In BODS, this is represented by a `Declaration` which can link multiple `Statements`. 
 
-The only property defined for a `Declaration` is `declarationSubject`, which is a pointer to the entity which the set of `Statements` is ultimately about. We consider this to be an equivalent property to `foaf:primaryTopic` in RDF. In the JSON representation of BODS this property belongs to a `Statement` object and has a plain string value; in RDF, the property belongs to the `Declaration` class, and the value is the URI of a `RecordDetails` instance.
+The only property defined in the JSON data model for a `Declaration` is `declarationSubject`, which is a pointer to the entity which the set of `Statements` is ultimately about. We consider this to be an equivalent property to `foaf:primaryTopic` in RDF. In the JSON representation of BODS this property belongs to a `Statement` object and has a plain string value; in RDF, the property belongs to the `Declaration` class, and the value is the URI of a `RecordDetails` instance.
 
 ### Declaration identifiers
 
 Similarly to records, declaration identifiers originate in a publisher’s system. The JSON representation of BODS uses the `declaration` property on a `Statement` to hold the string value for the external identifier. We replace this with a `declarationIdString` property on the `Declaration` class. The URI for a declaration can be generated from this string.
+
+The `declaration` property is retained on `Statement` with a value of an instance of `Declaration`.
 
 ## People, Entities and Relationships
 
@@ -154,18 +158,18 @@ The identifier for the instance, then, necessarily refers to the record. This al
 
 TODO: RecordDetails subclass diagram
 
-To align with the more conceptually “clean” approach generally taken in data modelling for Linked Data - which would require separate identifiers for the person/entity, and the record about them - but without deviating too much from the BODS conceptual model, we can append a `#` value to the end of the record identifier to refer to the person or entity which is the subject of that record. This means that we can say:
+To align with the more conceptually "clean" approach generally taken in data modelling for linked data - which would require separate identifiers for the person/entity, and the record about them - but without deviating too much from the BODS conceptual model, we can append a `#` value to the end of the record identifier to refer to the person or entity which is the subject of that record. This means that we can say:
 
 ```
-<ex:personabcd#subject> bods:name “Max” .
-<ex:entitymno#subject> bods:name “Ball Co” .
+<ex:personabcd#subject> bods:name "Max" .
+<ex:entitymno#subject> bods:name "Ball Co" .
 <ex:relationshipxyz> bods:subject <ex:entitymno#subject> .
 <ex:relationshipxyz> bods:interestedParty <ex:personabc#subject> .
 ```
 
 And the semantic meaning of these statements is that the person has an interest in the entity (as opposed to the record about the person having an interest in the record about the entity) - without us needing to generate completely new identifiers for people and entities or additional infrastructure to resolve them.
 
-The string that follows the the # character is arbitrary; it can be anything. We recommend to use the same string everywhere; eg. something like “#subject” or “#id”.
+The string that follows the the `#` character is arbitrary; it can be anything. We recommend to use the same string everywhere; eg. something like `#subject` or `#id`.
 
 To generate the URI for a person, entity or relationship, we recommend using information available as part of the identifiers property if available, or generating random uuids if not.
 
@@ -181,7 +185,7 @@ TODO: record details diagram
 
 Missing or incomplete data is explicitly accounted for in BODS as there are many potential reasons for and implications thereof. This aligns well with the [open world assumption](https://en.wikipedia.org/wiki/Closed-world_assumption) which underpins data modelling in linked data.
 
-In the JSON representation of BODS, missing data is described by a combination of a particular type value with additional requirements specified (eg. `“personType”: “anonymousPerson”`) and a nested object in the record details under one of the `unspecifiedEntityDetails`, `unspecifiedPersonDetails`, `interestedParty` or `subject` properties (depending on the record type). In the RDF data model, we replace this with the `UnspecifiedRecord` class, and define instances for each of the values of the `unspecifiedReason` codelist.
+In the JSON representation of BODS, missing data is described by a combination of a particular type value with additional requirements specified (eg. `"personType": "anonymousPerson"`) and a nested object in the record details under one of the `unspecifiedEntityDetails`, `unspecifiedPersonDetails`, `interestedParty` or `subject` properties (depending on the record type). In the RDF data model, we replace this with the `UnspecifiedRecord` class, and define instances for each of the values of the `unspecifiedReason` codelist.
 
 TODO: unspecifiedReason diagram
 
@@ -191,18 +195,18 @@ When partial data is known, an instance can have multiple types so that the nece
 <ex:entitymno> a bods:Entity, bods:UnspecifiedRecord .
 <ex:entitymno#subject> bods:entityType bods:UnknownEntity .
 <ex:entitymno#subject> bods:jurisdiction codes:FR .
-<ex:entitymno> bods:unspecifiedReason bods:informationUnknownToPublisher .
+<ex:entitymno> bods:reason codes:informationUnknownToPublisher .
 ```
 
 ## Interests
 
 Multiple interests can be referenced from a single record about a `Relationship`, so each `Interest` needs to be instantiated in its own right. `Interest`s are central to BODS; they are a distillation of external information from records which don’t directly map to an external artefact (like a specific record in a publisher’s system) and aren’t necessarily expected to have their own unique identifiers.
 
-The BODS interest types codelist is used as a type hierarchy for `Interest` instances in the RDF data model. In a future version, the properties which are available to each type of `Interest` may be constrained as this becomes defined in the data standard.
+The BODS Interest Types codelist is used as a type hierarchy for `Interest` instances in the RDF data model. In a future version, the properties which are available to each type of `Interest` may be constrained as this becomes defined in the data standard.
 
 TODO: Interests diagram
 
-When representing beneficial ownership relationships in RDF, we can either generate URIs for `Interest` instances or use [blank nodes](https://en.wikipedia.org/wiki/Blank_node.
+When representing beneficial ownership relationships in RDF, we can either generate URIs for `Interest` instances or use [blank nodes](https://en.wikipedia.org/wiki/Blank_node).
 
 The main disadvantage of using blank nodes is that when combining linked data from different sources, identical interests won’t be automatically identified. However the same problem remains with URIs, unless a standard algorithm is agreed between publishers for generating them.
 
@@ -218,13 +222,15 @@ Nesting properties in JSON can make it easier to automatically traverse data, bu
 
 * `Interest/share`: all properties are available for an instance of `Interest`.
 * `Statement/publicationDetails`: all properties nested under `publicationDetails` are available for a `Statement`.
-* `Statement/recordDetails (entity)/publicListing`: all properties nested under `publicListing` are available for an instance of `Entity`
+* `Statement/recordDetails (entity)/entityType`: is flattened into the `entityType`, `entitySubtype` and `entityTypeDetails` properties on `Entity`.
+* `Statement/recordDetails (entity)/formedByStatute`: nested properties are flattened to `formedByStatuteName` and `formedByStatuteDate` on `Entity`.
+* `Statement/recordDetails (entity)/publicListing`: nested properties are flattened to `hasPublicListing`, `companyFilingsURL` and `securitiesListing` on `Entity`.
 
 Note: this is only possible when there is a one-to-one relationship between the parent and child objects.
 
 ### Class hierarchies
 
-The following parts of the data standard are defined as classes with subclasses in the RDF vocabulary (as well as those already mentioned):
+As well as those already mentioned, the following parts of the data standard are defined as classes with subclasses in the RDF vocabulary:
 
 * `Address`, with subclasses from the `addressType` codelist.
 * `Name`, with subclasses from the `nameType` codelist.
@@ -261,11 +267,9 @@ When there is a one-to-many relationship between two objects (eg. a `Statement` 
 
 For readability and consistency, all property names expressed as plural in the JSON representation (typically because their values are Arrays) are converted to singular in the RDF vocabulary.
 
-As all properties in the RDF vocabulary are in the same “bucket”, ie. not segmented by the object to which they belong, some duplicate properties will need to be renamed:
+`type` recurs in several places in the BODS data model, but is not used at all in RDF, preferring instead class hierarchies, or the `entityType` and `personType` properties.
 
-* `name` is reused for `Agent` and `Jurisdiction` as `agentName` and `jurisdictionName`.
-* `Alternate` is a type of both `Address` and `Name`, used in RDF as the `AlternateName` and `AlternateAddress` subclasses.
-* `type` recurs in several places in the BODS data model, but is not used at all in RDF, preferring instead class hierarchies, or the `entityType` and `personType` properties.
+As all properties in the RDF vocabulary are in the same "bucket", ie. not segmented by the object to which they belong, some duplicate properties will need to be renamed, or to have their descriptions updated to accommodate multiple uses: **see [issue](https://github.com/openownership/bodsld/issues/2)**.
 
 ### Aligning attribution properties
 
@@ -285,7 +289,7 @@ This consistency could also be carried forward into future version of the JSON r
 
 The `Identifier` object in BODS points to an external mechanism for uniquely identifying something. We keep the `Identifier` class, and to reduce confusion with standard RDF terminology, we make the following changes to its use:
 
-* If a value for uri is present, treat this as the URI for the `Identifier` instance.
+* If a value for `uri` is present, treat this as the URI for the `Identifier` instance.
 * Rename the `id` property `idString`.
 
 And we update `SecuritiesListing/security` as follows:
@@ -312,7 +316,7 @@ Instances of `PoliticalExposure` are identified using blank nodes.
 
 ### Locations
 
-As `Country` is a type of `Jurisdiction`, we remove `Country` from the RDF vocabulary, define `Jurisdiction` as a class with properties `jurisdictionName` and `code`, and use this in place of `Country` throughout.
+As `Country` is a type of `Jurisdiction`, we remove `Country` from the RDF vocabulary, define `Jurisdiction` as a class with properties `name` and `code`, and use this in place of `Country` throughout.
 
 TODO: jurisdiction diagram
 
@@ -320,6 +324,6 @@ There is no consistent, reliable source of external URIs for jurisdictions in li
 
 ## Direct and indirect relationships
 
-This model has not been tested with `isComponent` and `componentRecords`. We can traverse the graph to find the indirect relationship from a series of direct ones as follows. 
+The properties `isComponent` and `componentRecords` are not carried through to the RDF data model. We can traverse the graph to find the indirect relationship from a series of direct ones as follows. 
 
 TODO: Example
