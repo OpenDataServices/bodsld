@@ -153,6 +153,7 @@ class BODSVocab:
         # Range fixup
         # TODO: can I automate these ranges from the $ref?
         self.g.add((BODS.annotation, RDFS.range, BODS.Annotation))
+        self.g.add((BODS.declaration, RDFS.range, BODS.Declaration))
         self.g.add((BODS.publisher, RDFS.range, BODS.Agent))
         self.g.add((BODS.source, RDFS.range, BODS.Source))
         self.g.add((BODS.recordDetails, RDFS.range, BODS.RecordDetails))
@@ -498,7 +499,7 @@ if __name__ == "__main__":
     
     # Properties that aren't making it to the RDF model
     vocab.exclude_properties(["publicationDetails",
-      "declarationSubject", "declaration", "recordType",
+      "declarationSubject", "recordType",
       "recordStatus", "isComponent", "type", "unspecifiedEntityDetails",
       "publicListing", "unspecifiedPersonDetails", "componentRecords", "share"])
     
