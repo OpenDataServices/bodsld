@@ -47,7 +47,7 @@ And also as the subject of triples in their own right:
 bods:statementDate "2019-01-01T12:34:00"^^xsd:dateTime <ex:statement123> .
 ```
 
-![A Statement with its list of properties, enclosing a Person with its list of properties in a dashed box, to visualise how quads work](assets/diagrams/statementgrah.png)
+![A Statement with its list of properties, enclosing a Person with its list of properties in a dashed box, to visualise how quads work](/bodsld/assets/diagrams/statementgrah.png)
 
 In this way, record details about which a particular `Statement` is made are grouped together into the same context, and information about that context is provided by the predicates attached to the `Statement`.
 
@@ -100,7 +100,7 @@ ORDER BY DESC(?date)
 LIMIT 1
 ```
 
-![A diagram with Statement and its properties at the center; subclasses NewRecordStatement, UpdatedRecordStatement and ClosedRecordStatement on the left; Declaration and RecordDetails linked to the declaration and recordDetails properties on the right](assets/diagrams/statement.png)
+![A diagram with Statement and its properties at the center; subclasses NewRecordStatement, UpdatedRecordStatement and ClosedRecordStatement on the left; Declaration and RecordDetails linked to the declaration and recordDetails properties on the right](/bodsld/assets/diagrams/statement.png)
 
 ### Statement types
 
@@ -156,7 +156,7 @@ However, two different records from two different systems referring to the same 
 
 The identifier for the instance, then, necessarily refers to the record. This also enables changes made to a record (which may or may not equate to changes to the subject!) to be tracked.
 
-![Diagram showing RecordDetails and its subclasses Entity, Relationship, Person, Unspecifed](assets/diagrams/recorddetails.png)
+![Diagram showing RecordDetails and its subclasses Entity, Relationship, Person, Unspecifed](/bodsld/assets/diagrams/recorddetails.png)
 
 To align with the more conceptually "clean" approach generally taken in data modelling for linked data - which would require separate identifiers for the person/entity, and the record about them - but without deviating too much from the BODS conceptual model, we can append a `#` value to the end of the record identifier to refer to the person or entity which is the subject of that record. This means that we can say:
 
@@ -179,7 +179,7 @@ The entity and person types and subtypes in the BODS conceptual model do not len
 
 For this reason, we define instances of `EntityType`, `EntitySubtype` and `PersonType` as part of the vocabulary, to be used as the values of the `entityType`, `entitySubtype` and `personType` properties.
 
-![Multi level diagram with RecordDetails at the top, its subclasses and their properties, and links with EntityType, EntitySubtype and PersonType instances](assets/diagrams/recorddetailsdetails.png)
+![Multi level diagram with RecordDetails at the top, its subclasses and their properties, and links with EntityType, EntitySubtype and PersonType instances](/bodsld/assets/diagrams/recorddetailsdetails.png)
 
 ### Unspecified record subjects
 
@@ -187,7 +187,7 @@ Missing or incomplete data is explicitly accounted for in BODS as there are many
 
 In the JSON representation of BODS, missing data is described by a combination of a particular type value with additional requirements specified (eg. `"personType": "anonymousPerson"`) and a nested object in the record details under one of the `unspecifiedEntityDetails`, `unspecifiedPersonDetails`, `interestedParty` or `subject` properties (depending on the record type). In the RDF data model, we replace this with the `UnspecifiedRecord` class, and define instances for each of the values of the `unspecifiedReason` codelist.
 
-![The UnspecifiedReason class and its subclasses (from the codelist)](assets/diagrams/unspecifiedreason.png)
+![The UnspecifiedReason class and its subclasses (from the codelist)](/bodsld/assets/diagrams/unspecifiedreason.png)
 
 When partial data is known, an instance can have multiple types so that the necessary properties are available, eg.:
 
@@ -204,7 +204,7 @@ Multiple interests can be referenced from a single record about a `Relationship`
 
 The BODS Interest Types codelist is used as a type hierarchy for `Interest` instances in the RDF data model. In a future version, the properties which are available to each type of `Interest` may be constrained as this becomes defined in the data standard.
 
-![Relationship links to Interest with its subclasses and properties via the interest property](assets/diagrams/interest.png)
+![Relationship links to Interest with its subclasses and properties via the interest property](/bodsld/assets/diagrams/interest.png)
 
 When representing beneficial ownership relationships in RDF, we can either generate URIs for `Interest` instances or use [blank nodes](https://en.wikipedia.org/wiki/Blank_node).
 
@@ -236,7 +236,7 @@ As well as those already mentioned, the following parts of the data standard are
 * `Name`, with subclasses from the `nameType` codelist.
 * `Source`, with subclasses from the `sourceType` codelist.
 
-![The Address, Name and Source classes with their properties and subclasses](assets/diagrams/addressnamesource.png)
+![The Address, Name and Source classes with their properties and subclasses](/bodsld/assets/diagrams/addressnamesource.png)
 
 ### Instance definitions
 
@@ -286,7 +286,7 @@ There are three places in the data standard where something is attributed simply
 
 We take the opportunity to align these in the RDF data model with an `Agent` class, an instance of which can be used as the value for each of these properties. In cases where an external URI is provided for the `Agent`, we can use this in our datastore as the identifier directly. In cases where this is missing, we should use a blank node (unless there is a compelling reason to generate a new URI of our own - for example, for a publisher providing lots of BODS data but without their own permanent identifier, or a source which recurs frequently).
 
-![Agent class with two properties](assets/diagrams/agent.png)
+![Agent class with two properties](/bodsld/assets/diagrams/agent.png)
 
 This consistency could also be carried forward into future version of the JSON representation of the data model.
 
@@ -302,7 +302,7 @@ And we update `SecuritiesListing/security` as follows:
 * `SecuritiesIdentifier` is a new class, subclass of `Identifier`, with the additional property of `ticker`.
 * The property `SecuritiesListing/security` with a nested object as its value is replaced by the property `securityId`, the value of which is an instance of `SecuritiesIdentifier`.
 
-![A diagram showing the Identifier class and its properties, a subclass SecuritiesIdentfier, and how that is used via the securityId property on the SecuritiesListing class](assets/diagrams/identifierandsecurities.png)
+![A diagram showing the Identifier class and its properties, a subclass SecuritiesIdentfier, and how that is used via the securityId property on the SecuritiesListing class](/bodsld/assets/diagrams/identifierandsecurities.png)
 
 ### Political exposure
 
@@ -315,7 +315,7 @@ In the JSON representation, there are multiple levels of nested object to descri
   * `PEP`
   * `PEPMissing`
 
-![Diagram showing how Person, PEPStatus (and instances of it) and PoliticalExposure are used via the pepStatus and politicalExposure properties](assets/diagrams/pep.png)
+![Diagram showing how Person, PEPStatus (and instances of it) and PoliticalExposure are used via the pepStatus and politicalExposure properties](/bodsld/assets/diagrams/pep.png)
 
 Instances of `PoliticalExposure` are identified using blank nodes.
 
@@ -323,7 +323,7 @@ Instances of `PoliticalExposure` are identified using blank nodes.
 
 As `Country` is a type of `Jurisdiction`, we remove `Country` from the RDF vocabulary, define `Jurisdiction` as a class with properties `name` and `code`, and use this in place of `Country` throughout.
 
-![Jurisdiction and its two properties](assets/diagrams/jurisdiction.png)
+![Jurisdiction and its two properties](/bodsld/assets/diagrams/jurisdiction.png)
 
 There is no consistent, reliable source of external URIs for jurisdictions in line with ISO 3166-1/2 so we recommend defining URIs as part of the BODS vocabulary to refer to for values of the `Entity/jurisdiction`, `Person/taxResidency` and `Address/country` properties.
 

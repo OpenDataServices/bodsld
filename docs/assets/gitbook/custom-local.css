@@ -1,3 +1,7 @@
 .markdown-section pre {
 	color: #000;
 }
+
+.markdown-section img {
+	padding: 2em;
+}
