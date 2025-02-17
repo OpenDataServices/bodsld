@@ -1817,6 +1817,30 @@ td {
             </tr>
           </table>
         </div>
+        <div class="property entity" id="DirectOrIndirect">
+          <h3>Direct Or Indirect
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>https://standard.openownership.org/codelists#DirectOrIndirect</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="https://w3id.org/profile/ontdoc/inRangeOf" title="Inverse of rdfs:range. Defined in Ontology Documentation Profile">In Range Of</a>
+              </th>
+              <td>
+                <span>
+                  <a href="#directOrIndirect">Direct or Indirect</a>
+                  <sup class="sup-p" title="RDF Property">p</sup>
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
         <div class="property entity" id="PoliticallyExposedPerson(PEP)Status">
           <h3>Politically Exposed Person (PEP) Status
             <sup class="sup-c" title="OWL/RDFS Class">c</sup>
@@ -1933,6 +1957,30 @@ td {
               <td>
                 <span>
                   <a href="#securityId">Security</a>
+                  <sup class="sup-p" title="RDF Property">p</sup>
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="SecuritiesIdentifierScheme">
+          <h3>Securities Identifier Scheme
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>https://standard.openownership.org/codelists#SecuritiesIdentifierScheme</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="https://w3id.org/profile/ontdoc/inRangeOf" title="Inverse of rdfs:range. Defined in Ontology Documentation Profile">In Range Of</a>
+              </th>
+              <td>
+                <span>
+                  <a href="#idScheme">Identifier Scheme</a>
                   <sup class="sup-p" title="RDF Property">p</sup>
                 </span>
               </td>
@@ -3536,7 +3584,7 @@ td {
               <th>
                 <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
               </th>
-              <td><p>One or more addresses for this entity.</p></td>
+              <td><p>One or more addresses for this person.</p></td>
             </tr>
             <tr>
               <th>
@@ -4387,7 +4435,10 @@ td {
                 <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#range" title="A range of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Range</a>
               </th>
               <td>
-                <a href="http://www.w3.org/2000/01/rdf-schema#Literal">Literal</a>
+                <span>
+                  <a href="https://standard.openownership.org/codelists#DirectOrIndirect">codes:DirectOrIndirect</a>
+                  <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                </span>
               </td>
             </tr>
           </table>
@@ -4902,7 +4953,17 @@ td {
                 <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#range" title="A range of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Range</a>
               </th>
               <td>
-                <a href="http://www.w3.org/2000/01/rdf-schema#Literal">Literal</a>
+                <ul>
+                  <li>
+                    <a href="http://www.w3.org/2000/01/rdf-schema#Literal">Literal</a>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="https://standard.openownership.org/codelists#SecuritiesIdentifierScheme">codes:SecuritiesIdentifierScheme</a>
+                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                    </span>
+                  </li>
+                </ul>
               </td>
             </tr>
           </table>
@@ -4975,7 +5036,7 @@ td {
               <th>
                 <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
               </th>
-              <td><p>One or more official identifiers for this entity. Where available, official registration numbers should be provided.</p></td>
+              <td><p>One or more official identifiers for this person. Where available, official registration numbers should be provided.</p></td>
             </tr>
             <tr>
               <th>
@@ -7130,6 +7191,9 @@ td {
               <a href="#Relationship">Relationship</a>
             </li>
             <li>
+              <a href="#DirectOrIndirect">Direct Or Indirect</a>
+            </li>
+            <li>
               <a href="#PoliticallyExposedPerson(PEP)Status">Politically Exposed Person (PEP) Status</a>
             </li>
             <li>
@@ -7137,6 +7201,9 @@ td {
             </li>
             <li>
               <a href="#Security">Security</a>
+            </li>
+            <li>
+              <a href="#SecuritiesIdentifierScheme">Securities Identifier Scheme</a>
             </li>
             <li>
               <a href="#Agent">Agent</a>

@@ -17,6 +17,10 @@ codes:Arrangement a bods:EntityType ;
     rdfs:label "Arrangement" ;
     rdfs:comment "A legal arrangement, agreement, contract or other mechanism via which one or more natural or legal persons can associate to exert ownership or control over an entity. Parties to an arrangement have no other form of collective legal identity." .
 
+codes:Cins a codes:SecuritiesIdentifierScheme ;
+    rdfs:label "CUSIP International Numbering System (CINS)" ;
+    rdfs:comment "Scheme for unique identification of securities issued outside North America. Securities are issued 9-character identifiers. The scheme is managed by the American Bankers Association and specified as ANSI X9.6." .
+
 codes:Commenting a bods:AnnotationMotivation ;
     rdfs:label "Commenting" ;
     rdfs:comment "The description field provides contextual comments for a field, object or statement." .
@@ -25,6 +29,18 @@ codes:Correcting a bods:AnnotationMotivation ;
     rdfs:label "Correcting" ;
     rdfs:comment "The value of this field, object or statement has been corrected, using the method in the description field or from the original value given in the description field." .
 
+codes:Cusip a codes:SecuritiesIdentifierScheme ;
+    rdfs:label "Committee on Uniform Securities Identification Procedures (CUSIP) Number" ;
+    rdfs:comment "Scheme for unique identification of securites in North America. Securities are issued 9-character identifiers. The scheme is managed by the American Bankers Association and specified as ANSI X9.6." .
+
+codes:Direct a codes:DirectOrIndirect ;
+    rdfs:label "Direct" ;
+    rdfs:comment "The interest is held directly." .
+
+codes:Figi a codes:SecuritiesIdentifierScheme ;
+    rdfs:label "Financial Instrument Global identifier (FIGI)" ;
+    rdfs:comment "Scheme for unique identification of securities internationally. Securities are issued 12-character identifiers. Full details of the scheme are specified as an Object Management Group standard: https://www.omg.org/spec/FIGI/." .
+
 codes:GovernmentDepartment a bods:EntitySubtype ;
     rdfs:label "Government department" ;
     rdfs:comment "An element of government with executive responsibilities. These terms are often used to designate such a body: ministry, department, bureau or office. This MUST be used with `entityType.type` 'stateBody'." .
@@ -32,6 +48,10 @@ codes:GovernmentDepartment a bods:EntitySubtype ;
 codes:Identifying a bods:AnnotationMotivation ;
     rdfs:label "Identifying" ;
     rdfs:comment "The value of this field, object or statement has been augmented or processed for the purpose of identifying natural persons or legal entities, using the method in the description field." .
+
+codes:Indirect a codes:DirectOrIndirect ;
+    rdfs:label "Indirect" ;
+    rdfs:comment "The interest is held through one or more intermediate entities (including arrangements)." .
 
 codes:InformationUnknownToPublisher a bods:UnspecifiedReason ;
     rdfs:label "Information unknown to the publisher of the data" ;
@@ -44,6 +64,10 @@ codes:InterestedPartyExemptFromDisclosure a bods:UnspecifiedReason ;
 codes:InterestedPartyHasNotProvidedInformation a bods:UnspecifiedReason ;
     rdfs:label "Interested party has not provided information" ;
     rdfs:comment "The interested party in this Relationship Statement has not provided enough information to identify or confirm the identity of the beneficial owner." .
+
+codes:Isin a codes:SecuritiesIdentifierScheme ;
+    rdfs:label "International Securities Identification Number (ISIN)" ;
+    rdfs:comment "Scheme for unique identification of securities internationally. Securities are issued 12-character identifiers. Full details of the scheme are specified by ISO 6166." .
 
 codes:KnownPerson a bods:PersonType ;
     rdfs:label "Known person" ;
@@ -101,9 +125,12 @@ codes:Trust a bods:EntitySubtype ;
     rdfs:label "Trust" ;
     rdfs:comment "A trust or trust like arrangement. An arrangement where a settlor transfers ownership of assets to trustees to control for the benefit of beneficiaries. This MUST be used with `entityType.type` 'arrangement' or 'legalEntity'." .
 
-codes:Unknown a bods:UnspecifiedReason ;
-    rdfs:label "Unknown reason" ;
-    rdfs:comment "The reason an interested party cannot be provided is not known." .
+codes:Unknown a codes:DirectOrIndirect,
+        bods:UnspecifiedReason ;
+    rdfs:label "Unknown",
+        "Unknown reason" ;
+    rdfs:comment "The interest may be direct or indirect.",
+        "The reason an interested party cannot be provided is not known." .
 
 codes:UnknownEntity a bods:EntityType ;
     rdfs:label "Unknown entity" ;
@@ -346,7 +373,7 @@ bods:VotingRights a owl:Class ;
 
 bods:address a rdf:Property ;
     rdfs:label "Addresses" ;
-    rdfs:comment "One or more addresses for this entity." ;
+    rdfs:comment "One or more addresses for this person." ;
     rdfs:domain bods:Entity,
         bods:Person ;
     rdfs:range bods:Address .
@@ -475,7 +502,7 @@ bods:directOrIndirect a rdf:Property ;
     rdfs:label "Direct or Indirect" ;
     rdfs:comment "How directly the interest is exercised by the interested party. The value MUST be 'indirect' if intermediate entities or agents are known to exist, and MUST be 'direct' if such intermediaries are known not to exist. Otherwise the value MUST be 'unknown'." ;
     rdfs:domain bods:Interest ;
-    rdfs:range rdfs:Literal .
+    rdfs:range codes:DirectOrIndirect .
 
 bods:dissolutionDate a rdf:Property ;
     rdfs:label "Dissolution Date" ;
@@ -555,7 +582,8 @@ bods:idScheme a rdf:Property ;
     rdfs:label "Identifier Scheme" ;
     rdfs:comment "The scheme under which the security has been issued a unique, persistent identifier, using the securitiesIdentifierSchemes codelist." ;
     rdfs:domain bods:SecuritiesIdentifier ;
-    rdfs:range rdfs:Literal .
+    rdfs:range rdfs:Literal,
+        codes:SecuritiesIdentifierScheme .
 
 bods:idString a rdf:Property ;
     rdfs:label "ID",
@@ -568,7 +596,7 @@ bods:idString a rdf:Property ;
 
 bods:identifier a rdf:Property ;
     rdfs:label "Identifiers" ;
-    rdfs:comment "One or more official identifiers for this entity. Where available, official registration numbers should be provided." ;
+    rdfs:comment "One or more official identifiers for this person. Where available, official registration numbers should be provided." ;
     rdfs:domain bods:Entity,
         bods:Person ;
     rdfs:range bods:Identifier .
@@ -879,6 +907,8 @@ bods:Relationship a owl:Class ;
     rdfs:comment "The Record Details in this Statement describe the interests held by an interested party in a subject (an entity) at a particular point in time." ;
     rdfs:subClassOf bods:RecordDetails .
 
+codes:DirectOrIndirect a owl:Class .
+
 bods:PEPStatus a owl:Class ;
     rdfs:label "Politically Exposed Person (PEP) Status" ;
     rdfs:comment "This value is 'isPep' or 'isNotPep' according to whether the person described by this statement has the status of politically exposed person (PEP). An 'unknown' value means a PEP status declaration is expected but missing; the reason for the missing data SHOULD be supplied in the `details` array." .
@@ -889,6 +919,8 @@ bods:SecuritiesIdentifier a owl:Class ;
     rdfs:label "Security" ;
     rdfs:comment "Identifying information of the stock or other security." ;
     rdfs:subClassOf bods:Identifier .
+
+codes:SecuritiesIdentifierScheme a owl:Class .
 
 bods:Agent a owl:Class .
 

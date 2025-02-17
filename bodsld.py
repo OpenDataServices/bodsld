@@ -311,6 +311,9 @@ class BODSVocab:
         ## flatten share
         share_path = f"{path}/properties/share"
         self.map_properties(BODS.Interest, share_path)
+
+        # DirectOrIndirect codelist
+        self.map_instances(CODES.DirectOrIndirect, "directOrIndirect.csv")
         
         # Ranges
         self.g.add((BODS.beneficialOwnershipOrControl, RDFS.range, XSD.boolean))
@@ -319,6 +322,8 @@ class BODSVocab:
         self.g.add((BODS.shareExact, RDFS.range, XSD.float))
         self.g.add((BODS.shareExclusiveMaximum, RDFS.range, XSD.float))
         self.g.add((BODS.shareExclusiveMinimum, RDFS.range, XSD.float))
+        self.g.add((BODS.directOrIndirect, RDFS.range, CODES.DirectOrIndirect))
+        self.g.remove((BODS.directOrIndirect, RDFS.range, RDFS.Literal))
 
     def map_address(self):
         path = "/$defs/Address"
@@ -407,12 +412,15 @@ class BODSVocab:
 
         # TODO reason and jurisdiction are duplicate properties
 
-
     def map_securitieslisting(self):
         path = "/$defs/SecuritiesListing"
         self.map_class(BODS.SecuritiesListing, path)
         self.map_properties(BODS.SecuritiesListing, path)
         self.g.add((BODS.securityId, RDFS.range, BODS.SecuritiesIdentifier))
+
+        # SecuritiesIdentifierSchemes codelist
+        self.map_instances(CODES.SecuritiesIdentifierScheme, "securitiesIdentifierSchemes.csv")
+        self.g.add((BODS.idScheme, RDFS.range, CODES.SecuritiesIdentifierScheme))
 
         sec_path = "/$defs/SecuritiesListing/properties/security"
         self.map_class(BODS.SecuritiesIdentifier, sec_path)
@@ -432,7 +440,6 @@ class BODSVocab:
         self.g.add((BODS.assertedBy, RDFS.range, BODS.Agent))
 
         # TODO: description is a duplicate..
-
 
     def get_title(self, pointer):
         path = f"{pointer}/title"
