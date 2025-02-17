@@ -5,3 +5,9 @@
 .markdown-section img {
 	padding: 2em;
 }
+
+.markdown-section img.small {
+	width: 50%;
+	min-width: 300px;
+	max-width: 100%;
+}

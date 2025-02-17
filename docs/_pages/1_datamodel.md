@@ -187,7 +187,7 @@ Missing or incomplete data is explicitly accounted for in BODS as there are many
 
 In the JSON representation of BODS, missing data is described by a combination of a particular type value with additional requirements specified (eg. `"personType": "anonymousPerson"`) and a nested object in the record details under one of the `unspecifiedEntityDetails`, `unspecifiedPersonDetails`, `interestedParty` or `subject` properties (depending on the record type). In the RDF data model, we replace this with the `UnspecifiedRecord` class, and define instances for each of the values of the `unspecifiedReason` codelist.
 
-![The UnspecifiedReason class and its subclasses (from the codelist)](/bodsld/assets/diagrams/unspecifiedreason.png)
+![The UnspecifiedReason class and its subclasses (from the codelist)](/bodsld/assets/diagrams/unspecifiedreason.png){:.small}
 
 When partial data is known, an instance can have multiple types so that the necessary properties are available, eg.:
 
@@ -286,7 +286,7 @@ There are three places in the data standard where something is attributed simply
 
 We take the opportunity to align these in the RDF data model with an `Agent` class, an instance of which can be used as the value for each of these properties. In cases where an external URI is provided for the `Agent`, we can use this in our datastore as the identifier directly. In cases where this is missing, we should use a blank node (unless there is a compelling reason to generate a new URI of our own - for example, for a publisher providing lots of BODS data but without their own permanent identifier, or a source which recurs frequently).
 
-![Agent class with two properties](/bodsld/assets/diagrams/agent.png)
+![Agent class with two properties](/bodsld/assets/diagrams/agent.png){:.small}
 
 This consistency could also be carried forward into future version of the JSON representation of the data model.
 
@@ -323,7 +323,7 @@ Instances of `PoliticalExposure` are identified using blank nodes.
 
 As `Country` is a type of `Jurisdiction`, we remove `Country` from the RDF vocabulary, define `Jurisdiction` as a class with properties `name` and `code`, and use this in place of `Country` throughout.
 
-![Jurisdiction and its two properties](/bodsld/assets/diagrams/jurisdiction.png)
+![Jurisdiction and its two properties](/bodsld/assets/diagrams/jurisdiction.png){:.small}
 
 There is no consistent, reliable source of external URIs for jurisdictions in line with ISO 3166-1/2 so we recommend defining URIs as part of the BODS vocabulary to refer to for values of the `Entity/jurisdiction`, `Person/taxResidency` and `Address/country` properties.
 
