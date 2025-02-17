@@ -5,199 +5,96 @@ layout: post
 
 BODS v0.4 JSON data can be converted to RDF in line with the data model described here.
 
-While the code in this repository converts the _schema_ into an RDF vocabulary, it may serve as a useful starting point for any _data_ conversion scripts.
+While the code in this repository converts the _schema_ into an RDF vocabulary, the code and the quick reference may serve as a useful starting point for any _data_ conversion scripts.
 
-## Summary of changes
+## Examples
 
-This is a list of the changes for each JSON object type and its properties that need to be made when transforming from the [JSON data model](https://standard.openownership.org/en/0.4.0/standard/schema-browser.html) to the RDF data model.
+```
+@prefix stmt: <https://example.org/statements/> .
+@prefix rec: <https://example.org/records/> .
+@prefix decl: <https://example.org/declarations/> .
+@prefix bods: <https://vocab.openownership.org/terms#> .
 
-Where the value of a property is a nested object in JSON, unless otherwise stated, this object is converted into an instance with a relevant `rdf:type` value, and the value of the property is the URI of this instance (or blank node identifier).
+_:gb a bods:Jurisdiction;
+	bods:jurisdictionName "United Kingdom";
+	bods:code "GB" .
 
-For more detail about the differences, see the Data Model documentation.
+_:pub1 bods:publisherName "Profitech Ltd" .
 
-### Statement
+_:declaration1 a bods:Declaration;
+	bods:declarationSubject rec:c359f58d2977 .
 
-* `statementId`: renamed to `statementIdString`; and the value is used for the URI for the `Statement` instance.
-* `statementDate`: unchanged.
-* `annotations`: becomes `annotation`.
-* `publicationDetails`: removed; nested properties are flattened so `bodsVersion`, `license`, `publicationDate` and `publisher` are on the Statement. Value of `publisher` is an `Agent`.
-* `source`: unchanged.
-* `declaration`: value is a `Declaration` instance.
-* `declarationSubject`: moved to `Declaration` instance.
-* `recordId`: moved to a `RecordDetails` instance and renamed to `recordIdString`; and the value is used for the URI of the `RecordDetails` instance.
-* `recordType`: removed; use to generate the `rdf:type` value for the `RecordDetails` instance.
-* `recordStatus`: removed; use to generate the `rdf:type` value for the `Statement` instance.
-* `recordDetails`: the value is the URI of a `RecordDetails` instance.
+_:id1 a bods:Identifier;
+    	bods:scheme "GB-COH";
+    	bods:idString "2063384560" .
 
-### Record details (entity)
+stmt:1dc0e987-5c57-4a1c-b3ad-61353b66a9b7
+{
+	stmt:1dc0e987-5c57-4a1c-b3ad-61353b66a9b7 a bods:NewRecordStatement;
+        	bods:statementDate "2020-03-04"^^xsd:dateTime;
+        	bods:publicationDate "2020-03-04"^^xsd:dateTime;
+        	bods:version "0.4";
+        	bods:publisher _:pub1;
+        	bods:recordDetails rec:c359f58d2977 .
 
-These go from a nested object under `recordDetails` on `Statement` to an instance with an `rdf:type` of `Entity`.
+	rec:c359f58d2977 a bods:Entity;
+    	   	bods:recordIdString "c359f58d2977";
+    	   	bods:entityType bods:RegisteredEntity;
+    	   	bods:entityName "Profitech Ltd";
+    	   	bods:foundingDate "2019-09-03"^^xsd:dateTime;
+    	   	bods:identifier _:id1 .
 
-* `isComponent`: removed.
-* `entityType`: value is an instance of an `EntityType` (generated from the entityType codelist).
-* `entityType/subtype`: flattened to `entitySubtype`; value is an instance of an `EntitySubtype` (generated from the entitySubtype codelist).
-* `entityType/details`: flattened to `entityTypeDetails`.
-* `unspecifiedEntityDetails`: removed; use an instance of `UnspecifiedRecord` instead.
-* `name`: unchanged.
-* `alternateNames`: becomes `alternateName`.
-* `jurisdiction`: unchanged.
-* `identifiers`: becomes `identifier`.
-* `foundingDate`: unchanged.
-* `dissolutionDate`: unchanged.
-* `addresses`: becomes `address`.
-* `uri`: unchanged.
-* `publicListing`: removed; nested properties are flattened to `hasPublicListing`, `companyFilingsURL` and `securitiesListing`.
-* `formedByStatute`: removed; nested properties are flattened to `formedByStatuteName` and `formedByStatuteDate`.
+}
 
-### Record details (person)
+_:name1 a bods:LegalName;
+	bods:fullName "Jennifer Hewitson-Smith";
+	bods:giveName "Jennifer";
+	bods:familyName "Hewitson-Smith" .
 
-These go from a nested object under `recordDetails` on `Statement` to an instance with an `rdf:type` of `Person`.
+_:name2 a bods:AlternativeName;
+	bods:fullName "Jenny Hewitson-Smith" .
 
-* `isComponent`: removed.
-* `personType`: value is an instance of a `PersonType` (generated from the personType codelist).
-* `unspecifiedPersonDetails`: removed; use an instance of `UnspecifiedRecord` instead.
-* `names`: becomes `name`.
-* `identifiers`: becomes `identifier`.
-* `nationalities`: becomes `nationality`.
-* `placeOfBirth`: unchanged.
-* `birthDate`: unchanged.
-* `deathDate`: unchanged.
-* `taxResidencies`: becomes `taxResidency`.
-* `addresses`: becomes `address`.
-* `politicalExposure`: value is the identifier for a `PoliticalExposure` instance.
-* `politicalExposure/status`: replaced with `pepStatus`, the value for which is an instance of `PEPStatus`.
+_:addr1 a bods:ServiceAddress;
+	bods:address "76 York Road Bournemouth";
+	bods:postCode "BH81 3L0";
+	bods:country _:gb .
 
-### Record details (relationship)
+stmt:019a93f1-e470-42e9-957b-03559861b2e2
+{
+	stmt:019a93f1-e470-42e9-957b-03559861b2e2 a bods:NewRecordStatement;
+    	bods:statementDate "2020-03-04"^^xsd:dateTime;
+    	bods:publicationDate "2020-03-04"^^xsd:dateTime;
+    	bods:version "0.4";
+    	bods:publisher _:pub1;
+    	bods:recordDetails rec:10478c6cf6de .
 
-These go from a nested object under `recordDetails` on `Statement` to an instance with an `rdf:type` of `Relationship`.
+	rec:10478c6cf6de a bods:Person;
+    	bods:personType bods:KnownPerson;
+    	bods:nationality _:gb;
+    	bods:personName _:name1, name2;
+    	bods:birthDate "1978-07"^^xsd:dateTime;
+    	bods:address _:addr1 .
+}
 
-* `isComponent`: removed.
-* `componentRecords`: removed.
-* `subject`: the value goes from a recordId string to the URI of an instance.
-* `interestedParty`: the value goes from a recordId string to the URI of an instance.
-* `interests`: becomes `interest`; the value goes from a nested object to the URI of an instance.
+stmt:fbfd0547-d0c6-4a00-b559-5c5e91c34f5c
+{
+	stmt:fbfd0547-d0c6-4a00-b559-5c5e91c34f5c a bods:NewRecordStatement;
+    	bods:statementDate "2020-03-04"^^xsd:dateTime;
+    	bods:publicationDate "2020-03-04"^^xsd:dateTime;
+    	bods:version "0.4";
+    	bods:publisher _:pub1;
+    	bods:recordDetails rec:93b53022ae6a .
 
-### UnspecifiedRecord
+	rec:93b53022ae6a a bods:Relationship;
+    	bods:subject rec:c359f58d2977;
+    	bods:interestedParty rec:10478c6cf6de;
+    	bods:interest _:interest1 .
 
-In JSON we use a nested object to describe an unspecified person or entity. This is replaced with the `UnspecifiedRecord` class which is a subclass of `RecordDetails` (like `Person` and `Entity`).
+	_:interest1 a bods:Interest;
+    	bods:interestType bods:Shareholding;
+    	bods:beneficialOwnershipOrControl "true"^^xsd:boolean;
+    	bods:startDate "2016-04-06"^^xsd:dateTime;
+    	bods:shareExact "100" .
+}
 
-* `reason`: renamed to `unspecifiedReason`; value is an instance from the codelist.
-* `description`: renamed to `unspecifiedDescription`.
-
-### Address
-
-* `type`: removed; use a `rdf:type` with a class.
-* `address`: renamed to `streetAddress`.
-* `postCode`: unchanged.
-* `country`: unchanged, but the value is a `Jurisdiction`.
-
-### Annotation
-
-* `statementPointerTarget`
-* creationDate
-* createdBy, /name, /uri
-* `motivation`: unchanged; value is an instance from the codelist.
-* description
-* transformedContent
-* url
-
-### Country
-
-Removed and replaced with `Jurisdiction` throughout.
-
-### Identifier
-
-* `id`: renamed to `idString`.
-* `scheme`: unchanged.
-* `schemeName`: unchanged.
-* `uri`: unchanged.
-
-### Interest
-
-* `type`: removed; use a `rdf:type` with a class.
-* `directOrIndirect`: unchanged; value is an instance from the codelist.
-* `beneficialOwnershipOrControl`: unchanged.
-* `details`: unchanged.
-* `share`: removed; nested properties are flattened to `shareExact`, `shareMaximum`, `shareExclusiveMinimum`, `shareExclusiveMaximum`.
-* `startDate`: unchanged.
-* `endDate`: unchanged.
-
-### Jurisdiction
-
-* `name`: renamed to `jurisdictionName`.
-* `code`: unchanged.
-
-### Name
-
-* `type`: removed; use a `rdf:type` with a class.
-* `fullName`: unchanged.
-* `familyName`: unchanged.
-* `givenName`: unchanged.
-* `patronymicName`: unchanged.
-
-### PEPstatusDetails
-
-Renamed to `PoliticalExposure`.
-
-* `reason`: renamed to `pepStatusReason`.
-* `missingInfoReason`: unchanged.
-* `jurisdiction`: renamed to `pepJurisdiction`.
-* `startDate`: unchanged.
-* `endDate`: unchanged.
-* `source`: unchanged.
-
-### PublicListing
-
-Removed and flattened onto `Entity` (nested property names unchanged).
-
-### PublicationDetails
-
-Removed and flattened onto `Statement`.
-
-### Publisher
-
-Renamed to `Agent` for use in other places.
-
-* `name`: unchanged.
-* `url`: renamed to `uri`.
-
-### SecuritiesListing
-
-* `marketIdentifierCode`: unchanged.
-* `operatingMarketIdentifierCode`: unchanged.
-* `stockExchangeJurisdiction`: unchanged.
-* `stockExchangeName`: unchanged.
-* `security`: renamed to `securityId`; convert the nested object into an instance of `SecuritiesIdentifier` (which is a subclass of `Identifier` with the additional property of `ticker`).
-
-### Share
-
-Removed and flattened onto `Interest`. Note property names are prefixed with `share*` for clarity.
-
-### Source
-
-* `type`: removed; use a `rdf:type` with a class.
-* `description`: unchanged.
-* `url`: unchanged.
-* `retrievedAt`: unchanged.
-* `assertedBy`: nested object is replaced with `Agent` instance.
-
-### Codelists
-
-Where codelists are converted into instances, capitalise the code and prefix it with the namespace `https://vocab.openownership.org/codelists#` (prefixed `codes:`) to create a URI. Use this URI as the value where a string of the code would be used in the JSON format. The following codelists are part of the vocabulary as instances:
-
-* `annotationMotivation`: values become instances of the `AnnotationMotivation` class
-* `directOrIndirect`: values become instances of the `DirectOrIndirect` class
-* `entityType`: values become instances of the `EntityType` class
-* `entitySubtype`: values become instances of the `EntitySubtype` class
-* `personType`: values become instances of the `PersonType` class
-* `securitiesIdentifierSchemes`: values become instances of `SecuritiesIdentifierScheme` class
-* `unspecifiedReason`: values become instances of the `UnspecifiedReason` class
-
-Where codelists are converted into classes, capitalise the code and prefix it with the namespace `https://vocab.openownership.org/terms#` (prefixed `bods:`) to create a URI. Use this as the `rdf:type` value for an instance which, as a JSON object, would have had a property pointing to the string of the code. The following codelists are part of the vocabulary as classes:
-
-* `addressType`: the values become subclasses of `Address`
-* `interestType`: the values become subclasses of `Interest`
-* `nameType`: the values become subclasses of `Name`
-* `recordStatus`: the values `new`, `updated` and `closed` are converted to `NewRecordStatement`, `UpdatedRecordStatement` and `ClosedRecordStatement` respectively, as subclasses of `Statement`.
-* `recordType`: the values become as subclasses of `RecordDetails`.
-* `sourceType`: the values become subclasses of `Source`
+```
