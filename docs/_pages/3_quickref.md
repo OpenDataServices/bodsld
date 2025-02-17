@@ -77,8 +77,8 @@ These go from a nested object under `recordDetails` on `Statement` to an instanc
 
 In JSON we use a nested object to describe an unspecified person or entity. This is replaced with the `UnspecifiedRecord` class which is a subclass of `RecordDetails` (like `Person` and `Entity`).
 
-* `reason`: renamed to `unspecifiedReason`; value is an instance from the codelist.
-* `description`: renamed to `unspecifiedDescription`.
+* `reason`: unchanged; value is an instance from the codelist.
+* `description`: unchanged.
 
 ### Interest
 

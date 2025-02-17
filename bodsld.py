@@ -294,8 +294,7 @@ class BODSVocab:
         self.map_properties(BODS.Unspecified, path)
 
         # Range fixup
-        self.g.add((BODS.unspecifiedReason, RDFS.range, BODS.UnspecifiedReason))
-        self.g.remove((BODS.unspecifiedReason, RDFS.range, RDFS.Literal))
+        self.g.add((BODS.reason, RDFS.range, BODS.UnspecifiedReason))
 
         # Unspecified Reason codelist
         self.map_instances(BODS.UnspecifiedReason, "unspecifiedReason.csv")
@@ -509,8 +508,6 @@ if __name__ == "__main__":
         "formedByStatute": "formedByStatuteName",
         "nationalities": "nationality",
         "taxResidencies": "taxResidency",
-        "reason": "unspecifiedReason",
-        "description": "unspecifiedDescription",
         "minimum": "shareMinimum",
         "maximum": "shareMaximum",
         "exact": "shareExact",
