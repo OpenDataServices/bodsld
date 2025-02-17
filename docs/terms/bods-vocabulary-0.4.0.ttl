@@ -1,8 +1,117 @@
 @prefix bods: <https://standard.openownership.org/terms#> .
+@prefix codes: <https://standard.openownership.org/codelists#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+codes:AnonymousEntity a bods:EntityType ;
+    rdfs:label "Anonymous entity" ;
+    rdfs:comment "An entity that has been identified, but for which identifying information is being withheld. The reason for non-disclosure should be given in the accompanying `unspecifiedEntityDetails` field." .
+
+codes:AnonymousPerson a bods:PersonType ;
+    rdfs:label "Anonymous person" ;
+    rdfs:comment "A natural person who has been identified, but identifying information is being withheld. The reason for non-disclosure should be given in the accompanying `unspecifiedPersonDetails` field." .
+
+codes:Arrangement a bods:EntityType ;
+    rdfs:label "Arrangement" ;
+    rdfs:comment "A legal arrangement, agreement, contract or other mechanism via which one or more natural or legal persons can associate to exert ownership or control over an entity. Parties to an arrangement have no other form of collective legal identity." .
+
+codes:Commenting a bods:AnnotationMotivation ;
+    rdfs:label "Commenting" ;
+    rdfs:comment "The description field provides contextual comments for a field, object or statement." .
+
+codes:Correcting a bods:AnnotationMotivation ;
+    rdfs:label "Correcting" ;
+    rdfs:comment "The value of this field, object or statement has been corrected, using the method in the description field or from the original value given in the description field." .
+
+codes:GovernmentDepartment a bods:EntitySubtype ;
+    rdfs:label "Government department" ;
+    rdfs:comment "An element of government with executive responsibilities. These terms are often used to designate such a body: ministry, department, bureau or office. This MUST be used with `entityType.type` 'stateBody'." .
+
+codes:Identifying a bods:AnnotationMotivation ;
+    rdfs:label "Identifying" ;
+    rdfs:comment "The value of this field, object or statement has been augmented or processed for the purpose of identifying natural persons or legal entities, using the method in the description field." .
+
+codes:InformationUnknownToPublisher a bods:UnspecifiedReason ;
+    rdfs:label "Information unknown to the publisher of the data" ;
+    rdfs:comment "A publisher does not have access to information on this person or entity. This should not generally be used in situations where one party has the responsibility to provide such information." .
+
+codes:InterestedPartyExemptFromDisclosure a bods:UnspecifiedReason ;
+    rdfs:label "Interested party exempt from disclosure" ;
+    rdfs:comment "The interested party in this Relationship Statement is exempt from having their identity disclosed." .
+
+codes:InterestedPartyHasNotProvidedInformation a bods:UnspecifiedReason ;
+    rdfs:label "Interested party has not provided information" ;
+    rdfs:comment "The interested party in this Relationship Statement has not provided enough information to identify or confirm the identity of the beneficial owner." .
+
+codes:KnownPerson a bods:PersonType ;
+    rdfs:label "Known person" ;
+    rdfs:comment "A natural person who has been identified, and information such as names, identifiers or biographical information can be provided about them." .
+
+codes:LegalEntity a bods:EntityType ;
+    rdfs:label "Legal entity" ;
+    rdfs:comment "A body with distinct legal personality, such as an international institution or statutory corporation, but which is not otherwise uniquely identified in some official register." .
+
+codes:Linking a bods:AnnotationMotivation ;
+    rdfs:label "Linking" ;
+    rdfs:comment "The description explains how linked material relates to the field, object or statement. A URL to linked material MUST be provided in the `url` field." .
+
+codes:NoBeneficialOwners a bods:UnspecifiedReason ;
+    rdfs:label "No beneficial owners" ;
+    rdfs:comment "There are no beneficial owners who need to disclose ownership according to the rules under which this statement is made." .
+
+codes:Nomination a bods:EntitySubtype ;
+    rdfs:label "Nomination" ;
+    rdfs:comment "An agreement where a nominator instructs a nominee to act on their behalf in a specified capacity. This MUST be used with `entityType.type` 'arrangement'." .
+
+codes:Other a bods:EntitySubtype ;
+    rdfs:label "Other" ;
+    rdfs:comment "Any other type of entity." .
+
+codes:RegisteredEntity a bods:EntityType ;
+    rdfs:label "Registered Entity" ;
+    rdfs:comment "A legal entity created through an act of official registration. In most cases, registered entities have an officially issued identifier." .
+
+codes:State a bods:EntityType ;
+    rdfs:label "State" ;
+    rdfs:comment "A country, nation or community with legal sovereignty within a territory." .
+
+codes:StateAgency a bods:EntitySubtype ;
+    rdfs:label "State Agency" ;
+    rdfs:comment "A body overseeing or administering elements of public policy. State agencies may have responsibilities which are devolved from government departments or from the state's legislative body. This MUST be used with `entityType.type` 'stateBody." .
+
+codes:StateBody a bods:EntityType ;
+    rdfs:label "State body" ;
+    rdfs:comment "A core administrative or legislative unit within a state's apparatus." .
+
+codes:SubjectExemptFromDisclosure a bods:UnspecifiedReason ;
+    rdfs:label "Subject exempt from disclosure" ;
+    rdfs:comment "The subject of this Relationship Statement is not required to disclose its beneficial owner." .
+
+codes:SubjectUnableToConfirmOrIdentifyBeneficialOwner a bods:UnspecifiedReason ;
+    rdfs:label "Subject unable to confirm or identify beneficial owner" ;
+    rdfs:comment "The subject of this Relationship Statement has, as the disclosing party, been unwilling or unable to confirm the existence identify a beneficial owner." .
+
+codes:Transformation a bods:AnnotationMotivation ;
+    rdfs:label "Transformation" ;
+    rdfs:comment "The values of this field, object or statement have been changed from their original form using the method in the description field. The transformed representation may be provided in the `transformedContent` field." .
+
+codes:Trust a bods:EntitySubtype ;
+    rdfs:label "Trust" ;
+    rdfs:comment "A trust or trust like arrangement. An arrangement where a settlor transfers ownership of assets to trustees to control for the benefit of beneficiaries. This MUST be used with `entityType.type` 'arrangement' or 'legalEntity'." .
+
+codes:Unknown a bods:UnspecifiedReason ;
+    rdfs:label "Unknown reason" ;
+    rdfs:comment "The reason an interested party cannot be provided is not known." .
+
+codes:UnknownEntity a bods:EntityType ;
+    rdfs:label "Unknown entity" ;
+    rdfs:comment "An entity that has not been identified." .
+
+codes:UnknownPerson a bods:PersonType ;
+    rdfs:label "Unknown person" ;
+    rdfs:comment "A natural person whose identity has not been discovered or confirmed." .
 
 <https://standard.openownership.org/terms> a owl:Ontology ;
     rdfs:label "Beneficial Ownership Data Standard v0.4" ;
@@ -18,22 +127,10 @@ bods:Alternative a owl:Class ;
     rdfs:subClassOf bods:Address,
         bods:Name .
 
-bods:AnonymousEntity a bods:EntityType ;
-    rdfs:label "Anonymous entity" ;
-    rdfs:comment "An entity that has been identified, but for which identifying information is being withheld. The reason for non-disclosure should be given in the accompanying `unspecifiedEntityDetails` field." .
-
-bods:AnonymousPerson a bods:PersonType ;
-    rdfs:label "Anonymous person" ;
-    rdfs:comment "A natural person who has been identified, but identifying information is being withheld. The reason for non-disclosure should be given in the accompanying `unspecifiedPersonDetails` field." .
-
 bods:AppointmentOfBoard a owl:Class ;
     rdfs:label "Appointment of board" ;
     rdfs:comment "A controlling interest in an entity. Defined as the absolute right to appoint members of the board of directors." ;
     rdfs:subClassOf bods:Interest .
-
-bods:Arrangement a bods:EntityType ;
-    rdfs:label "Arrangement" ;
-    rdfs:comment "A legal arrangement, agreement, contract or other mechanism via which one or more natural or legal persons can associate to exert ownership or control over an entity. Parties to an arrangement have no other form of collective legal identity." .
 
 bods:BeneficiaryOfLegalArrangement a owl:Class ;
     rdfs:label "Beneficiary of a legal arrangement" ;
@@ -65,10 +162,6 @@ bods:Closed a owl:Class ;
     rdfs:comment "This is the final Statement published pertaining to the record referenced by `recordId`." ;
     rdfs:subClassOf bods:Statement .
 
-bods:Commenting a bods:AnnotationMotivation ;
-    rdfs:label "Commenting" ;
-    rdfs:comment "The description field provides contextual comments for a field, object or statement." .
-
 bods:ConditionalRightsGrantedByContract a owl:Class ;
     rdfs:label "Conditional rights granted by contract" ;
     rdfs:comment "An interest that exists only if some contractual condition is met." ;
@@ -84,10 +177,6 @@ bods:ControlViaCompanyRulesOrArticles a owl:Class ;
     rdfs:comment "Control of an entity gained through a provision in company articles or by shareholder agreement." ;
     rdfs:subClassOf bods:Interest .
 
-bods:Correcting a bods:AnnotationMotivation ;
-    rdfs:label "Correcting" ;
-    rdfs:comment "The value of this field, object or statement has been corrected, using the method in the description field or from the original value given in the description field." .
-
 bods:EnjoymentAndUseOfAssets a owl:Class ;
     rdfs:label "Enjoyment and use of assets" ;
     rdfs:comment "The use of assets belonging to an entity." ;
@@ -98,44 +187,12 @@ bods:Former a owl:Class ;
     rdfs:comment "A name that the person has used in the past." ;
     rdfs:subClassOf bods:Name .
 
-bods:GovernmentDepartment a bods:EntitySubtype ;
-    rdfs:label "Government department" ;
-    rdfs:comment "An element of government with executive responsibilities. These terms are often used to designate such a body: ministry, department, bureau or office. This MUST be used with `entityType.type` 'stateBody'." .
-
-bods:Identifying a bods:AnnotationMotivation ;
-    rdfs:label "Identifying" ;
-    rdfs:comment "The value of this field, object or statement has been augmented or processed for the purpose of identifying natural persons or legal entities, using the method in the description field." .
-
-bods:InformationUnknownToPublisher a bods:UnspecifiedReason ;
-    rdfs:label "Information unknown to the publisher of the data" ;
-    rdfs:comment "A publisher does not have access to information on this person or entity. This should not generally be used in situations where one party has the responsibility to provide such information." .
-
 bods:InterestType a owl:Class .
-
-bods:InterestedPartyExemptFromDisclosure a bods:UnspecifiedReason ;
-    rdfs:label "Interested party exempt from disclosure" ;
-    rdfs:comment "The interested party in this Relationship Statement is exempt from having their identity disclosed." .
-
-bods:InterestedPartyHasNotProvidedInformation a bods:UnspecifiedReason ;
-    rdfs:label "Interested party has not provided information" ;
-    rdfs:comment "The interested party in this Relationship Statement has not provided enough information to identify or confirm the identity of the beneficial owner." .
-
-bods:KnownPerson a bods:PersonType ;
-    rdfs:label "Known person" ;
-    rdfs:comment "A natural person who has been identified, and information such as names, identifiers or biographical information can be provided about them." .
 
 bods:Legal a owl:Class ;
     rdfs:label "Legal name" ;
     rdfs:comment "A name that identifies the person for legal, administrative and other official purposes. A person's legal name will usually be the one that is found on official government documents." ;
     rdfs:subClassOf bods:Name .
-
-bods:LegalEntity a bods:EntityType ;
-    rdfs:label "Legal entity" ;
-    rdfs:comment "A body with distinct legal personality, such as an international institution or statutory corporation, but which is not otherwise uniquely identified in some official register." .
-
-bods:Linking a bods:AnnotationMotivation ;
-    rdfs:label "Linking" ;
-    rdfs:comment "The description explains how linked material relates to the field, object or statement. A URL to linked material MUST be provided in the `url` field." .
 
 bods:NameType a owl:Class .
 
@@ -143,14 +200,6 @@ bods:New a owl:Class ;
     rdfs:label "New Record" ;
     rdfs:comment "This is the first Statement published pertaining to the record referenced by `recordId`." ;
     rdfs:subClassOf bods:Statement .
-
-bods:NoBeneficialOwners a bods:UnspecifiedReason ;
-    rdfs:label "No beneficial owners" ;
-    rdfs:comment "There are no beneficial owners who need to disclose ownership according to the rules under which this statement is made." .
-
-bods:Nomination a bods:EntitySubtype ;
-    rdfs:label "Nomination" ;
-    rdfs:comment "An agreement where a nominator instructs a nominee to act on their behalf in a specified capacity. This MUST be used with `entityType.type` 'arrangement'." .
 
 bods:Nominator a owl:Class ;
     rdfs:label "Nominator" ;
@@ -168,10 +217,6 @@ bods:OfficialRegister a owl:Class ;
     rdfs:label "Official register" ;
     rdfs:comment "The information was taken from an official register." ;
     rdfs:subClassOf bods:Source .
-
-bods:Other a bods:EntitySubtype ;
-    rdfs:label "Other" ;
-    rdfs:comment "Any other type of entity." .
 
 bods:OtherInfluenceOrControl a owl:Class ;
     rdfs:label "Other influence or control" ;
@@ -201,10 +246,6 @@ bods:Registered a owl:Class ;
     rdfs:label "Registered address" ;
     rdfs:comment "An official address for delivering statutory mail and legal notices which must be provided to company registers. This MUST only apply to entities." ;
     rdfs:subClassOf bods:Address .
-
-bods:RegisteredEntity a bods:EntityType ;
-    rdfs:label "Registered Entity" ;
-    rdfs:comment "A legal entity created through an act of official registration. In most cases, registered entities have an officially issued identifier." .
 
 bods:Residence a owl:Class ;
     rdfs:label "Residential address" ;
@@ -258,34 +299,10 @@ bods:Shareholding a owl:Class ;
 
 bods:SourceType a owl:Class .
 
-bods:State a bods:EntityType ;
-    rdfs:label "State" ;
-    rdfs:comment "A country, nation or community with legal sovereignty within a territory." .
-
-bods:StateAgency a bods:EntitySubtype ;
-    rdfs:label "State Agency" ;
-    rdfs:comment "A body overseeing or administering elements of public policy. State agencies may have responsibilities which are devolved from government departments or from the state's legislative body. This MUST be used with `entityType.type` 'stateBody." .
-
-bods:StateBody a bods:EntityType ;
-    rdfs:label "State body" ;
-    rdfs:comment "A core administrative or legislative unit within a state's apparatus." .
-
-bods:SubjectExemptFromDisclosure a bods:UnspecifiedReason ;
-    rdfs:label "Subject exempt from disclosure" ;
-    rdfs:comment "The subject of this Relationship Statement is not required to disclose its beneficial owner." .
-
-bods:SubjectUnableToConfirmOrIdentifyBeneficialOwner a bods:UnspecifiedReason ;
-    rdfs:label "Subject unable to confirm or identify beneficial owner" ;
-    rdfs:comment "The subject of this Relationship Statement has, as the disclosing party, been unwilling or unable to confirm the existence identify a beneficial owner." .
-
 bods:ThirdParty a owl:Class ;
     rdfs:label "Third party" ;
     rdfs:comment "The information was provided by a third party, not directly related to the person, entity or interests described by this statement." ;
     rdfs:subClassOf bods:Source .
-
-bods:Transformation a bods:AnnotationMotivation ;
-    rdfs:label "Transformation" ;
-    rdfs:comment "The values of this field, object or statement have been changed from their original form using the method in the description field. The transformed representation may be provided in the `transformedContent` field." .
 
 bods:Translation a owl:Class ;
     rdfs:label "Translation of name" ;
@@ -297,31 +314,15 @@ bods:Transliteration a owl:Class ;
     rdfs:comment "A transliteration of the person's legal name in a different script." ;
     rdfs:subClassOf bods:Name .
 
-bods:Trust a bods:EntitySubtype ;
-    rdfs:label "Trust" ;
-    rdfs:comment "A trust or trust like arrangement. An arrangement where a settlor transfers ownership of assets to trustees to control for the benefit of beneficiaries. This MUST be used with `entityType.type` 'arrangement' or 'legalEntity'." .
-
 bods:Trustee a owl:Class ;
     rdfs:label "Trustee" ;
     rdfs:comment "A person who administers a trust for the benefit of a third party and in whom the legal title of the trust property is vested either by declaration of the settlor or by operation of law. This should also be used for a person with a trustee-equivalent role in any legal arrangement that is similar to a trust." ;
     rdfs:subClassOf bods:Interest .
 
-bods:Unknown a bods:UnspecifiedReason ;
-    rdfs:label "Unknown reason" ;
-    rdfs:comment "The reason an interested party cannot be provided is not known." .
-
-bods:UnknownEntity a bods:EntityType ;
-    rdfs:label "Unknown entity" ;
-    rdfs:comment "An entity that has not been identified." .
-
 bods:UnknownInterest a owl:Class ;
     rdfs:label "Unknown interest" ;
     rdfs:comment "The interestedParty is known to have an interest in the subject of this Relationship Statement, but the nature of the interest is unknown." ;
     rdfs:subClassOf bods:Interest .
-
-bods:UnknownPerson a bods:PersonType ;
-    rdfs:label "Unknown person" ;
-    rdfs:comment "A natural person whose identity has not been discovered or confirmed." .
 
 bods:UnpublishedInterest a owl:Class ;
     rdfs:label "Unpublished interest" ;
@@ -345,7 +346,7 @@ bods:VotingRights a owl:Class ;
 
 bods:address a rdf:Property ;
     rdfs:label "Addresses" ;
-    rdfs:comment "One or more addresses for this person." ;
+    rdfs:comment "One or more addresses for this entity." ;
     rdfs:domain bods:Entity,
         bods:Person ;
     rdfs:range bods:Address .
@@ -434,6 +435,13 @@ bods:deathDate a rdf:Property ;
     rdfs:domain bods:Person ;
     rdfs:range xsd:dateTime .
 
+bods:declaration a rdf:Property ;
+    rdfs:label "Declaration Reference" ;
+    rdfs:comment "An identifier or reference for a declaration within the publisher’s system. Where a Statement is a claim from a particular declaration (made at a point in time by a `source` about a `declarationSubject`) this field identifies the declaration." ;
+    rdfs:domain bods:Statement ;
+    rdfs:range rdfs:Literal,
+        bods:Declaration .
+
 bods:declarationIdString a rdf:Property ;
     rdfs:label "Declaration Reference" ;
     rdfs:comment "An identifier or reference for a declaration within the publisher’s system. Where a Statement is a claim from a particular declaration (made at a point in time by a `source` about a `declarationSubject`) this field identifies the declaration." ;
@@ -446,6 +454,16 @@ bods:declarationSubject a rdf:Property ;
     rdfs:domain bods:Declaration ;
     rdfs:range bods:Entity,
         bods:Person .
+
+bods:description a rdf:Property ;
+    rdfs:label "Description" ;
+    rdfs:comment "A free text description providing extra information about part of this Statement.",
+        "Additional information about the absence of details for a person or entity. This field may be used to provide set phrases from a source system, or a free text explanation.",
+        "Additional, free text information about the source of information." ;
+    rdfs:domain bods:Annotation,
+        bods:Source,
+        bods:Unspecified ;
+    rdfs:range rdfs:Literal .
 
 bods:details a rdf:Property ;
     rdfs:label "Details" ;
@@ -531,7 +549,7 @@ bods:hasPublicListing a rdf:Property ;
     rdfs:label "Has Public Listing" ;
     rdfs:comment "Whether the entity is a publicly listed company." ;
     rdfs:domain bods:Entity ;
-    rdfs:range xsd:Boolean .
+    rdfs:range xsd:boolean .
 
 bods:idScheme a rdf:Property ;
     rdfs:label "Identifier Scheme" ;
@@ -550,7 +568,7 @@ bods:idString a rdf:Property ;
 
 bods:identifier a rdf:Property ;
     rdfs:label "Identifiers" ;
-    rdfs:comment "One or more official identifiers for this person. Where available, official registration numbers should be provided." ;
+    rdfs:comment "One or more official identifiers for this entity. Where available, official registration numbers should be provided." ;
     rdfs:domain bods:Entity,
         bods:Person ;
     rdfs:range bods:Identifier .
@@ -672,11 +690,26 @@ bods:publisher a rdf:Property ;
     rdfs:domain bods:Statement ;
     rdfs:range bods:Agent .
 
+bods:reason a rdf:Property ;
+    rdfs:label "Reason" ;
+    rdfs:comment "The reason for this person being declared a politically-exposed person.",
+        "The reason that a person or entity cannot be specified, using the unspecifiedReason codelist." ;
+    rdfs:domain bods:PoliticalExposure,
+        bods:Unspecified ;
+    rdfs:range rdfs:Literal,
+        bods:UnspecifiedReason .
+
 bods:recordDetails a rdf:Property ;
     rdfs:label "Record Details" ;
     rdfs:comment "The details of the entity, person or relationship as declared on the Statement Date." ;
     rdfs:domain bods:Statement ;
     rdfs:range bods:RecordDetails .
+
+bods:recordIdString a rdf:Property ;
+    rdfs:label "Record Identifier" ;
+    rdfs:comment "A unique identifier for the record (within the publisher's system) to which this Statement relates. (A record captures information about an entity, natural person or relationship within the beneficial ownership network of a particular declaration subject.)" ;
+    rdfs:domain bods:Statement ;
+    rdfs:range rdfs:Literal .
 
 bods:retrievedAt a rdf:Property ;
     rdfs:label "Retrieved At" ;
@@ -761,6 +794,12 @@ bods:statementDate a rdf:Property ;
     rdfs:domain bods:Statement ;
     rdfs:range xsd:dateTime .
 
+bods:statementIdString a rdf:Property ;
+    rdfs:label "Statement Identifier" ;
+    rdfs:comment "A persistent globally unique identifier for this Statement. Length MUST be 32 - 64 characters (inclusive)." ;
+    rdfs:domain bods:Statement ;
+    rdfs:range rdfs:Literal .
+
 bods:statementPointerTarget a rdf:Property ;
     rdfs:label "Statement Fragment Pointer" ;
     rdfs:comment "An RFC6901 JSON Pointer (https://tools.ietf.org/html/rfc6901) describing the target fragment of the statement that this Annotation applies to, starting from the root of the Statement. An empty string (\"\") indicates that the Annotation applies to the whole Statement." ;
@@ -809,25 +848,6 @@ bods:transformedContent a rdf:Property ;
     rdfs:domain bods:Annotation ;
     rdfs:range rdfs:Literal .
 
-bods:unspecifiedDescription a rdf:Property ;
-    rdfs:label "Description" ;
-    rdfs:comment "A free text description providing extra information about part of this Statement.",
-        "Additional information about the absence of details for a person or entity. This field may be used to provide set phrases from a source system, or a free text explanation.",
-        "Additional, free text information about the source of information." ;
-    rdfs:domain bods:Annotation,
-        bods:Source,
-        bods:Unspecified ;
-    rdfs:range rdfs:Literal .
-
-bods:unspecifiedReason a rdf:Property ;
-    rdfs:label "Reason" ;
-    rdfs:comment "The reason for this person being declared a politically-exposed person.",
-        "The reason that a person or entity cannot be specified, using the unspecifiedReason codelist." ;
-    rdfs:domain bods:PoliticalExposure,
-        bods:Unspecified ;
-    rdfs:range rdfs:Literal,
-        bods:UnspecifiedReason .
-
 bods:uri a rdf:Property ;
     rdfs:label "URI" ;
     rdfs:comment "A canonical URI (https://en.wikipedia.org/wiki/Uniform_Resource_Identifier) for the identifier and associated details of the person or entity, if one exists.",
@@ -845,14 +865,14 @@ bods:url a rdf:Property ;
         bods:Source ;
     rdfs:range rdfs:Resource .
 
-bods:Declaration a owl:Class ;
-    rdfs:label "Declaration" ;
-    rdfs:comment "Each declaration is a set of claims about the entities, people and relationships within the subject’s beneficial ownership network." .
-
 bods:Unspecified a owl:Class ;
     rdfs:label "Unspecified or unknown person or entity" ;
     rdfs:comment "A `reason` MUST be supplied." ;
     rdfs:subClassOf bods:RecordDetails .
+
+bods:Declaration a owl:Class ;
+    rdfs:label "Declaration" ;
+    rdfs:comment "Each declaration is a set of claims about the entities, people and relationships within the subject’s beneficial ownership network." .
 
 bods:Relationship a owl:Class ;
     rdfs:label "Relationship" ;
@@ -912,10 +932,6 @@ bods:Address a owl:Class ;
     rdfs:label "Address" ;
     rdfs:comment "Semi-structured address details, suitable for processing using address-parsing algorithms. Where postal codes and country information are isolated fields in source systems, this information SHOULD be published in the dedicated fields and SHOULD NOT be published in the `address` field." .
 
-bods:Statement a owl:Class ;
-    rdfs:label "Statement" ;
-    rdfs:comment "A claim about a person, entity or relationship, made at a particular point in time." .
-
 bods:Name a owl:Class ;
     rdfs:label "Name" ;
     rdfs:comment "A name by which this person is known. A name MUST be provided in `fullName`, and MAY be broken down in the `familyName`, `givenName` and `patronymicName` fields, based on the EC ISA Core Person Vocabulary (https://joinup.ec.europa.eu/solution/e-government-core-vocabularies) definitions." .
@@ -924,6 +940,10 @@ bods:Person a owl:Class ;
     rdfs:label "Person" ;
     rdfs:comment "The Record Details in this Statement contain information about a natural person at a particular point in time." ;
     rdfs:subClassOf bods:RecordDetails .
+
+bods:Statement a owl:Class ;
+    rdfs:label "Statement" ;
+    rdfs:comment "A claim about a person, entity or relationship, made at a particular point in time." .
 
 bods:Entity a owl:Class ;
     rdfs:label "Entity" ;

@@ -1658,6 +1658,57 @@ td {
             </tr>
           </table>
         </div>
+        <div class="property entity" id="Unspecifiedorunknownpersonorentity">
+          <h3>Unspecified or unknown person or entity
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>https://standard.openownership.org/terms#Unspecified</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>A <code>reason</code> MUST be supplied.</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#subClassOf" title="The subject is a subclass of a class. Defined in The RDF Schema vocabulary (RDFS)">Sub Class Of</a>
+              </th>
+              <td>
+                <span>
+                  <a href="#RecordDetails">Record Details</a>
+                  <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="https://w3id.org/profile/ontdoc/inDomainOf" title="Inverse of rdfs:domain. Defined in Ontology Documentation Profile">In Domain Of</a>
+              </th>
+              <td>
+                <ul>
+                  <li>
+                    <span>
+                      <a href="#description">Description</a>
+                      <sup class="sup-p" title="RDF Property">p</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="#reason">Reason</a>
+                      <sup class="sup-p" title="RDF Property">p</sup>
+                    </span>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </div>
         <div class="property entity" id="Declaration">
           <h3>Declaration
             <sup class="sup-c" title="OWL/RDFS Class">c</sup>
@@ -1696,55 +1747,15 @@ td {
                 </ul>
               </td>
             </tr>
-          </table>
-        </div>
-        <div class="property entity" id="Unspecifiedorunknownpersonorentity">
-          <h3>Unspecified or unknown person or entity
-            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
-          </h3>
-          <table>
-            <tr>
-              <th>IRI</th>
-              <td>
-                <code>https://standard.openownership.org/terms#Unspecified</code>
-              </td>
-            </tr>
             <tr>
               <th>
-                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
-              </th>
-              <td><p>A <code>reason</code> MUST be supplied.</p></td>
-            </tr>
-            <tr>
-              <th>
-                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#subClassOf" title="The subject is a subclass of a class. Defined in The RDF Schema vocabulary (RDFS)">Sub Class Of</a>
+                <a class="hover_property" href="https://w3id.org/profile/ontdoc/inRangeOf" title="Inverse of rdfs:range. Defined in Ontology Documentation Profile">In Range Of</a>
               </th>
               <td>
                 <span>
-                  <a href="#RecordDetails">Record Details</a>
-                  <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                  <a href="#declaration">Declaration Reference</a>
+                  <sup class="sup-p" title="RDF Property">p</sup>
                 </span>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <a class="hover_property" href="https://w3id.org/profile/ontdoc/inDomainOf" title="Inverse of rdfs:domain. Defined in Ontology Documentation Profile">In Domain Of</a>
-              </th>
-              <td>
-                <ul>
-                  <li>
-                    <span>
-                      <a href="#unspecifiedDescription">Description</a>
-                      <sup class="sup-p" title="RDF Property">p</sup>
-                    </span>
-                  </li>
-                  <li>
-                    <span>
-                      <a href="#unspecifiedReason">Reason</a>
-                      <sup class="sup-p" title="RDF Property">p</sup>
-                    </span>
-                  </li>
-                </ul>
               </td>
             </tr>
           </table>
@@ -2359,6 +2370,12 @@ td {
                   </li>
                   <li>
                     <span>
+                      <a href="#reason">Reason</a>
+                      <sup class="sup-p" title="RDF Property">p</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
                       <a href="#source">Source</a>
                       <sup class="sup-p" title="RDF Property">p</sup>
                     </span>
@@ -2366,12 +2383,6 @@ td {
                   <li>
                     <span>
                       <a href="#startDate">Start Date</a>
-                      <sup class="sup-p" title="RDF Property">p</sup>
-                    </span>
-                  </li>
-                  <li>
-                    <span>
-                      <a href="#unspecifiedReason">Reason</a>
                       <sup class="sup-p" title="RDF Property">p</sup>
                     </span>
                   </li>
@@ -2428,6 +2439,12 @@ td {
                   </li>
                   <li>
                     <span>
+                      <a href="#description">Description</a>
+                      <sup class="sup-p" title="RDF Property">p</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
                       <a href="#motivation">Motivation</a>
                       <sup class="sup-p" title="RDF Property">p</sup>
                     </span>
@@ -2441,12 +2458,6 @@ td {
                   <li>
                     <span>
                       <a href="#transformedContent">Transformed Content</a>
-                      <sup class="sup-p" title="RDF Property">p</sup>
-                    </span>
-                  </li>
-                  <li>
-                    <span>
-                      <a href="#unspecifiedDescription">Description</a>
                       <sup class="sup-p" title="RDF Property">p</sup>
                     </span>
                   </li>
@@ -2513,7 +2524,7 @@ td {
               </th>
               <td>
                 <span>
-                  <a href="#unspecifiedReason">Reason</a>
+                  <a href="#reason">Reason</a>
                   <sup class="sup-p" title="RDF Property">p</sup>
                 </span>
               </td>
@@ -2551,13 +2562,13 @@ td {
                   </li>
                   <li>
                     <span>
-                      <a href="#retrievedAt">Retrieved At</a>
+                      <a href="#description">Description</a>
                       <sup class="sup-p" title="RDF Property">p</sup>
                     </span>
                   </li>
                   <li>
                     <span>
-                      <a href="#unspecifiedDescription">Description</a>
+                      <a href="#retrievedAt">Retrieved At</a>
                       <sup class="sup-p" title="RDF Property">p</sup>
                     </span>
                   </li>
@@ -2726,109 +2737,6 @@ td {
                   <li>
                     <span>
                       <a href="#Serviceaddress">Service address</a>
-                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
-                    </span>
-                  </li>
-                </ul>
-              </td>
-            </tr>
-          </table>
-        </div>
-        <div class="property entity" id="Statement">
-          <h3>Statement
-            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
-          </h3>
-          <table>
-            <tr>
-              <th>IRI</th>
-              <td>
-                <code>https://standard.openownership.org/terms#Statement</code>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
-              </th>
-              <td><p>A claim about a person, entity or relationship, made at a particular point in time.</p></td>
-            </tr>
-            <tr>
-              <th>
-                <a class="hover_property" href="https://w3id.org/profile/ontdoc/inDomainOf" title="Inverse of rdfs:domain. Defined in Ontology Documentation Profile">In Domain Of</a>
-              </th>
-              <td>
-                <ul>
-                  <li>
-                    <span>
-                      <a href="#annotation">Annotations</a>
-                      <sup class="sup-p" title="RDF Property">p</sup>
-                    </span>
-                  </li>
-                  <li>
-                    <span>
-                      <a href="#bodsVersion">BODS Version</a>
-                      <sup class="sup-p" title="RDF Property">p</sup>
-                    </span>
-                  </li>
-                  <li>
-                    <span>
-                      <a href="#license">License URL</a>
-                      <sup class="sup-p" title="RDF Property">p</sup>
-                    </span>
-                  </li>
-                  <li>
-                    <span>
-                      <a href="#publicationDate">Publication date</a>
-                      <sup class="sup-p" title="RDF Property">p</sup>
-                    </span>
-                  </li>
-                  <li>
-                    <span>
-                      <a href="#publisher">Publisher</a>
-                      <sup class="sup-p" title="RDF Property">p</sup>
-                    </span>
-                  </li>
-                  <li>
-                    <span>
-                      <a href="#recordDetails">Record Details</a>
-                      <sup class="sup-p" title="RDF Property">p</sup>
-                    </span>
-                  </li>
-                  <li>
-                    <span>
-                      <a href="#source">Source</a>
-                      <sup class="sup-p" title="RDF Property">p</sup>
-                    </span>
-                  </li>
-                  <li>
-                    <span>
-                      <a href="#statementDate">Statement Date</a>
-                      <sup class="sup-p" title="RDF Property">p</sup>
-                    </span>
-                  </li>
-                </ul>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <a class="hover_property" href="https://w3id.org/profile/ontdoc/superClassOf" title="Inverse of RDFS' subClassOf. Defined in Ontology Documentation Profile">Super Class Of</a>
-              </th>
-              <td>
-                <ul>
-                  <li>
-                    <span>
-                      <a href="#ClosedRecord">Closed Record</a>
-                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
-                    </span>
-                  </li>
-                  <li>
-                    <span>
-                      <a href="#NewRecord">New Record</a>
-                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
-                    </span>
-                  </li>
-                  <li>
-                    <span>
-                      <a href="#UpdatedRecord">Updated Record</a>
                       <sup class="sup-c" title="OWL/RDFS Class">c</sup>
                     </span>
                   </li>
@@ -3074,6 +2982,127 @@ td {
                     <span>
                       <a href="#interestedParty">Interested Party</a>
                       <sup class="sup-p" title="RDF Property">p</sup>
+                    </span>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="Statement">
+          <h3>Statement
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>https://standard.openownership.org/terms#Statement</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>A claim about a person, entity or relationship, made at a particular point in time.</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="https://w3id.org/profile/ontdoc/inDomainOf" title="Inverse of rdfs:domain. Defined in Ontology Documentation Profile">In Domain Of</a>
+              </th>
+              <td>
+                <ul>
+                  <li>
+                    <span>
+                      <a href="#annotation">Annotations</a>
+                      <sup class="sup-p" title="RDF Property">p</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="#bodsVersion">BODS Version</a>
+                      <sup class="sup-p" title="RDF Property">p</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="#declaration">Declaration Reference</a>
+                      <sup class="sup-p" title="RDF Property">p</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="#license">License URL</a>
+                      <sup class="sup-p" title="RDF Property">p</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="#publicationDate">Publication date</a>
+                      <sup class="sup-p" title="RDF Property">p</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="#publisher">Publisher</a>
+                      <sup class="sup-p" title="RDF Property">p</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="#recordDetails">Record Details</a>
+                      <sup class="sup-p" title="RDF Property">p</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="#recordIdString">Record Identifier</a>
+                      <sup class="sup-p" title="RDF Property">p</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="#source">Source</a>
+                      <sup class="sup-p" title="RDF Property">p</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="#statementDate">Statement Date</a>
+                      <sup class="sup-p" title="RDF Property">p</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="#statementIdString">Statement Identifier</a>
+                      <sup class="sup-p" title="RDF Property">p</sup>
+                    </span>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="https://w3id.org/profile/ontdoc/superClassOf" title="Inverse of RDFS' subClassOf. Defined in Ontology Documentation Profile">Super Class Of</a>
+              </th>
+              <td>
+                <ul>
+                  <li>
+                    <span>
+                      <a href="#ClosedRecord">Closed Record</a>
+                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="#NewRecord">New Record</a>
+                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="#UpdatedRecord">Updated Record</a>
+                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
                     </span>
                   </li>
                 </ul>
@@ -3507,7 +3536,7 @@ td {
               <th>
                 <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
               </th>
-              <td><p>One or more addresses for this person.</p></td>
+              <td><p>One or more addresses for this entity.</p></td>
             </tr>
             <tr>
               <th>
@@ -4090,6 +4119,54 @@ td {
             </tr>
           </table>
         </div>
+        <div class="property entity" id="declaration">
+          <h3>Declaration Reference
+            <sup class="sup-p" title="RDF Property">p</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>https://standard.openownership.org/terms#declaration</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>An identifier or reference for a declaration within the publisher’s system. Where a Statement is a claim from a particular declaration (made at a point in time by a <code>source</code> about a <code>declarationSubject</code>) this field identifies the declaration.</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#domain" title="A domain of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Domain</a>
+              </th>
+              <td>
+                <span>
+                  <a href="#Statement">Statement</a>
+                  <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#range" title="A range of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Range</a>
+              </th>
+              <td>
+                <ul>
+                  <li>
+                    <a href="http://www.w3.org/2000/01/rdf-schema#Literal">Literal</a>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="#Declaration">Declaration</a>
+                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                    </span>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </div>
         <div class="property entity" id="declarationIdString">
           <h3>Declaration Reference
             <sup class="sup-p" title="RDF Property">p</sup>
@@ -4175,6 +4252,66 @@ td {
                     </span>
                   </li>
                 </ul>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="description">
+          <h3>Description
+            <sup class="sup-p" title="RDF Property">p</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>https://standard.openownership.org/terms#description</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td>
+                <ul>
+                  <li><p>A free text description providing extra information about part of this Statement.</p></li>
+                  <li><p>Additional information about the absence of details for a person or entity. This field may be used to provide set phrases from a source system, or a free text explanation.</p></li>
+                  <li><p>Additional, free text information about the source of information.</p></li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#domain" title="A domain of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Domain</a>
+              </th>
+              <td>
+                <ul>
+                  <li>
+                    <span>
+                      <a href="#Annotation">Annotation</a>
+                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="#Source">Source</a>
+                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="#Unspecifiedorunknownpersonorentity">Unspecified or unknown person or entity</a>
+                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                    </span>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#range" title="A range of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Range</a>
+              </th>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#Literal">Literal</a>
               </td>
             </tr>
           </table>
@@ -4727,7 +4864,7 @@ td {
                 <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#range" title="A range of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Range</a>
               </th>
               <td>
-                <a href="http://www.w3.org/2001/XMLSchema#Boolean">xsd:Boolean</a>
+                <a href="http://www.w3.org/2001/XMLSchema#boolean">xsd:boolean</a>
               </td>
             </tr>
           </table>
@@ -4838,7 +4975,7 @@ td {
               <th>
                 <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
               </th>
-              <td><p>One or more official identifiers for this person. Where available, official registration numbers should be provided.</p></td>
+              <td><p>One or more official identifiers for this entity. Where available, official registration numbers should be provided.</p></td>
             </tr>
             <tr>
               <th>
@@ -5638,6 +5775,69 @@ td {
             </tr>
           </table>
         </div>
+        <div class="property entity" id="reason">
+          <h3>Reason
+            <sup class="sup-p" title="RDF Property">p</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>https://standard.openownership.org/terms#reason</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td>
+                <ul>
+                  <li><p>The reason for this person being declared a politically-exposed person.</p></li>
+                  <li><p>The reason that a person or entity cannot be specified, using the unspecifiedReason codelist.</p></li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#domain" title="A domain of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Domain</a>
+              </th>
+              <td>
+                <ul>
+                  <li>
+                    <span>
+                      <a href="#PEPStatusDetails">PEP Status Details</a>
+                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="#Unspecifiedorunknownpersonorentity">Unspecified or unknown person or entity</a>
+                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                    </span>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#range" title="A range of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Range</a>
+              </th>
+              <td>
+                <ul>
+                  <li>
+                    <a href="http://www.w3.org/2000/01/rdf-schema#Literal">Literal</a>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="#UnspecifiedReason">bods:UnspecifiedReason</a>
+                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                    </span>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </div>
         <div class="property entity" id="recordDetails">
           <h3>Record Details
             <sup class="sup-p" title="RDF Property">p</sup>
@@ -5675,6 +5875,44 @@ td {
                   <a href="#RecordDetails">Record Details</a>
                   <sup class="sup-c" title="OWL/RDFS Class">c</sup>
                 </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="recordIdString">
+          <h3>Record Identifier
+            <sup class="sup-p" title="RDF Property">p</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>https://standard.openownership.org/terms#recordIdString</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>A unique identifier for the record (within the publisher's system) to which this Statement relates. (A record captures information about an entity, natural person or relationship within the beneficial ownership network of a particular declaration subject.)</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#domain" title="A domain of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Domain</a>
+              </th>
+              <td>
+                <span>
+                  <a href="#Statement">Statement</a>
+                  <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#range" title="A range of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Range</a>
+              </th>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#Literal">Literal</a>
               </td>
             </tr>
           </table>
@@ -6212,6 +6450,44 @@ td {
             </tr>
           </table>
         </div>
+        <div class="property entity" id="statementIdString">
+          <h3>Statement Identifier
+            <sup class="sup-p" title="RDF Property">p</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>https://standard.openownership.org/terms#statementIdString</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>A persistent globally unique identifier for this Statement. Length MUST be 32 - 64 characters (inclusive).</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#domain" title="A domain of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Domain</a>
+              </th>
+              <td>
+                <span>
+                  <a href="#Statement">Statement</a>
+                  <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#range" title="A range of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Range</a>
+              </th>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#Literal">Literal</a>
+              </td>
+            </tr>
+          </table>
+        </div>
         <div class="property entity" id="statementPointerTarget">
           <h3>Statement Fragment Pointer
             <sup class="sup-p" title="RDF Property">p</sup>
@@ -6522,129 +6798,6 @@ td {
             </tr>
           </table>
         </div>
-        <div class="property entity" id="unspecifiedDescription">
-          <h3>Description
-            <sup class="sup-p" title="RDF Property">p</sup>
-          </h3>
-          <table>
-            <tr>
-              <th>IRI</th>
-              <td>
-                <code>https://standard.openownership.org/terms#unspecifiedDescription</code>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
-              </th>
-              <td>
-                <ul>
-                  <li><p>A free text description providing extra information about part of this Statement.</p></li>
-                  <li><p>Additional information about the absence of details for a person or entity. This field may be used to provide set phrases from a source system, or a free text explanation.</p></li>
-                  <li><p>Additional, free text information about the source of information.</p></li>
-                </ul>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#domain" title="A domain of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Domain</a>
-              </th>
-              <td>
-                <ul>
-                  <li>
-                    <span>
-                      <a href="#Annotation">Annotation</a>
-                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
-                    </span>
-                  </li>
-                  <li>
-                    <span>
-                      <a href="#Source">Source</a>
-                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
-                    </span>
-                  </li>
-                  <li>
-                    <span>
-                      <a href="#Unspecifiedorunknownpersonorentity">Unspecified or unknown person or entity</a>
-                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
-                    </span>
-                  </li>
-                </ul>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#range" title="A range of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Range</a>
-              </th>
-              <td>
-                <a href="http://www.w3.org/2000/01/rdf-schema#Literal">Literal</a>
-              </td>
-            </tr>
-          </table>
-        </div>
-        <div class="property entity" id="unspecifiedReason">
-          <h3>Reason
-            <sup class="sup-p" title="RDF Property">p</sup>
-          </h3>
-          <table>
-            <tr>
-              <th>IRI</th>
-              <td>
-                <code>https://standard.openownership.org/terms#unspecifiedReason</code>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
-              </th>
-              <td>
-                <ul>
-                  <li><p>The reason for this person being declared a politically-exposed person.</p></li>
-                  <li><p>The reason that a person or entity cannot be specified, using the unspecifiedReason codelist.</p></li>
-                </ul>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#domain" title="A domain of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Domain</a>
-              </th>
-              <td>
-                <ul>
-                  <li>
-                    <span>
-                      <a href="#PEPStatusDetails">PEP Status Details</a>
-                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
-                    </span>
-                  </li>
-                  <li>
-                    <span>
-                      <a href="#Unspecifiedorunknownpersonorentity">Unspecified or unknown person or entity</a>
-                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
-                    </span>
-                  </li>
-                </ul>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#range" title="A range of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Range</a>
-              </th>
-              <td>
-                <ul>
-                  <li>
-                    <a href="http://www.w3.org/2000/01/rdf-schema#Literal">Literal</a>
-                  </li>
-                  <li>
-                    <span>
-                      <a href="#UnspecifiedReason">bods:UnspecifiedReason</a>
-                      <sup class="sup-c" title="OWL/RDFS Class">c</sup>
-                    </span>
-                  </li>
-                </ul>
-              </td>
-            </tr>
-          </table>
-        </div>
         <div class="property entity" id="uri">
           <h3>URI
             <sup class="sup-p" title="RDF Property">p</sup>
@@ -6758,6 +6911,10 @@ td {
           <dt id="bods">bods</dt>
           <dd>
             <code>https://standard.openownership.org/terms#</code>
+          </dd>
+          <dt id="codes">codes</dt>
+          <dd>
+            <code>https://standard.openownership.org/codelists#</code>
           </dd>
           <dt id="ns1">ns1</dt>
           <dd>
@@ -6964,10 +7121,10 @@ td {
               <a href="#Votingrights">Voting rights</a>
             </li>
             <li>
-              <a href="#Declaration">Declaration</a>
+              <a href="#Unspecifiedorunknownpersonorentity">Unspecified or unknown person or entity</a>
             </li>
             <li>
-              <a href="#Unspecifiedorunknownpersonorentity">Unspecified or unknown person or entity</a>
+              <a href="#Declaration">Declaration</a>
             </li>
             <li>
               <a href="#Relationship">Relationship</a>
@@ -7021,13 +7178,13 @@ td {
               <a href="#Address">Address</a>
             </li>
             <li>
-              <a href="#Statement">Statement</a>
-            </li>
-            <li>
               <a href="#Name">Name</a>
             </li>
             <li>
               <a href="#Person">Person</a>
+            </li>
+            <li>
+              <a href="#Statement">Statement</a>
             </li>
             <li>
               <a href="#Entity">Entity</a>
@@ -7088,10 +7245,16 @@ td {
               <a href="#deathDate">Death Date</a>
             </li>
             <li>
+              <a href="#declaration">Declaration Reference</a>
+            </li>
+            <li>
               <a href="#declarationIdString">Declaration Reference</a>
             </li>
             <li>
               <a href="#declarationSubject">Declaration Subject</a>
+            </li>
+            <li>
+              <a href="#description">Description</a>
             </li>
             <li>
               <a href="#details">Details</a>
@@ -7199,7 +7362,13 @@ td {
               <a href="#publisher">Publisher</a>
             </li>
             <li>
+              <a href="#reason">Reason</a>
+            </li>
+            <li>
               <a href="#recordDetails">Record Details</a>
+            </li>
+            <li>
+              <a href="#recordIdString">Record Identifier</a>
             </li>
             <li>
               <a href="#retrievedAt">Retrieved At</a>
@@ -7241,6 +7410,9 @@ td {
               <a href="#statementDate">Statement Date</a>
             </li>
             <li>
+              <a href="#statementIdString">Statement Identifier</a>
+            </li>
+            <li>
               <a href="#statementPointerTarget">Statement Fragment Pointer</a>
             </li>
             <li>
@@ -7265,12 +7437,6 @@ td {
               <a href="#transformedContent">Transformed Content</a>
             </li>
             <li>
-              <a href="#unspecifiedDescription">Description</a>
-            </li>
-            <li>
-              <a href="#unspecifiedReason">Reason</a>
-            </li>
-            <li>
               <a href="#uri">URI</a>
             </li>
             <li>
@@ -7285,6 +7451,9 @@ td {
           <ul class="second">
             <li>
               <a href="#bods">bods</a>
+            </li>
+            <li>
+              <a href="#codes">codes</a>
             </li>
             <li>
               <a href="#ns1">ns1</a>

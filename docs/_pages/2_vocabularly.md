@@ -11,10 +11,7 @@ codes: https://vocab.openownership.org/codelists#
 orgid: https://org-id.guide/list/
 ```
 
-The RDF vocabulary is available in full:
-
-* In turtle format 
-* As a JSON-LD context (TODO)
+See [the namespace index](terms) for links to the vocabulary in different formats.
 
 ## Mapping to other terms
 
