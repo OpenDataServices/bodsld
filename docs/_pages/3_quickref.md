@@ -101,13 +101,13 @@ In JSON we use a nested object to describe an unspecified person or entity. This
 
 ### Annotation
 
-* `statementPointerTarget`
-* creationDate
-* createdBy, /name, /uri
+* `statementPointerTarget`: unchanged.
+* `creationDate`: unchanged.
+* `createdBy`: value is an `Agent` instance.
 * `motivation`: unchanged; value is an instance from the codelist.
-* description
-* transformedContent
-* url
+* `description`: unchanged.
+* `transformedContent`: unchanged.
+* `url`: unchanged.
 
 ### Country
 
@@ -146,7 +146,7 @@ Renamed to `PoliticalExposure`.
 
 ### PublicListing
 
-Removed and flattened onto `Entity` (nested property names unchanged).
+Removed and flattened onto `Entity` (nested property names unchanged, except for `companyFilingsURLs` which becomes `companyFilingsURL`).
 
 ### PublicationDetails
 
