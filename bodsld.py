@@ -112,9 +112,9 @@ class BODSVocab:
         
         for code, info in types.items():
             t = cap_first(code)
-            self.g.add((BODS[t], RDF.type, instance_class))
-            self.g.add((BODS[t], RDFS.label, Literal(types.get(code)[0])))
-            self.g.add((BODS[t], RDFS.comment, Literal(types.get(code)[1])))
+            self.g.add((CODES[t], RDF.type, instance_class))
+            self.g.add((CODES[t], RDFS.label, Literal(types.get(code)[0])))
+            self.g.add((CODES[t], RDFS.comment, Literal(types.get(code)[1])))
 
 
     def make_graph(self):
@@ -231,7 +231,7 @@ class BODSVocab:
         self.g.add((BODS.securitiesListing, RDFS.range, BODS.SecuritiesListing))
         self.g.add((BODS.entityType, RDFS.range, BODS.EntityType))
         self.g.add((BODS.entitySubtype, RDFS.range, BODS.EntitySubtype))
-        self.g.add((BODS.hasPublicListing, RDFS.range, XSD.Boolean))
+        self.g.add((BODS.hasPublicListing, RDFS.range, XSD.boolean))
         self.g.add((BODS.securitiesListing, RDFS.range, BODS.SecuritiesListing))
         self.g.add((BODS.companyFilingsURL, RDFS.range, RDFS.Resource))
 
