@@ -371,7 +371,6 @@ class BODSVocab:
 
         # Jurisdiction properties
         self.map_properties(BODS.Jurisdiction, path)
-        # TODO: name needs converting to jurisdictionName
 
     def map_identifier(self):
         path = "/$defs/Identifier"

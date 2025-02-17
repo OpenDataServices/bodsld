@@ -122,7 +122,7 @@ Removed and replaced with [`Jurisdiction`](#jurisdiction) throughout.
 
 ### Jurisdiction
 
-* `name`: renamed to `jurisdictionName`.
+* `name`: unchanged.
 * `code`: unchanged.
 
 ### Name
