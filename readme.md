@@ -10,7 +10,7 @@ See the documentation attached to this repo.
 
 ### Limitations
 
-Most of the vocabularly is derived directly from the JSON Schema, which means it can be generated from versions of the schema translated into different languages. However, due to a few changes to the model, there are some customisations which will not be translated in this case, and will need to be adjusted by hand.
+Most of the vocabulary is derived directly from the JSON Schema, which means it can be generated from versions of the schema translated into different languages. However, due to a few changes to the model, there are some customisations which will not be translated in this case, and will need to be adjusted by hand.
 
 Instance data (eg. entity types, annotation motivations; other things from codelists) is included in the RDF but not in the HTML documentation due to a limitation of the library used to generate it.
 
