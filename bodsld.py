@@ -5,8 +5,8 @@ from pylode.profiles.ontpub import OntPub
 from helpers import *
 
 
-BODS = Namespace("https://standard.openownership.org/terms#")
-CODES = Namespace("https://standard.openownership.org/codelists#")
+BODS = Namespace("https://vocab.openownership.org/terms#")
+CODES = Namespace("https://vocab.openownership.org/codelists#")
 ORGID = Namespace("https://org-id.guide/list/")
 
 

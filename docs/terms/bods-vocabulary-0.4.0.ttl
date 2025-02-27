@@ -1,4 +1,4 @@
-@prefix bods: <https://standard.openownership.org/terms#> .
+@prefix bods: <https://vocab.openownership.org/terms#> .
 @prefix codes: <https://standard.openownership.org/codelists#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -140,7 +140,7 @@ codes:UnknownPerson a bods:PersonType ;
     rdfs:label "Unknown person" ;
     rdfs:comment "A natural person whose identity has not been discovered or confirmed." .
 
-<https://standard.openownership.org/terms> a owl:Ontology ;
+<https://vocab.openownership.org/terms> a owl:Ontology ;
     rdfs:label "Beneficial Ownership Data Standard v0.4" ;
     rdfs:comment "The RDF vocabulary for the Beneficial Ownership Data Standard v0.4" .
 
