@@ -11,7 +11,7 @@ codes: https://vocab.openownership.org/codelists#
 orgid: https://org-id.guide/list/
 ```
 
-See [the namespace index](terms) for links to the vocabulary in different formats.
+See [the namespace index](/terms) for links to the vocabulary in different formats.
 
 ## Mapping to other terms
 
