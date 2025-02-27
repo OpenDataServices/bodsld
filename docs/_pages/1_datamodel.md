@@ -269,7 +269,7 @@ For readability and consistency, all property names expressed as plural in the J
 
 `type` recurs in several places in the BODS data model, but is not used at all in RDF, preferring instead class hierarchies, or the `entityType` and `personType` properties.
 
-> #### ISSUE
+> **ISSUE**
 > 
 > As all properties in the RDF vocabulary are in the same "bucket", ie. not segmented by the object to which they belong, some duplicate properties will need to be renamed, or to have their descriptions updated to accommodate multiple uses.
 >
@@ -331,7 +331,8 @@ There is no consistent, reliable source of external URIs for jurisdictions in li
 
 The properties `isComponent` and `componentRecords` are not carried through to the RDF data model. We can traverse the graph to find the indirect relationship from a series of direct ones as follows. 
 
-> #### TODO
+> **TODO**
 >
 > Example SPARQL needed
 {: .block-warning }
+
